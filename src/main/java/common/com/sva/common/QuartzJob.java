@@ -17,10 +17,6 @@ public class QuartzJob {
     @Autowired
     private CommonDao dao;
 
-    
-    @Value("${reflashTime}")
-    private String reflashTime;
-
     @Value("${mysql.db}")
     private String db;
 
