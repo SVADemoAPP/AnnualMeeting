@@ -24,11 +24,9 @@ import org.apache.qpid.client.AMQAnyDestination;
 import org.apache.qpid.client.AMQConnection;
 import org.apache.qpid.url.URLSyntaxException;
 import com.sva.common.ConvertUtil;
-import com.sva.common.MyLog;
 import com.sva.dao.AmqpDao;
 import com.sva.model.LocationModel;
 import com.sva.model.SvaModel;
-import com.sva.web.controllers.AccountController;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -47,7 +45,6 @@ public class AmqpThread extends Thread {
      */ 
     private static final Logger LOG = Logger.getLogger(AmqpThread.class);
     
-    private static final MyLog mylog = AccountController.mylog;
     /** 
      * @Fields sva : sva信息 
      */ 
@@ -105,12 +102,6 @@ public class AmqpThread extends Thread {
                 + ",ip:" + ip
                 + ",port:" + port
                 + ",id:" + id);
-        mylog.location("amqp started:"
-                + "userId:" + userId 
-                + ",queueId:" + queueId
-                + ",ip:" + ip
-                + ",port:" + port
-                + ",id:" + id);
         // 获取keystore的路径
 //        String path = getClass().getResource("/").getPath();
         String path = System.getProperty("user.dir");
@@ -118,7 +109,6 @@ public class AmqpThread extends Thread {
 //        path = path.substring(1, path.indexOf("/classes"));
         path = path + File.separator + "java_keystore" + File.separator;
         LOG.debug("get keystore path:"+path);
-        mylog.location("get keystore path:"+path);
         // 设置系统环境jvm参数
         System.setProperty("javax.net.ssl.keyStore", path + "keystore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "importkey");
@@ -129,22 +119,18 @@ public class AmqpThread extends Thread {
         String brokerOpts = "?brokerlist='tcp://"+ip+":"+port+"?ssl='true'&ssl_verify_hostname='false''";
         String connectionString = "amqp://"+userId+":"+"xxxx@xxxx/"+brokerOpts;
         LOG.debug("connection string:" + connectionString);
-        mylog.location("connection string:" + connectionString);
         // 建立连接
         try {
             conn = new AMQConnection(connectionString);
             conn.start();
             LOG.debug("connection started!");
-            mylog.location("connection started!");
             // 获取session
             Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
             LOG.debug("session created!");
-            mylog.location("session created!");
             // 获取队列
             Destination queue = new AMQAnyDestination("ADDR:"+queueId+";{create:sender}");
             MessageConsumer consumer = session.createConsumer(queue);
             LOG.debug("consumer created!");
-            mylog.location("consumer created!");
             
             while(!isStop  && !this.isInterrupted())
             {
@@ -152,7 +138,6 @@ public class AmqpThread extends Thread {
                 // message为空的情况,
                 if(m == null){
                     LOG.debug("Get NULL message, pause for 1 miniute!");
-                    mylog.location("Get NULL message, pause for 1 miniute!");
 //                    sleep(60000);
                     continue;
                 }
@@ -166,14 +151,11 @@ public class AmqpThread extends Thread {
                         String messages = new String(keyBytes);
                         saveSvaData(messages, Integer.parseInt(sva.getStoreId()), sva.getType(), sva.getIp(), sva.getId());
                         LOG.debug("SVA Data:"+messages);
-                        mylog.other("SVA Data:"+messages);
                     }else{
                         LOG.debug("Get zero length message");
-                        mylog.location("Get zero length message");
                     }
                 }else{
                     LOG.warn("Message is not in Byte format!");
-                    mylog.location("Message is not in Byte format!");
                 }
             }
         } catch (URLSyntaxException e) {
@@ -195,7 +177,6 @@ public class AmqpThread extends Thread {
             } catch (JMSException e) {
                 LOG.error(e);
             }
-            mylog.location("[AMQP]No data from SVA,connection closed!");
             LOG.error("[AMQP]No data from SVA,connection closed!");
         }
     }
@@ -211,7 +192,6 @@ public class AmqpThread extends Thread {
     private void saveSvaData(String jsonStr, int storeId, int type, String ip, String svaId){
         if(StringUtils.isEmpty(jsonStr)){
             LOG.warn("No data from SVA!");
-            mylog.location("No data from SVA!");
         }else{
             JSONObject result = JSONObject.fromObject(jsonStr);
             // 非匿名化订阅
@@ -231,7 +211,6 @@ public class AmqpThread extends Thread {
                 saveGeofencing(result);
             }else{
                 LOG.warn("Unknow message from SVA!");
-                mylog.location("Unknow message from SVA!");
             }
         }
     }
@@ -319,7 +298,6 @@ public class AmqpThread extends Thread {
             JSONObject temp = jsonList.getJSONObject(i);
             String gpp = temp.getString("gpp");
             String rsrp = temp.getString("rsrp");
-            mylog.prru("prru data: enbid:"+enbid+" userid:"+userid+" gpp"+gpp+" rsrp:"+rsrp);
             dao.svaPrru(enbid,userid,gpp,rsrp,ip,timestamp);
         }
     }

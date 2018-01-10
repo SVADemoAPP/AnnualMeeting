@@ -29,7 +29,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import com.sva.web.auth.AuthInterceptor;
 
 /** 
  * @ClassName: WebConfig 
@@ -122,16 +121,6 @@ public class WebConfig extends WebMvcConfigurerAdapter
     }
     
     /** 
-     * @Title: authInterceptor 
-     * @Description: 自定义权限拦截器
-     * @return 
-     */
-    @Bean
-    public AuthInterceptor authInterceptor(){
-        return new AuthInterceptor();
-    }
-    
-    /** 
      * @Title: propertySourcesPlaceholderConfigurer 
      * @Description: 全局属性文件配置
      * @return 
@@ -182,7 +171,6 @@ public class WebConfig extends WebMvcConfigurerAdapter
     {
         // 注册拦截器
         registry.addInterceptor(localeChangeInterceptor());
-        registry.addInterceptor(authInterceptor());
         super.addInterceptors(registry);
     }
 }

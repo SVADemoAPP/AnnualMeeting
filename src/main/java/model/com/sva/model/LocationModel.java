@@ -24,7 +24,6 @@ public class LocationModel
     
     private String svaId;
 
-    private MapsModel maps;
 
     public String getIdType()
     {
@@ -126,20 +125,6 @@ public class LocationModel
     public void setSvaId(String svaId)
     {
         this.svaId = svaId;
-    }
-
-    /**
-     * @return the maps
-     */
-    public MapsModel getMaps() {
-        return maps;
-    }
-
-    /**
-     * @param maps the maps to set
-     */
-    public void setMaps(MapsModel maps) {
-        this.maps = maps;
     }
 
     /**

@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.sva.common.ConvertUtil;
-import com.sva.common.MyLog;
 import com.sva.common.conf.GlobalConf;
 import com.sva.dao.AmqpDao;
 import com.sva.model.SvaModel;
@@ -43,8 +42,6 @@ public class SubscriptionService extends HttpsService {
      */
     private static final Logger LOG = Logger.getLogger(SubscriptionService.class);
     
-    private static final MyLog mylog = MyLog.getInstance();
-
     /**   
      * @Fields amqpDao : amqp对接入库dao   
      */ 
@@ -112,11 +109,9 @@ public class SubscriptionService extends HttpsService {
             
             if(StringUtils.isEmpty(token)){
                 LOG.warn("token got failed:svaId:" + sva.getId());
-                mylog.location("token got failed:svaId:" + sva.getId());
                 return;
             }
             LOG.debug("token got:"+token);
-            mylog.location("token got:"+token);
             
             // 是否需要在订阅参数中加idType
             String idTypeString = "";
@@ -135,7 +130,6 @@ public class SubscriptionService extends HttpsService {
             // 获取订阅ID
             Map<String,String> subResult = this.httpsPost(url, content, charset,"POST", tokenResult.get("token"),svaSSLVersion);
             LOG.debug("subscribeSvaPhone result:" + subResult.get("result"));
-            mylog.location("subscribeSvaPhone result:" + subResult.get("result"));
             JSONObject jsonObj = JSONObject.fromObject(subResult.get("result"));
             //判断是否订阅成功,成功为0
             JSONObject svaResult =  jsonObj.getJSONObject("result");
@@ -145,11 +139,9 @@ public class SubscriptionService extends HttpsService {
             JSONObject obj = (JSONObject) list.get(0);
             String queueId = obj.getString("QUEUE_ID");
             LOG.debug("queueId:" + queueId);
-            mylog.location("queueId:" + queueId);
             }
             else{
                 LOG.debug("sva Subscription failed: "+jsonObj);
-                mylog.location("sva Subscription failed: "+jsonObj);
             }
             
         }
@@ -171,7 +163,6 @@ public class SubscriptionService extends HttpsService {
     public void unsubscribeSvaPhone(SvaModel sva, String phoneIp)
     {
         LOG.debug("unsubscribeSvaPhone started!");
-        mylog.location("unsubscribeSvaPhone started!");
         String url = "";
         String content = "";
 
@@ -189,11 +180,9 @@ public class SubscriptionService extends HttpsService {
             String token = tokenResult.get("token");            
             if(StringUtils.isEmpty(token)){
                 LOG.warn("[unsubscribeSvaPhone]token got failed:svaId:" + sva.getId());
-                mylog.location("[unsubscribeSvaPhone]token got failed:svaId:" + sva.getId());
                 return;
             }
             LOG.debug("[unsubscribeSvaPhone]token got:"+token);
-            mylog.location("[unsubscribeSvaPhone]token got:"+token);
 
             // 是否需要在订阅参数中加idType
             String idTypeString = "";
@@ -211,11 +200,9 @@ public class SubscriptionService extends HttpsService {
 //                content = "{\"APPID\":\"" + sva.getUsername()+ "\""+idTypeString+"}";
                 Map<String,String> subResult = this.httpsPost(url, content,charset, "DELETE", token, svaSSLVersion);
                 LOG.debug("[unsubscribeSvaPhone]result:" + subResult.get("result"));
-                mylog.location("[unsubscribeSvaPhone]result:" + subResult.get("result"));
             // 关闭amqp连接
             GlobalConf.removeAmqpThread(sva.getId());
             LOG.debug("[unsubscribeSvaPhone]connection closed!");
-            mylog.location("[unsubscribeSvaPhone]connection closed!");
 
         }
         catch (KeyManagementException e)
@@ -246,10 +233,6 @@ public class SubscriptionService extends HttpsService {
                 + "svaId:" + sva.getId() 
                 + ",ip:" + sva.getIp() 
                 + ",port:" + sva.getTokenPort());
-        mylog.location("subscripiton started:"
-                + "svaId:" + sva.getId() 
-                + ",ip:" + sva.getIp() 
-                + ",port:" + sva.getTokenPort());
         
         // 获取token地址
         String url = "https://" + sva.getIp() + ":"
@@ -269,11 +252,9 @@ public class SubscriptionService extends HttpsService {
             
             if(StringUtils.isEmpty(token)){
                 LOG.warn("token got failed:svaId:" + sva.getId());
-                mylog.location("token got failed:svaId:" + sva.getId());
                 return;
             }
             LOG.debug("token got:"+token);
-            mylog.location("token got:"+token);
             
             // 是否需要在订阅参数中加idType
             String idTypeString = "";
@@ -315,7 +296,6 @@ public class SubscriptionService extends HttpsService {
             // 获取订阅ID
             Map<String,String> subResult = this.httpsPost(url, content, charset,"POST", tokenResult.get("token"), svaSSLVersion);
             LOG.debug("subscription result:" + subResult.get("result"));
-            mylog.location("subscription result:" + subResult.get("result"));
             JSONObject jsonObj = JSONObject.fromObject(subResult.get("result")); 
             //判断是否订阅成功,成功为0
             JSONObject svaResult =  jsonObj.getJSONObject("result");
@@ -325,7 +305,6 @@ public class SubscriptionService extends HttpsService {
                 JSONObject obj = (JSONObject) list.get(0);
                 String queueId = obj.getString("QUEUE_ID");
                 LOG.debug("queueId:" + queueId);
-                mylog.location("queueId:" + queueId);
                 
                 // 如果获取queueId，则进入数据对接逻辑
                 if(StringUtils.isNotEmpty(queueId)){
@@ -334,12 +313,10 @@ public class SubscriptionService extends HttpsService {
                     at.start();
                 }else{
                     LOG.warn("queueId got failed:svaId:" + sva.getId());
-                    mylog.location("queueId got failed:svaId:" + sva.getId());
                 }
             }else
             {
                 LOG.debug("sva Subscription failed: "+jsonObj);
-                mylog.location("sva Subscription failed: "+jsonObj);
             }
         }
         catch (IOException e)
@@ -365,7 +342,6 @@ public class SubscriptionService extends HttpsService {
     public void unsubscribe(SvaModel sva)
     {
         LOG.debug("unsubcribe started!");
-        mylog.location("unsubcribe started!");
         if (StringUtils.isNotEmpty(sva.getToken()))
         {
             return;
@@ -387,11 +363,9 @@ public class SubscriptionService extends HttpsService {
             String token = tokenResult.get("token");            
             if(StringUtils.isEmpty(token)){
                 LOG.warn("[unsubscribe]token got failed:svaId:" + sva.getId());
-                mylog.location("[unsubscribe]token got failed:svaId:" + sva.getId());
                 return;
             }
             LOG.debug("[unsubscribe]token got:"+token);
-            mylog.location("[unsubscribe]token got:"+token);
 
             // 是否需要在订阅参数中加idType
             String idTypeString = "";
@@ -406,7 +380,6 @@ public class SubscriptionService extends HttpsService {
                 content = "{\"APPID\":\"" + sva.getUsername()+ "\""+idTypeString+"}";
                 Map<String,String> subResult = this.httpsPost(url, content,charset, "DELETE", token, svaSSLVersion);
                 LOG.debug("[unsubscribe]result:" + subResult.get("result"));
-                mylog.location("[unsubscribe]result:" + subResult.get("result"));
             }else if(sva.getType() == 1){
                 // 匿名化取消订阅
                 url = "https://" + sva.getIp() + ":" + sva.getTokenPort()
@@ -414,13 +387,11 @@ public class SubscriptionService extends HttpsService {
                 content = "{\"APPID\":\"" + sva.getUsername() + "\"}";
                 Map<String,String> subResultAnonymous = this.httpsPost(url, content,charset, "DELETE", token, svaSSLVersion);
                 LOG.debug("[unsubscribe]anonymous result:" + subResultAnonymous.get("result"));
-                mylog.location("[unsubscribe]anonymous result:" + subResultAnonymous.get("result"));
             }
             
             // 关闭amqp连接
             GlobalConf.removeAmqpThread(sva.getId());
             LOG.debug("[unsubscribe]connection closed!");
-            mylog.location("[unsubscribe]connection closed!");
 
         }
         catch (KeyManagementException e)
