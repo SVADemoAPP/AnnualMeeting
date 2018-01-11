@@ -24,7 +24,7 @@ public class HomeController
     @RequestMapping(value = "/showMain", method = {RequestMethod.GET})
     public String showSvaMng(Model model)
     {
-        return "account/main";
+        return "web/main";
     }
     
 
