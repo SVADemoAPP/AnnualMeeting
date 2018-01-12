@@ -30,14 +30,16 @@ import com.sva.web.models.UserModel;
  * @date 2018年1月11日 下午3:37:19 
  *  
  */
-@Service("accountService")
 public class AccountService implements UserDetailsService
 {
-    @Autowired
     private AccountDao daoAccount;
     
-    @Autowired
     private RoleDao daoRole;
+    
+    public AccountService(AccountDao daoAccount, RoleDao daoRole){
+        this.daoAccount = daoAccount;
+        this.daoRole = daoRole;
+    }
 
     /* (非 Javadoc) 
      * <p>Title: loadUserByUsername</p> 
