@@ -55,20 +55,6 @@
 							<li data-target="#myCarousel" data-slide-to="3"></li>
 						</ol>
 						<!-- Carousel items -->
-						<div class="carousel-inner">
-							<div class="active item">
-								<img src="<spring:message code="sva_login_1" />">
-							</div>
-							<div class="item">
-								<img src="<spring:message code="sva_login_2" />">
-							</div>
-							<div class="item">
-								<img src="<spring:message code="sva_login_3" />">
-							</div>
-							<div class="item">
-								<img src="<spring:message code="sva_login_4" />">
-							</div>
-						</div>
 					</div>
 	     		</div>
 	  		</div>
@@ -86,9 +72,9 @@
 							<table  class="table table-bordered"">
 								<thead>
 									<tr>
-										<th colspan="2"><spring:message code="port" /></th>
-										<th><spring:message code="url" /></th>
-										<th><spring:message code="version_no" /></th>
+										<th colspan="2">port</th>
+										<th>url</th>
+										<th>version no</th>
 									</tr>
 								</thead>
 								<tbody class="tdtextcenter">
@@ -152,10 +138,10 @@
 							<table  class="table table-bordered"">
 								<thead>
 									<tr>
-										<th><spring:message code="version_name" /></th>
-										<th><spring:message code="test_report" /></th>
-										<th><spring:message code="explain_for_use" /></th>
-										<th><spring:message code="download" /></th>
+										<th>version name</th>
+										<th>test report</th>
+										<th>doc</th>
+										<th>download</th>
 									</tr>
 								</thead>
 								<tbody class="tdtextcenter">
@@ -169,7 +155,7 @@
                                         <a href="../readme/readme_1.2T.txt">readme_1.2T.txt
                                         </a></td>
                                         <td><a href="../version/WAR/SVADemoV1.2T.zip">
-                                        <spring:message code="download" /></a></td>
+                                        download</a></td>
                                     </tr>
 									<tr>
                                         <td>SVADemo V1.3T</td>
@@ -181,7 +167,7 @@
                                         <a href="../readme/readme_1.3T.txt">readme_1.3T.txt
                                         </a></td>
                                         <td><a href="../version/WAR/SVADemoV1.3T.zip">
-                                        <spring:message code="download" /></a></td>
+                                        download</a></td>
                                     </tr>									
 								</tbody>
 							</table>
@@ -190,10 +176,10 @@
 							<table  class="table table-bordered"">
 								<thead>
 									<tr>
-										<th><spring:message code="version_name" /></th>
-										<th><spring:message code="test_report" /></th>
-										<th><spring:message code="explain_for_use" /></th>
-										<th><spring:message code="two_dimension_code" /></th>
+										<th>version</th>
+										<th>test report</th>
+										<th>doc</th>
+										<th>code</th>
 									</tr>
 								</thead>
 								<tbody class="tdtextcenter">
@@ -207,7 +193,7 @@
                                         <a href="../readme/readme_1.2T.txt">readme_1.2T.txt
                                         </a></td>
                                         <td >
-                                        <a id = "xiazai1"><spring:message code="download" /></a></td>
+                                        <a id = "xiazai1">download</a></td>
                                     </tr>									
                                      <tr>
                                         <td>SVADemo V1.3T</td>
@@ -219,7 +205,7 @@
                                         <a href="../readme/readme_1.3T.txt">readme_1.3T.txt
                                         </a></td>
                                         <td >
-                                        <a id = "xiazai2"><spring:message code="download" /></a></td>
+                                        <a id = "xiazai2">download</a></td>
                                     </tr>									
                                    <!--  <tr>
                                         <td>SVADemo V1.4T</td>
@@ -231,7 +217,7 @@
                                         <a href="../readme/readme_1.4T.txt">readme_1.4T.txt
                                         </a></td>
                                         <td >
-                                        <a id = "xiazai3"><spring:message code="download" /></a></td>
+                                        <a id = "xiazai3">download</a></td>
                                     </tr>		-->							
 								</tbody>
 							</table>
@@ -240,10 +226,10 @@
 							<table  class="table table-bordered"">
 								<thead>
 									<tr>
-										<th><spring:message code="version_name" /></th>
-										<th><spring:message code="test_report" /></th>
-										<th><spring:message code="explain_for_use" /></th>
-										<th><spring:message code="two_dimension_code" /></th>
+										<th>version</th>
+                                        <th>test report</th>
+                                        <th>doc</th>
+                                        <th>code</th>
 									</tr>
 								</thead>
 								<tbody class="tdtextcenter">
@@ -257,7 +243,7 @@
                                         <a href="../readme/readme_1.2T.txt">readme_1.2T.txt
                                         </a></td>
                                         <td >
-                                        <a id = "IOSxiazai1"><spring:message code="download" /></a></td>
+                                        <a id = "IOSxiazai1">download</a></td>
                                     </tr>                                   
                                      <tr>
                                         <td>SVADemo V1.3T</td>
@@ -269,7 +255,7 @@
                                         <a href="../readme/readme_1.3T.txt">readme_1.3T.txt
                                         </a></td>
                                         <td >
-                                        <a id = "IOSxiazai2"><spring:message code="download" /></a></td>
+                                        <a id = "IOSxiazai2">download</a></td>
                                     </tr> -->                                 
                                      <tr>
                                         <td>SVADemo V1.3T</td>
@@ -281,7 +267,7 @@
                                         <a href="../readme/readme_1.3T.txt">readme_1.3T.txt
                                         </a></td>
                                         <td >
-                                        <a id = "IOSxiazai3"><spring:message code="download" /></a></td>
+                                        <a id = "IOSxiazai3">Download</a></td>
                                     </tr>									
 								</tbody>
 							</table>
@@ -290,22 +276,22 @@
 							<table  class="table table-bordered"" style="border-top:1px solid #FFFFFF ">
 								<thead class="shiyong">
 									<tr>
-										<th style="border-left: 1px solid #FFFFFF;border-bottom: 1px solid #FFFFFF"><spring:message code="version_name" /></th>
-										<th><spring:message code="download" /></th>
+										<th style="border-left: 1px solid #FFFFFF;border-bottom: 1px solid #FFFFFF">version</th>
+										<th>download</th>
 									</tr>
 								</thead>
 								<tbody class="tdtextcenter">                             
                                      <tr class = "tdtextcenter1">
                                         <td>SVADemo V1.2T</td>
                                         <td>
-                                        <a href="../user/SVADemoV1.2T.doc"><spring:message code="download" />
+                                        <a href="../user/SVADemoV1.2T.doc">download
                                         </a>
                                         </td>
                                     </tr>
                                      <tr class = "tdtextcenter1">
                                         <td>SVADemo V1.3T</td>
                                         <td>
-                                        <a href="../user/SVADemoV1.3T.doc"><spring:message code="download" />
+                                        <a href="../user/SVADemoV1.3T.doc">download
                                         </a>
                                         </td>
                                     </tr>                                    									
@@ -323,14 +309,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="button" id= "closeId" onclick="closeModel()" value=" <spring:message code="common_close" />">
+                <input type="button" id= "closeId" onclick="closeModel()" value=" close">
             </div>
 
         </div>	  		
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="bottom">
-						<%@ include file="../shared/loginFooter.jsp"%>
 					</div>
 				</div>
 			</div>

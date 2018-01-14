@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import com.sva.dao.AccountDao;
@@ -61,13 +62,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
             .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/login").permitAll()
+                .antMatchers("/home/**").hasRole("ADMIN")
+                .antMatchers("/app/**").hasRole("CUSTOMER")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login/do")
+                //.successHandler(successHandler)设置登录成功后的处理动作即跳转
+                .permitAll()
                 .and()
             .csrf().disable();
+    }
+    
+    /**   
+     * <p>Title: configure</p>   
+     * <p>Description: 忽略静态文件</p>   
+     * @param web
+     * @throws Exception   
+     * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.WebSecurity)   
+     */  
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/js/**", "/css/**", "/fonts/**", "/plugins/**", "/images/**", "/upload/**");
     }
 }

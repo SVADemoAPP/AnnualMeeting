@@ -25,9 +25,4 @@ public class LoginController
     public String login(){
         return "account/login";
     }
-    
-    @RequestMapping(value = "/login/do")
-    public String loginProcess(){
-        return "account/main";
-    }
 }

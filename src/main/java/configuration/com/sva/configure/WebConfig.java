@@ -157,8 +157,6 @@ public class WebConfig extends WebMvcConfigurerAdapter
         registry.addResourceHandler("/plugins/**").addResourceLocations("/WEB-INF/plugins/");
         registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/");
         registry.addResourceHandler("/upload/**").addResourceLocations("/WEB-INF/upload/");
-        registry.addResourceHandler("/readme/**").addResourceLocations("/WEB-INF/readme/");
-        registry.addResourceHandler("/version/**").addResourceLocations("/WEB-INF/version/");
     }
     /* (非 Javadoc) 
      * <p>Title: addInterceptors</p> 
