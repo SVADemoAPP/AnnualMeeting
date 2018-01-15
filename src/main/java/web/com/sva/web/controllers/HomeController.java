@@ -21,10 +21,26 @@ public class HomeController
 
     private static final Logger LOG = Logger.getLogger(HomeController.class);
 
+    /** 
+     * @Title: showSvaMng 
+     * @Description: 抽奖起始页
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/showMain", method = {RequestMethod.GET})
-    public String showSvaMng(Model model)
+    public String showMain()
     {
         return "web/main";
+    }
+    
+    /** 
+     * @Title: showLottery 
+     * @Description: 抽奖页面
+     * @return 
+     */
+    @RequestMapping(value = "/showLottery", method = {RequestMethod.GET})
+    public String showLottery(){
+        return "web/lottery";
     }
     
 
