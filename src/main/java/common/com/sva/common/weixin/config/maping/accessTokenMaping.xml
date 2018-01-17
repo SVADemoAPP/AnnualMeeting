@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 
+	例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀) -->
+
+<!-- 只维护唯一一个access_token,且id固定为1 -->
+<mapper namespace="weixinInfo">
+	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
+		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
+	<!-- 根据id查询得到一个user对象 -->
+	<select id="getAccessToken" parameterType="int"
+		resultType="com.hangao.bean.AccessToken">
+		select * from wx_access where id =1
+	</select>
+
+	<!--执行增加操作的SQL语句。id和parameterType分别与IUserOperation接口中的addUser方法的名字和参数类型一致。 
+		useGeneratedKeys设置为"true"表明要MyBatis获取由数据库自动生成的主键；keyProperty="id"指定把获取到的主键值注入到User的id属性 -->
+	<insert id="initAccessToken" parameterType="com.hangao.bean.AccessToken"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		wx_access(access_token,expires_in,put_time)
+		values(#{access_token},#{expires_in},#{put_time})
+	</insert>
+
+	<delete id="deleteAccessToken" parameterType="int">
+		delete from wx_access where id=1
+	</delete>
+
+	<update id="updateAccessToken" parameterType="com.hangao.bean.AccessToken">
+		update wx_access set
+		access_token=#{access_token},expires_in=#{expires_in},put_time=#{put_time}
+		where id =1
+	</update>
+
+</mapper>

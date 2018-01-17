@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `sys_account` (
   `lastHeartbeat` datetime DEFAULT NULL COMMENT '最后一次心跳时间',
   `onLineTime` int(10) unsigned NOT NULL COMMENT '累计在线时长',
   `loginState` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否登录(0:未登录;1:登录)',
+  `openid` VARCHAR(50) NOT NULL COMMENT '微信用户唯一标识' COLLATE 'utf8_bin',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='账户信息表';
 
