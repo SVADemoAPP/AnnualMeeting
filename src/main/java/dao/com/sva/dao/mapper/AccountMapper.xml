@@ -24,7 +24,7 @@
             and s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record w 
-                WHERE w.prizeCode = #{prizeLevel}
+                WHERE w.prizeCode = #{prizeCode}
             )
     </select>
     

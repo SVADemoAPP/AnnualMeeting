@@ -41,8 +41,8 @@ public interface AccountDao
      * @Title: getCandidate 
      * @Description: 查找符合抽奖条件的候选人
      * @param dept
-     * @param prizeLevel
+     * @param prizeCode
      * @return 
      */
-    public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeLevel")String prizeLevel);
+    public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
 }

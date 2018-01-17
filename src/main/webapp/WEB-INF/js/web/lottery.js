@@ -101,6 +101,17 @@
         		}
 			});
 		});
+		
+		$(".arrow").on("click",function(e){
+			// 图标方向改变
+			var angle = parseInt($(".arrow").attr("data-angle"));
+			var newAng = (angle+180)%360;
+			$(".arrow").css({transform:"rotate("+newAng+"deg)"});
+			$(".arrow").attr("data-angle",newAng);
+			// 隐藏菜单toggle
+			var newAng = (angle+180)%360;
+			$(".quitBox").css({transform:"rotate("+newAng+"deg)"});
+		});
 	}
 	
 	var IndoorMap = {

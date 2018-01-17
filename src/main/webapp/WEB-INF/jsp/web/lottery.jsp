@@ -10,7 +10,7 @@
     html,body{
         margin:0;
         padding:0;
-        overflow:hidden;
+        /* overflow:hidden; */
     }
     
     #back{
@@ -99,6 +99,9 @@
     }
     
     .popup{
+        position:absolute;
+        top:0;
+        z-index:10;
         width:1920px;
         height:1080px;
         background-color:rgba(0,0,0,0.5);
@@ -107,9 +110,39 @@
     .notice{
         width: 858px;
         height: 892px;
-        background:url(<c:url value='/images/winner.png'/>) bottom no-repeat;
-        margin:auto auto;
+        margin:50px auto;
+        z-index:9;
     }
+    
+    .noticeBox{
+        position:absolute;
+        width: 858px;
+        height: 892px;
+        background:url(<c:url value='/images/winner.png'/>) bottom no-repeat;
+        z-index:12;
+    }
+    
+    .arrow{
+        background:url(<c:url value='/images/arrow.png'/>) bottom no-repeat;
+        float:right;
+        width: 85px;
+        height: 50px;
+        margin: 100px 70px;
+        cursor: pointer;
+        transition: All 0.4s ease-in-out;
+    }
+    
+    .quitBox{
+        transform-origin: left bottom;
+        transition: All 0.4s ease-in-out;
+        background:url(<c:url value='/images/quitBox.png'/>) bottom no-repeat;
+        width:230px;
+        height:130px;
+        float:right;
+        margin: -45px -385px 0 0;
+        z-index:11;
+    }
+    
 </style>
 </head>
 <body>
@@ -132,8 +165,15 @@
             <div class="prizeCount"></div>
         </div>
     </div>
-    <div class="popup hide">
-        <div class="notice"></div>
+    <div class="popup" style="display:none;">
+        <div class="notice">
+            <div class="noticeBox">
+                <div class="arrow" data-angle="0"></div>
+            </div>
+            <div class="quitBox">
+            abc
+            </div>
+        </div>
     </div>
     <input id="typeHidden" type="hidden" value="${prizeCode}"/>
     <script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
