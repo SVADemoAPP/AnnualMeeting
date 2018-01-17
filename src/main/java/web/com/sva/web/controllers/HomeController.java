@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,8 +39,9 @@ public class HomeController
      * @Description: 抽奖页面
      * @return 
      */
-    @RequestMapping(value = "/showLottery", method = {RequestMethod.GET})
-    public String showLottery(){
+    @RequestMapping(value = "/showLottery/{prizeCode}", method = {RequestMethod.GET})
+    public String showLottery(@PathVariable("prizeCode")String prizeCode, Model model){
+        model.addAttribute("prizeCode", prizeCode);
         return "web/lottery";
     }
     

@@ -8,6 +8,8 @@
  */
 package com.sva.model;
 
+import java.util.Date;
+
 /** 
  * @ClassName: AccountModel 
  * @Description: 账户信息model
@@ -46,6 +48,26 @@ public class AccountModel
      * @Fields id : 数据库id
      */ 
     private String id;
+    
+    /** 
+     * @Fields phoneNo : 电话号码 
+     */ 
+    private String phoneNo;
+    
+    /** 
+     * @Fields dept : 所属部门 
+     */ 
+    private String dept;
+    
+    /** 
+     * @Fields lastHeartbeat : 最后一次心跳时间 
+     */ 
+    private Date lastHeartbeat;
+    
+    /** 
+     * @Fields onLineTime : 累计在线时长 
+     */ 
+    private int onLineTime;
     
     /**
      * @return the username
@@ -130,6 +152,62 @@ public class AccountModel
     public void setId(String id)
     {
         this.id = id;
+    }
+    /**
+     * @return the phoneNo
+     */
+    public String getPhoneNo()
+    {
+        return phoneNo;
+    }
+    /**
+     * @param phoneNo the phoneNo to set
+     */
+    public void setPhoneNo(String phoneNo)
+    {
+        this.phoneNo = phoneNo;
+    }
+    /**
+     * @return the dept
+     */
+    public String getDept()
+    {
+        return dept;
+    }
+    /**
+     * @param dept the dept to set
+     */
+    public void setDept(String dept)
+    {
+        this.dept = dept;
+    }
+    /**
+     * @return the lastHeartbeat
+     */
+    public Date getLastHeartbeat()
+    {
+        return lastHeartbeat;
+    }
+    /**
+     * @param lastHeartbeat the lastHeartbeat to set
+     */
+    public void setLastHeartbeat(Date lastHeartbeat)
+    {
+        this.lastHeartbeat = lastHeartbeat;
+    }
+    /**
+     * @return the onLineTime
+     */
+    public int getOnLineTime()
+    {
+        return onLineTime;
+    }
+    /**
+     * @param onLineTime the onLineTime to set
+     */
+    public void setOnLineTime(int onLineTime)
+    {
+        this.onLineTime = onLineTime;
     }
     
 }

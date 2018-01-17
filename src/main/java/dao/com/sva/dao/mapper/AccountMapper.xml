@@ -10,4 +10,22 @@
         WHERE username = #{value}
     </select>
     
+    <select id="getPersionById" resultType="AccountModel">
+        SELECT * 
+        FROM sys_account 
+        WHERE id = #{value}
+    </select>
+    
+    <select id="getCandidate" resultType="Integer">
+        SELECT id
+        FROM sys_account s 
+        WHERE s.dept = #{dept} 
+            and s.dept != ""
+            and s.id not in (
+                SELECT distinct(accountId) 
+                FROM winning_record w 
+                WHERE w.prizeCode = #{prizeLevel}
+            )
+    </select>
+    
 </mapper>

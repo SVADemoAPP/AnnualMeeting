@@ -8,6 +8,8 @@
  */
 package com.sva.dao;
 
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import com.sva.model.AccountModel;
 
 /** 
@@ -26,4 +28,21 @@ public interface AccountDao
      * @return 
      */
     public AccountModel getAccountByName(String username);
+    
+    /** 
+     * @Title: getPersionById 
+     * @Description: 根据id查找对应的账户信息
+     * @param id
+     * @return 
+     */
+    public AccountModel getPersionById(int id);
+    
+    /** 
+     * @Title: getCandidate 
+     * @Description: 查找符合抽奖条件的候选人
+     * @param dept
+     * @param prizeLevel
+     * @return 
+     */
+    public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeLevel")String prizeLevel);
 }

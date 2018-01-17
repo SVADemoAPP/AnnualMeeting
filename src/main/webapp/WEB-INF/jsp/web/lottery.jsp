@@ -14,11 +14,20 @@
     }
     
     #back{
-        background:url(../images/back.png) no-repeat;
+        background:url(<c:url value='/images/back.png'/>) no-repeat;
+        width: 150px;
+        height: 70px;
+        position:absolute;
+        top: 50px;
+        left: 30px;
+        cursor:pointer;
+    }
+    #back:active{
+        background:url(<c:url value='/images/backActive.png'/>) no-repeat;
     }
     
     .main_bg{
-        background:url(../images/mainBg.png) top center no-repeat;
+        background:url(<c:url value='/images/mainBg.png'/>) top center no-repeat;
         height:1080px;
     }
     
@@ -30,7 +39,7 @@
     }
     
     .mask{
-        background:url(../images/blinkLeft.png) no-repeat;
+        background:url(<c:url value='/images/blinkLeft.png'/>) no-repeat;
         width:1048px;
         height:364px;
         position:absolute;
@@ -42,7 +51,7 @@
     }
     
     .num_box{
-        background:url(../images/numBox.png) no-repeat;
+        background:url(<c:url value='/images/numBox.png'/>) no-repeat;
         width:1119px;
         height:435px;
         position:absolute;
@@ -53,14 +62,14 @@
     }
     
     .num{
-        background:url(../images/num.png) top center repeat-y;
+        background:url(<c:url value='/images/num.png'/>) top center repeat-y;
         width:160px;
         height:230px;
         float:left;
     }
     
     .handle{
-        background:url(../images/handleOff.png) 0px 0px no-repeat;
+        background:url(<c:url value='/images/handleOff.png'/>) bottom no-repeat;
         width:110px;
         height:296px;
         position:absolute;
@@ -68,6 +77,38 @@
         bottom:200px;
         cursor:pointer;
         clear:both;
+    }
+    
+    .prizeCountBox{
+        width: 200px;
+        height: 50px;
+        position:absolute;
+        right: 80px;
+        top:666px;
+        color:rgb(251,245,19);
+        text-align:center;
+    }
+    
+    .prizeCount{
+        width: 200px;
+        margin-top: -40px;
+        font-family: "Arial";
+        font-weight: bold;
+        font-size:200px;
+        text-shadow: 5px 5px 10px #1b1b19;
+    }
+    
+    .popup{
+        width:1920px;
+        height:1080px;
+        background-color:rgba(0,0,0,0.5);
+    }
+    
+    .notice{
+        width: 858px;
+        height: 892px;
+        background:url(<c:url value='/images/winner.png'/>) bottom no-repeat;
+        margin:auto auto;
     }
 </style>
 </head>
@@ -86,7 +127,15 @@
             </div>
             <div class="handle"></div>
         </div>
+        <div class="prizeCountBox">
+            <h1 style="font-size:2.7em;">剩余名额</h1>
+            <div class="prizeCount"></div>
+        </div>
     </div>
+    <div class="popup hide">
+        <div class="notice"></div>
+    </div>
+    <input id="typeHidden" type="hidden" value="${prizeCode}"/>
     <script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/plugins/easing.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/js/web/lottery.js'/>" type="text/javascript"></script>

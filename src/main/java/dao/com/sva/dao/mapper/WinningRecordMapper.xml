@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sva.dao.WinningRecordDao">
+
+    <select id="getDeptRate" resultType="DeptRateModel">
+        SELECT * 
+        FROM dept_winning_rate 
+        WHERE prizeCode = #{value}
+    </select>
+    
+    <update id="updateDeptRate">
+        UPDATE dept_winning_rate 
+        SET rate = #{deptRate.rate}
+        WHERE id = #{deptRate.id}
+    </update>
+    
+    <select id="getPrizeCountByCode" resultType="Integer">
+        SELECT count 
+        FROM prize
+        WHERE code = #{value}
+    </select>
+    
+    <select id="getReceivedPrizeCountByCode" resultType="Integer">
+        SELECT count(accountId)
+        FROM winning_record
+        WHERE prizeCode = #{value} and received = 1
+    </select>
+    
+</mapper>
