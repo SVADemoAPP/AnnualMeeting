@@ -25,8 +25,9 @@ public class WeixinUtil {
     // private final static String appid = "wxbab55d45abfbb9bc";
     // private final static String secret = "246883272034517bdfbef75a74a991f5";
     // test
-    private final static String APPID = "wxf6e7f9bedaa4abf3";
-    private final static String APPSECRET = "be2bae4a73c33d97b6b08fd8a49da6c4";
+    public final static String SERVER_URL = "4nnnsp.natappfree.cc";
+    public final static String APPID = "wxf6e7f9bedaa4abf3";
+    public final static String APPSECRET = "be2bae4a73c33d97b6b08fd8a49da6c4";
 
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
@@ -45,15 +46,19 @@ public class WeixinUtil {
      * @throws ParseException
      * @throws IOException
      */
-    public static JSONObject doGetStr(String url) throws ParseException, IOException {
+    public static JSONObject doGetStr(String url)  {
         DefaultHttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
         JSONObject jsonObject = null;
-        HttpResponse httpResponse = client.execute(httpGet);
-        HttpEntity entity = httpResponse.getEntity();
-        if (entity != null) {
-            String result = EntityUtils.toString(entity, "UTF-8");
-            jsonObject = JSONObject.fromObject(result);
+        try {
+            HttpResponse httpResponse = client.execute(httpGet);
+            HttpEntity entity = httpResponse.getEntity();
+            if (entity != null) {
+                String result = EntityUtils.toString(entity, "UTF-8");
+                jsonObject = JSONObject.fromObject(result);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
         }
         return jsonObject;
     }
@@ -67,14 +72,18 @@ public class WeixinUtil {
      * @throws ParseException
      * @throws IOException
      */
-    public static JSONObject doPostStr(String url, String outStr) throws ParseException, IOException {
+    public static JSONObject doPostStr(String url, String outStr) {
         DefaultHttpClient client = new DefaultHttpClient();
         HttpPost httpost = new HttpPost(url);
         JSONObject jsonObject = null;
-        httpost.setEntity(new StringEntity(outStr, "UTF-8"));
-        HttpResponse response = client.execute(httpost);
-        String result = EntityUtils.toString(response.getEntity(), "UTF-8");
-        jsonObject = JSONObject.fromObject(result);
+        try {
+            httpost.setEntity(new StringEntity(outStr, "UTF-8"));
+            HttpResponse response = client.execute(httpost);
+            String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+            jsonObject = JSONObject.fromObject(result);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         return jsonObject;
     }
 
