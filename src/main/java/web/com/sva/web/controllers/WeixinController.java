@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sva.common.weixin.utils.CheckUtil;
 import com.sva.common.weixin.utils.MessageUtil;
 import com.sva.common.weixin.utils.WeixinUtil;
+import com.sva.model.AccountModel;
+import com.sva.service.WeixinService;
 
 import net.sf.json.JSONObject;
 
@@ -33,6 +36,9 @@ import net.sf.json.JSONObject;
 public class WeixinController {
 
     private static final Logger LOG = Logger.getLogger(WeixinController.class);
+
+    @Autowired
+    private WeixinService weixinService;
 
     @RequestMapping(value = "", method = { RequestMethod.GET })
     @ResponseBody
@@ -94,22 +100,49 @@ public class WeixinController {
         return msg;
     }
 
-    @RequestMapping(value = "/fuka", method = { RequestMethod.GET })
+    @RequestMapping(value = "/introRedirect", method = RequestMethod.GET)
+    public String introRedirect(HttpServletRequest req, HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
+                + "&redirect_uri="
+                + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/switchPage", "utf-8")
+                + "?response_type=code&scope=snsapi_userinfo&state=intro#wechat_redirect";
+    }
+
+    @RequestMapping(value = "/fukaRedirect", method = RequestMethod.GET)
+    public String fukaRedirect(HttpServletRequest req, HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
+                + "&redirect_uri="
+                + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/switchPage", "utf-8")
+                + "?response_type=code&scope=snsapi_userinfo&state=fuka#wechat_redirect";
+    }
+
+    @RequestMapping(value = "/mineRedirect", method = RequestMethod.GET)
+    public String mineRedirect(HttpServletRequest req, HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
+                + "&redirect_uri="
+                + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/switchPage", "utf-8")
+                + "?response_type=code&scope=snsapi_userinfo&state=mine#wechat_redirect";
+    }
+
+    @RequestMapping(value = "/switchPage", method = { RequestMethod.GET })
     public String fuka(HttpServletRequest req) {
         String CODE = req.getParameter("code");
+        String STATE = req.getParameter("state");
         String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code"
                 .replace("APPID", WeixinUtil.APPID).replace("SECRET", WeixinUtil.APPSECRET).replace("CODE", CODE);
         JSONObject jsonObj = WeixinUtil.doGetStr(URL);
         String openid = jsonObj.get("openid").toString();
-        req.getSession().setAttribute("openid", openid);
-        return "weixin/fuka";
+        AccountModel accountModel=weixinService.getAccountIdByOpenid(openid);
+        if (accountModel == null) {
+            req.getSession().setAttribute("openid", openid);
+            return "weixin/login";
+        } else {
+            req.getSession().setAttribute("accountModel", accountModel);
+            return "weixin/" + STATE;
+        }
     }
 
-    @RequestMapping(value = "/redirect", method = RequestMethod.GET)
-    public String weixinRedirect(HttpServletRequest req, HttpServletResponse response)
-            throws UnsupportedEncodingException {
-        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
-                + "&redirect_uri=" + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/fuka", "utf-8")
-                + "?response_type=code&scope=snsapi_userinfo&state=gyr#wechat_redirect";
-    }
 }

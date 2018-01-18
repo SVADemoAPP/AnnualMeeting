@@ -8,6 +8,6 @@ AccountModel accountModel=(AccountModel)request.getSession().getAttribute("accou
 <html>
 <head></head>
 <body>
-福卡      ${accountModel.openid}      ${accountModel.id}
+我的      ${accountModel.openid}      ${accountModel.id}
 </body>
 </html>
