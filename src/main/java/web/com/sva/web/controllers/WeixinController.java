@@ -135,14 +135,15 @@ public class WeixinController {
                 .replace("APPID", WeixinUtil.APPID).replace("SECRET", WeixinUtil.APPSECRET).replace("CODE", CODE);
         JSONObject jsonObj = WeixinUtil.doGetStr(URL);
         String openid = jsonObj.get("openid").toString();
-        AccountModel accountModel=weixinService.getAccountIdByOpenid(openid);
-        if (accountModel == null) {
-            req.getSession().setAttribute("openid", openid);
-            return "weixin/login";
-        } else {
-            req.getSession().setAttribute("accountModel", accountModel);
-            return "weixin/" + STATE;
-        }
+        AccountModel accountModel = weixinService.getAccountIdByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        return "weixin/" + STATE;
+    }
+
+    @RequestMapping(value = "/intro", method = { RequestMethod.GET })
+    public String login(HttpServletRequest req) {
+        return "weixin/intro";
     }
 
 }
