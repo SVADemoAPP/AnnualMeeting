@@ -11,6 +11,8 @@ package com.sva.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import com.sva.model.DeptRateModel;
+import com.sva.model.PrizeModel;
+import com.sva.model.WinningRecordModel;
 
 /** 
  * @ClassName: WinningRecordDao 
@@ -52,4 +54,19 @@ public interface WinningRecordDao
      * @return 
      */
     public Integer getReceivedPrizeCountByCode(String prizeCode);
+    
+    /** 
+     * @Title: getPrizeDetail 
+     * @Description: 获取指定等级的奖品详情 
+     * @param prizeCode
+     * @return 
+     */
+    public PrizeModel getPrizeDetail(String prizeCode);
+    
+    /** 
+     * @Title: saveWinningRecord 
+     * @Description: 将中奖信息记录到数据库 
+     * @param model 
+     */
+    public void saveWinningRecord(WinningRecordModel model);
 }

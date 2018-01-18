@@ -1,12 +1,15 @@
 package com.sva.web.controllers;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.sva.model.PrizeModel;
+import com.sva.service.LotteryService;
 
 /**
  * <p>Title:HomeController</p>
@@ -19,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/home")
 public class HomeController
 {
-
+    @Autowired
+    private LotteryService lottery;
+    
     private static final Logger LOG = Logger.getLogger(HomeController.class);
 
     /** 
@@ -41,7 +46,9 @@ public class HomeController
      */
     @RequestMapping(value = "/showLottery/{prizeCode}", method = {RequestMethod.GET})
     public String showLottery(@PathVariable("prizeCode")String prizeCode, Model model){
+        PrizeModel p = lottery.getPrizeDetail(prizeCode);
         model.addAttribute("prizeCode", prizeCode);
+        model.addAttribute("prize", p.getDesc());
         return "web/lottery";
     }
     

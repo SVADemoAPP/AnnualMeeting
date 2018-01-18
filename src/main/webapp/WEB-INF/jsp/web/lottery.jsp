@@ -10,7 +10,7 @@
     html,body{
         margin:0;
         padding:0;
-        /* overflow:hidden; */
+        overflow:hidden;
     }
     
     #back{
@@ -48,6 +48,7 @@
         overflow:hidden;
         text-align:center;
         z-index:8;
+        overflow:hidden;
     }
     
     .num_box{
@@ -135,12 +136,77 @@
     .quitBox{
         transform-origin: left bottom;
         transition: All 0.4s ease-in-out;
+        transform:rotate(180deg);
         background:url(<c:url value='/images/quitBox.png'/>) bottom no-repeat;
         width:230px;
         height:130px;
         float:right;
-        margin: -45px -385px 0 0;
+        margin: -45px -165px 0 0;
         z-index:11;
+        color:#ef2c13;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    .quitFont{
+        cursor: pointer;
+        width: 100px;
+        margin: 30px auto;
+    }
+    
+    .countNo{
+        float: right;
+        width: 150px;
+        height: 200px;
+        margin-top: 247px;
+        font-size: 150px;
+        color: #fc335a;
+        font-weight: bold;
+        text-align: center
+    }
+    
+    .countNo-1{
+        margin-right:6px;
+    }
+    
+    .countNo-2{
+        margin-right:80px;
+    }
+    
+    .prizeType{
+        text-align:center;
+        font-size: 60px;
+        font-weight: bold;
+        text-shadow: 0px 5px 5px #ff0000;
+        color: #fbe27c;
+        margin-top: 470px;
+    }
+    
+    .detail{
+        text-align: center;
+        font-size: 48px;
+        color: #fff;
+    }
+    
+    .detail-1:before{
+        content:"中奖人：";
+    }
+    
+    .detail-2:before{
+        content:"电话：";
+    }
+    
+    .confirm{
+        width:332px;
+        height:160px;
+        margin: 0 0 0 240px;
+        cursor: pointer;
+        background:url(<c:url value='/images/confirmPrize.png'/>) bottom no-repeat;
+    }
+    
+    .confirm:active{
+        background:url(<c:url value='/images/confirmPrizeOn.png'/>) bottom no-repeat;
     }
     
 </style>
@@ -169,9 +235,15 @@
         <div class="notice">
             <div class="noticeBox">
                 <div class="arrow" data-angle="0"></div>
+                <div class="countNo countNo-1">0</div>
+                <div class="countNo countNo-2">6</div>
+                <div class="prizeType" id="prize">${prize}</div>
+                <div class="detail detail-1" id="people"></div>
+                <div class="detail detail-2" id="phone"></div>
+                <div class="confirm"></div>
             </div>
             <div class="quitBox">
-            abc
+            <div class="quitFont">放弃</div>
             </div>
         </div>
     </div>

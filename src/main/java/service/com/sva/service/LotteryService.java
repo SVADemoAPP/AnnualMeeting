@@ -18,6 +18,8 @@ import com.sva.dao.AccountDao;
 import com.sva.dao.WinningRecordDao;
 import com.sva.model.AccountModel;
 import com.sva.model.DeptRateModel;
+import com.sva.model.PrizeModel;
+import com.sva.model.WinningRecordModel;
 
 /** 
  * @ClassName: LotteryService 
@@ -79,6 +81,25 @@ public class LotteryService
         int received = daoWinning.getReceivedPrizeCountByCode(prizeLevel);
         // 返回剩余奖品数
         return all - received;
+    }
+    
+    /** 
+     * @Title: getPrizeDetail 
+     * @Description: 获取奖品详情 
+     * @param prizeCode
+     * @return 
+     */
+    public PrizeModel getPrizeDetail(String prizeCode){
+        return daoWinning.getPrizeDetail(prizeCode);
+    }
+    
+    /** 
+     * @Title: saveWinningRecord 
+     * @Description: 记录中奖信息 
+     * @param model 
+     */
+    public void saveWinningRecord(WinningRecordModel model){
+        daoWinning.saveWinningRecord(model);
     }
     
     /** 

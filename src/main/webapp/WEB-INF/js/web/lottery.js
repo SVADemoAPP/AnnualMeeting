@@ -4,7 +4,9 @@
 ;(function($,win){
 	var timerBlink;
 	var timerCountdown;
+	var timerCount;
 	var isBegin;
+	var accountInfo;
 	
 	function startBlink(){
 		timerBlink = setInterval(function(){
@@ -46,6 +48,9 @@
 	
 	function waitForNotice(detail){
 		$(".popup").show();
+		$("#people").html(detail.realname+" "+detail.username);
+		$("#phone").html(detail.phoneNo);
+		startCount();
 	}
 	
 	function startShowResult(detail){
@@ -76,6 +81,57 @@
 		});
 	}
 	
+	function startCount(){
+		var all = 59;
+		timerCount = setInterval(function(){
+			var intStr = ""+all;
+			if(all < 10) intStr = "0"+intStr;
+			console.log(intStr);
+			var num_arr = intStr.split('');
+			$(".countNo").each(function(index){
+				$(this).html(num_arr[1-index]);
+			});
+			all--;
+			if(all<0){
+				refresh();
+				clearInterval(timerCount);
+				var prizeCode = $("#typeHidden").val();
+				recordWinner(prizeCode, 0);
+			}
+		}, 1000);
+	}
+	
+	function refresh(){
+		$(".popup").hide();
+		startBlink();
+		$(".num").css('backgroundPositionY',0);
+		$(".arrow").css({transform:"rotate(0deg)"});
+		$(".quitBox").css({transform:"rotate(180deg)"});
+		$(".countNo-1").html("0");
+		$(".countNo-2").html("6");
+		clearInterval(timerCount);
+		showPrizeCount();
+	}
+	
+	function recordWinner(prizeCode, isReceived, callback){
+		var param = {prizeCode: prizeCode, accountId:accountInfo.id, received:isReceived};
+		$.ajax({
+			url:"/sva/lottery/saveWinningRecord",
+    		type:"post",
+    		data:JSON.stringify(param),
+    		contentType:'application/json',
+    		dataType:"json",
+    		success:function(data){
+    			if(data.returnCode != 1){
+    				alert(data.error);
+        		}
+    			if(callback){
+    				callback();
+    			}
+    		}
+		});
+	}
+	
 	function bindEvent(){
 		$(".handle").on("mousedown",function(e){
 			$(".handle").css({background:"url(/sva/images/handleOn.png) bottom no-repeat"});
@@ -97,6 +153,7 @@
         		success:function(data){
         			if(data.returnCode == 1){
         				startShowResult(data.data);
+        				accountInfo = data.data;
             		}
         		}
 			});
@@ -109,9 +166,20 @@
 			$(".arrow").css({transform:"rotate("+newAng+"deg)"});
 			$(".arrow").attr("data-angle",newAng);
 			// 隐藏菜单toggle
-			var newAng = (angle+180)%360;
+			var newAng = newAng+180;
 			$(".quitBox").css({transform:"rotate("+newAng+"deg)"});
 		});
+		
+		$(".quitFont").on("click",function(e){
+			refresh();
+			var prizeCode = $("#typeHidden").val();
+			recordWinner(prizeCode, 0);
+		});
+		
+		$(".confirm").on("click",function(e){
+			var prizeCode = $("#typeHidden").val();
+			recordWinner(prizeCode, 1, refresh);
+		})
 	}
 	
 	var IndoorMap = {

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sva.model.AccountModel;
 import com.sva.service.LotteryService;
 import com.sva.web.models.LotteryInputModel;
+import com.sva.web.models.WinningInfoModel;
+import com.sva.web.models.extension.WinningInfoExtension;
 
 /** 
  * @ClassName: LotteryController 
@@ -81,6 +83,27 @@ public class LotteryController
         modelMap.put("returnCode", "1");
         modelMap.put("data", r);
         
+        return modelMap;
+    }
+    
+    /** 
+     * @Title: saveWinningRecord 
+     * @Description: 记录中奖信息 
+     * @param model
+     * @param result
+     * @return 
+     */
+    @RequestMapping(value="/saveWinningRecord", method = {RequestMethod.POST})
+    @ResponseBody
+    public Map<String, Object> saveWinningRecord(@Valid @RequestBody WinningInfoModel model, BindingResult result){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        // 校验用户输入
+        if(result.hasErrors()){
+            modelMap.put("error", result.getAllErrors());
+            return modelMap;
+        }
+        service.saveWinningRecord(WinningInfoExtension.toWinningRecordModel(model));
+        modelMap.put("returnCode", 1);
         return modelMap;
     }
 }
