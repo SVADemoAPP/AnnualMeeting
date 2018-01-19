@@ -53,7 +53,7 @@
 		startCount();
 	}
 	
-	function startShowResult(detail){
+	function startShowResult(detail, callback){
 		if(isBegin) return false;
 		isBegin = true;
 		var u = 229;
@@ -74,6 +74,7 @@
 							stopBlink();
 							allLightOn();
 							waitForNotice(detail);
+							if(callback) callback();
 						}
 					}
 				});
@@ -133,15 +134,12 @@
 	}
 	
 	function bindEvent(){
-		$(".handle").on("mousedown",function(e){
-			$(".handle").css({background:"url(/sva/images/handleOn.png) bottom no-repeat"});
-		});
-		
-		$(".handle").on("mouseup",function(e){
-			$(".handle").css({background:"url(/sva/images/handleOff.png) bottom no-repeat"});
-		});
 		
 		$(".handle").on("click",function(e){
+			var flag = $(".handle").attr("data-flag");
+			if(flag && flag == "false") return false;
+			$(".handle").attr("data-flag","false");
+			$(".handle").css({background:"url(/sva/images/handleOn.png) bottom no-repeat"});
 			// 请求数据并展示
 			var param = {prizeCode: $("#typeHidden").val()};
 			$.ajax({
@@ -152,8 +150,14 @@
         		dataType:"json",
         		success:function(data){
         			if(data.returnCode == 1){
-        				startShowResult(data.data);
+        				startShowResult(data.data,function(){
+            				$(".handle").attr("data-flag","true");
+            				$(".handle").css({background:"url(/sva/images/handleOff.png) bottom no-repeat"});
+        				});
         				accountInfo = data.data;
+            		}else{
+            			$(".handle").attr("data-flag","true");
+        				$(".handle").css({background:"url(/sva/images/handleOff.png) bottom no-repeat"});
             		}
         		}
 			});
@@ -180,6 +184,10 @@
 			var prizeCode = $("#typeHidden").val();
 			recordWinner(prizeCode, 1, refresh);
 		})
+		
+		$("#back").on("click",function(e){
+			window.location.href="/sva/home/showMain";
+		});
 	}
 	
 	var IndoorMap = {

@@ -69,4 +69,18 @@ public interface WinningRecordDao
      * @param model 
      */
     public void saveWinningRecord(WinningRecordModel model);
+    
+    /** 
+     * @Title: getAllPrizeDetail 
+     * @Description: 获取所有的奖品信息 
+     * @return 
+     */
+    public List<PrizeModel> getAllPrizeDetail();
+    
+    /** 
+     * @Title: getAllWinRecord 
+     * @Description: 获取所有的中奖信息 
+     * @return 
+     */
+    public List<WinningRecordModel> getAllWinRecord();
 }

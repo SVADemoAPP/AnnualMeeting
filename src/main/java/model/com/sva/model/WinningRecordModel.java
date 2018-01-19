@@ -43,6 +43,26 @@ public class WinningRecordModel
      * @Fields time : 领取时间 
      */ 
     private Date time;
+    
+    /** 
+     * @Fields username : 工号
+     */ 
+    private String username;
+    
+    /** 
+     * @Fields realname : 真实姓名
+     */ 
+    private String realname;
+    
+    /** 
+     * @Fields phone : 电话号码
+     */ 
+    private String phoneNo;
+    
+    /** 
+     * @Fields name : 奖品等级 
+     */ 
+    private String name;
 
     /**
      * @return the id
@@ -123,4 +143,69 @@ public class WinningRecordModel
     {
         this.time = time;
     }
+
+    /**
+     * @return the username
+     */
+    public String getUsername()
+    {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    /**
+     * @return the realname
+     */
+    public String getRealname()
+    {
+        return realname;
+    }
+
+    /**
+     * @param realname the realname to set
+     */
+    public void setRealname(String realname)
+    {
+        this.realname = realname;
+    }
+
+    /**
+     * @return the phoneNo
+     */
+    public String getPhoneNo()
+    {
+        return phoneNo;
+    }
+
+    /**
+     * @param phoneNo the phoneNo to set
+     */
+    public void setPhoneNo(String phoneNo)
+    {
+        this.phoneNo = phoneNo;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName()
+    {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+    
 }

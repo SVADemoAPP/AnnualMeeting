@@ -94,12 +94,30 @@ public class LotteryService
     }
     
     /** 
+     * @Title: getAllPrizeDetail 
+     * @Description: 获取所有的奖品详情
+     * @return 
+     */
+    public List<PrizeModel> getAllPrizeDetail(){
+        return daoWinning.getAllPrizeDetail();
+    }
+    
+    /** 
      * @Title: saveWinningRecord 
      * @Description: 记录中奖信息 
      * @param model 
      */
     public void saveWinningRecord(WinningRecordModel model){
         daoWinning.saveWinningRecord(model);
+    }
+    
+    /** 
+     * @Title: getAllWinRecord 
+     * @Description: 获取所有中奖记录
+     * @return 
+     */
+    public List<WinningRecordModel> getAllWinRecord(){
+        return daoWinning.getAllWinRecord();
     }
     
     /** 

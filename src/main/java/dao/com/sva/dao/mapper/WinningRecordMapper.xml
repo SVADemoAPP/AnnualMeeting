@@ -40,4 +40,18 @@
         VALUES(#{accountId},#{prizeCode},#{received},#{time})
     </insert>
     
+    <select id="getAllPrizeDetail" resultType="PrizeModel">
+        SELECT *
+        FROM prize
+    </select>
+    
+    <select id="getAllWinRecord" resultType="WinningRecordModel">
+        SELECT a.*,b.username, b.realname,b.phoneNo,c.name 
+        FROM annual.winning_record a 
+            left join sys_account b on a.accountId=b.id 
+            left join prize c on a.prizeCode= c.code 
+        WHERE received = 1
+        ORDER BY a.prizeCode,a.accountId
+    </select>
+    
 </mapper>
