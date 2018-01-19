@@ -23,4 +23,6 @@ import com.sva.model.AccountModel;
 public interface WeixinDao
 {
     public AccountModel getAccountIdByOpenid(@Param("openid") String openid);
+    
+    public Integer login(AccountModel accountModel);
 }

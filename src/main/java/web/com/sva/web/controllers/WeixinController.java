@@ -3,6 +3,7 @@ package com.sva.web.controllers;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sva.common.conf.Params;
 import com.sva.common.weixin.utils.CheckUtil;
 import com.sva.common.weixin.utils.MessageUtil;
 import com.sva.common.weixin.utils.WeixinUtil;
@@ -36,6 +38,10 @@ import net.sf.json.JSONObject;
 public class WeixinController {
 
     private static final Logger LOG = Logger.getLogger(WeixinController.class);
+
+    private static final int CODE_SUCCESS = 200;
+
+    private static final int CODE_FAIL = 400;
 
     @Autowired
     private WeixinService weixinService;
@@ -142,8 +148,23 @@ public class WeixinController {
     }
 
     @RequestMapping(value = "/intro", method = { RequestMethod.GET })
-    public String login(HttpServletRequest req) {
+    public String intro(HttpServletRequest req) {
         return "weixin/intro";
+    }
+
+    @RequestMapping(value = "/login", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> login(HttpServletRequest req, AccountModel accountModel) {
+        Map<String, Object> resultMap = new HashMap<>();
+        AccountModel loginModel = weixinService.login(accountModel);
+        if (loginModel != null) {
+            resultMap.put("resultCode", CODE_SUCCESS);
+            req.setAttribute("accountModel", loginModel);
+            resultMap.put("resultMsg", loginModel);
+        } else {
+            resultMap.put("resultCode", CODE_FAIL);
+        }
+        return resultMap;
     }
 
 }

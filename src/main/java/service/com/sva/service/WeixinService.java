@@ -24,11 +24,20 @@ import com.sva.model.AccountModel;
  */
 @Service
 public class WeixinService {
-    
+
     @Autowired
     private WeixinDao weixinDao;
 
     public AccountModel getAccountIdByOpenid(String openid) {
         return weixinDao.getAccountIdByOpenid(openid);
+    }
+
+    public AccountModel login(AccountModel accountModel) {
+        int code = weixinDao.login(accountModel);
+        if (code > 0) {
+            return weixinDao.getAccountIdByOpenid(accountModel.getOpenid());
+        } else {
+            return null;
+        }
     }
 }
