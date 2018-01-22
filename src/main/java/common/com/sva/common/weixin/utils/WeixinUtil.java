@@ -25,7 +25,7 @@ public class WeixinUtil {
     // private final static String appid = "wxbab55d45abfbb9bc";
     // private final static String secret = "246883272034517bdfbef75a74a991f5";
     // test
-    public final static String SERVER_URL = "4nnnsp.natappfree.cc";
+    public final static String SERVER_URL = "3ahj8y.natappfree.cc";
     public final static String APPID = "wxf6e7f9bedaa4abf3";
     public final static String APPSECRET = "be2bae4a73c33d97b6b08fd8a49da6c4";
 
