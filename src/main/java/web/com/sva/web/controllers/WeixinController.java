@@ -166,5 +166,15 @@ public class WeixinController {
         }
         return resultMap;
     }
+    
+    @RequestMapping(value = "/logout", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> logout(HttpServletRequest req, String openid) {
+        Map<String, Object> resultMap = new HashMap<>();
+        
+        resultMap.put("resultCode", CODE_SUCCESS);
+        req.removeAttribute("accountModel");
+        return resultMap;
+    }
 
 }

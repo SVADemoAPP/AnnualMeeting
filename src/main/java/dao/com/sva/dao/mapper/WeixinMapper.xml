@@ -14,4 +14,7 @@
 		username=#{username} and password=#{password}
 	</update>
 
+	<update id="logout">
+		update sys_account set openid='' where openid=#{openid}
+	</update>
 </mapper>

@@ -40,4 +40,8 @@ public class WeixinService {
             return null;
         }
     }
+    
+    public void logout(String openid) {
+        weixinDao.logout(openid);
+    }
 }

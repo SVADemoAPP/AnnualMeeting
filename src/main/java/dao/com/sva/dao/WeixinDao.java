@@ -25,4 +25,6 @@ public interface WeixinDao
     public AccountModel getAccountIdByOpenid(@Param("openid") String openid);
     
     public Integer login(AccountModel accountModel);
+    
+    public void logout(String openid);
 }

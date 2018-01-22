@@ -40,9 +40,6 @@
 					id="login_submit" src="../images/login_submit.png" style="" />
 			</div>
 
-			<div id="div_prize"  style="display: none;">
-					<img id="img_prizebg" src="../images/my_prize_dialog.png" /> 
-			</div>
 		</div>
 	</div>
 	
@@ -56,20 +53,6 @@
 			}
 		});
 
-		$("#bt_myprize").click(function() {
-			$('#div_login_all').show();
-			$('#div_prize').show();
-			$("#div_prize").animate({marginTop:"-40%"},function(){
-				$('.div_login_bg').one("click", function(){
-					$("#div_prize").animate({marginTop:"-180%"},function(){
-						$('#div_prize').hide();
-						$('#div_login_all').hide();
-						
-					})
-				});
-				
-			});
-		});
 
 
 		$("#login_submit").click(function() {
