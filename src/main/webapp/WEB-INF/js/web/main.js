@@ -4,6 +4,7 @@
 ;(function($,win){
 	
 	function showWinRecord(){
+		$("#winDetail").empty();
 		$.ajax({
 			url:"/sva/mainPage/getRecord",
     		type:"post",
@@ -17,9 +18,26 @@
     				for(var i=0; i<detail.length; i++){
     					var item = detail[i];
     					if(item.prizeCode != code){
-    						html
+    						html = html + ''
+    							+ '<div class="record-name">'
+    							+ item.name
+    							+ '</div>'
+    							+ '<div class="record-detail">'
+    							+ '<div class="record-detail-1">' + item.username + '</div>'
+    							+ '<div class="record-detail-2">' + item.realname + '</div>'
+    							+ '<div class="record-detail-3">' + item.phoneNo.substring(item.phoneNo.length-4) + '</div>'
+    							+ '</div>';
+    						code = item.prizeCode;
+    					}else{
+    						html = html + ""
+    							+ '<div class="record-detail">'
+    							+ '<div class="record-detail-1">' + item.username + '</div>'
+    							+ '<div class="record-detail-2">' + item.realname + '</div>'
+    							+ '<div class="record-detail-3">' + item.phoneNo.substring(item.phoneNo.length-4) + '</div>'
+    							+ '</div>';
     					}
     				}
+    				$("#winDetail").append(html);
         		}
     		}
 		});

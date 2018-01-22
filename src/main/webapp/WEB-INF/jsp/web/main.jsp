@@ -12,8 +12,9 @@
 html,body{
     margin:0;
     padding:0;
-    background-color:rgb(230,41,74);
+    background-color:#fff;
     overflow:hidden;
+    height:100%;
 }
 .main_bg{
     background:url(<c:url value='/images/welcomBg.png'/>) top center no-repeat;
@@ -111,6 +112,7 @@ html,body{
 .prizeSpan{
     margin: 10px 0 0 0;
     float: left;
+    color:#ff3500;
 }
 .caret-down{
      float:right;
@@ -120,6 +122,9 @@ html,body{
      margin: 20px 35px 0 0;
      transition: All 0.2s ease-in-out;
      transform:rotate(0deg);
+}
+.cs-skin-border{
+    color:#ff3500;
 }
 .cs-placeholder{
     width:580px;
@@ -181,6 +186,7 @@ html,body{
 .cs-options>ul>li{
     height:60px;
     cursor:pointer;
+    padding-left: 150px;
     list-style-type:none;
 }
 .cs-options>ul>li:hover{
@@ -269,9 +275,161 @@ html,body{
 .closeDetail:hover{
     transform:rotate(360deg);
 }
+#winDetail{
+    margin-top: 245px;
+    margin-left: 138px;
+    width: 620px;
+    height: 590px;
+    overflow-y: scroll;
+}
+.record-name{
+    padding: 10px 0 0 20px;
+    height: 50px;
+    color: rgb(251,226,124);
+    font-size: 38px;
+    font-weight: bold;
+    text-shadow: 0 3px 0px rgb(242,95,68);
+}
+.record-detail{
+    margin: 15px 0 0 20px;
+    height: 40px;
+    font-size: 36px;
+    font-weight:bold;
+    color: #fc335a;
+}
+.record-detail-1{
+    float: left;
+    width: 230px;
+}
+.record-detail-2{
+    float: left;
+    width: 160px;
+}
+.record-detail-3{
+    float: left;
+    width: 180px;
+}
+.record-detail-3:before{
+    content: "尾号";
+}
+#winDetail::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 20px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+#winDetail::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    background-color:rgb(251,226,124);
+    box-shadow: 0px 5px 0px rgb(242,94,68);
+    border-radius:10px;
+}
+#winDetail::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #EDEDED;
+}
+.detail-mask{
+    width: 598px;
+    height: 590px;
+    position: absolute;
+    top: 245px;
+    left: 140px;
+    box-shadow:0 0 20px 10px #fff inset;
+}
+#cubeTransition {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-perspective: 1200px;
+  -moz-perspective: 1200px;
+  perspective: 1200px;
+}
+ 
+#cubeTransition>div {
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  font-size: 5em;
+  color: #fff;
+  display: none;
+}
+ 
+.top { z-index: 9999 }
+ 
+.rotateCubeTopOut {
+  transform-origin: 50% 100%;
+  animation: rotateCubeTopOut .6s both ease-in;
+}
+ 
+.rotateCubeTopIn {
+  transform-origin: 50% 0%;
+  animation: rotateCubeTopIn .6s both ease-in;
+}
+ 
+.rotateCubeBottomOut {
+  transform-origin: 50% 0%;
+  animation: rotateCubeBottomOut .6s both ease-in;
+}
+ 
+.rotateCubeBottomIn {
+  transform-origin: 50% 100%;
+  animation: rotateCubeBottomIn .6s both ease-in;
+}
+ 
+@keyframes 
+rotateCubeTopOut {  
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+ 
+@keyframes 
+rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+ 
+@keyframes 
+rotateCubeBottomOut {  
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+ 
+@keyframes 
+rotateCubeBottomIn {  
+  0% {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+   50% {
+    animation-timing-function: ease-out;
+    transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
 		</style>
 	</head>
 	<body>
+	<div id="cubeTransition">
+	<div style="background-color:rgb(230,41,74);">
 	   <div class="main_bg">
          <div class="leftPart">
             <div class="prizeShow">
@@ -313,7 +471,7 @@ html,body{
 	   </div>
 	   <div id="confirmPopup"  class="popup" style="display:none;">
 	       <div class="popupBox">
-	           <div id="confirmPrize" style="margin-top:450px;"></div>
+	           <div id="confirmPrize" style="margin-top: 450px;"></div>
 	           <div id="confirmPrizeDetail"></div>
 	           <div>获奖名额一人</div>
 	           <div>
@@ -326,10 +484,20 @@ html,body{
            <div class=winPopupBox>
                 <div class="closeDetail">
                 </div>
-                <div id="winDetail" style="margin-top:450px;"></div>
+                <div id="winDetail"></div>
+                <div class="detail-mask"></div>
            </div>
        </div>
+    </div>
+    <div>
+        <iframe src="http://192.168.0.178:8088/sva/jsp/heatMap" width="100%" height="1080px" style="overflow:hidden;"></iframe>
+        <div style="position:absolute;top:0;left:0;width:1920px;height:1080px;overflow:hidden;"></div>
+    </div>
+    </div>
 	<script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
+    <script src="<c:url value='/plugins/cubeTransition/js/mousewheel.js'/>"></script>
+    <script src="<c:url value='/plugins/cubeTransition/js/jquery.touchSwipe.js'/>"></script>
+    <script src="<c:url value='/plugins/cubeTransition/js/cubeTransition.js'/>"></script> 
     <script src="<c:url value='/js/web/main.js'/>" type="text/javascript"></script>
 	</body>
 </html>
