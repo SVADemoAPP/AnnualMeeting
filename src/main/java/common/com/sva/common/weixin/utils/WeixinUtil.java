@@ -155,7 +155,7 @@ public class WeixinUtil {
             tokenTime = nowTime;
             lastToken = token;
         }
-        System.out.println("token:"+token);
+        System.out.println("token:" + token);
         return token;
     }
 
@@ -171,8 +171,8 @@ public class WeixinUtil {
      * @throws NoSuchProviderException
      * @throws KeyManagementException
      */
-    public static String upload(String filePath, String type){
-        String mediaId="";
+    public static String upload(String filePath, String type) {
+        String mediaId = "";
         try {
             File file = new File(filePath);
             if (!file.exists() || !file.isFile()) {
@@ -261,7 +261,7 @@ public class WeixinUtil {
         } catch (Exception e) {
             // TODO: handle exception
         }
-        
+
         return mediaId;
     }
 
@@ -272,7 +272,7 @@ public class WeixinUtil {
      * @param openid
      * @param type
      */
-    public static void pushMsg(String openid, String type,String media_id) {
+    public static void pushMsg(String openid, String type, String media_id) {
         String url = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
         JSONObject params = new JSONObject();
         params.put("touser", openid);
@@ -280,12 +280,12 @@ public class WeixinUtil {
         JSONObject msgBody = new JSONObject();
         if ("text".equals(type)) {
             msgBody.put("content", "测试一下文字推送");
-        }else if("image".equals(type)){
+        } else if ("image".equals(type)) {
             msgBody.put("media_id", media_id);
-          
-        }else if("news".equals(type)){
-            JSONArray articles=new JSONArray();
-            JSONObject temp=new JSONObject();
+
+        } else if ("news".equals(type)) {
+            JSONArray articles = new JSONArray();
+            JSONObject temp = new JSONObject();
             temp.put("title", "test1");
             temp.put("description", "test2");
             temp.put("url", "test3");
@@ -297,33 +297,33 @@ public class WeixinUtil {
         JSONObject jsonObj = WeixinUtil.doPostStr(url, params.toString());
         System.out.println(jsonObj);
     }
-    
+
     /**
      * 
-     * @Title: pushNews 
-     * @Description: 推送图文消息
+     * @Title: pushNews
+     * @Description: 推送图文消息，单条
      * @param openid
      * @param type
      * @param media_id
      */
-    public static void pushNews(String openid,String title,String description,String url,String picurl) {
+    public static void pushNews(String openid, String title, String description, String url, String picurl) {
         String wxUrl = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
         JSONObject params = new JSONObject();
         params.put("touser", openid);
         params.put("msgtype", "news");
         JSONObject msgBody = new JSONObject();
-            JSONArray articles=new JSONArray();
-            JSONObject temp=new JSONObject();
-            temp.put("title", title);
-            temp.put("description", description);
-            temp.put("url", url);
-            temp.put("picurl", picurl);
-            articles.add(temp);
-            msgBody.put("articles", articles);
+        //放入一条图文消息
+        JSONArray articles = new JSONArray();
+        JSONObject temp = new JSONObject();
+        temp.put("title", title);
+        temp.put("description", description);
+        temp.put("url", url);
+        temp.put("picurl", picurl);
+        articles.add(temp);
+        msgBody.put("articles", articles);
         params.put("news", msgBody);
         JSONObject jsonObj = WeixinUtil.doPostStr(wxUrl, params.toString());
         System.out.println(jsonObj);
     }
-    
-    
+
 }

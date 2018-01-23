@@ -7,7 +7,7 @@ public class WeixinTest {
     public static void main(String[] args) {
 //        test2();
         // test2();
-//        WeixinUtil.pushMsg("omWBL1pLyb_3AY3VLhj5iTpjQQyI", "news","U4z2EgFblNmVxekDvlX1T3gYywpvwhx29LLzY0AR7tLAYMQWGY5MxR9BHVdFvDTo");
+//        WeixinUtil.pushMsg("omWBL1pLyb_3AY3VLhj5iTpjQQyI", "text","");
 //        WeixinUtil.upload("d://car.jpg", "image");
         String openid="omWBL1pLyb_3AY3VLhj5iTpjQQyI";
         WeixinUtil.pushNews(openid, "标题1", "描述文字", "http://"+WeixinUtil.SERVER_URL+"/sva/weixin/skipPrize?openid="+openid, "http://"+WeixinUtil.SERVER_URL+"/sva/images/prize.png");
