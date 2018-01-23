@@ -6,9 +6,9 @@
 <%@ include file="../shared/weixinCss.jsp"%>
 <%
     String openid = (String) request.getSession().getAttribute("openid");
-			//	String openid="aaa";
-			AccountModel accountModel = (AccountModel) request.getSession().getAttribute("accountModel");
-			String accountJson = JSONObject.fromObject(accountModel).toString();
+	AccountModel accountModel = (AccountModel) request.getSession().getAttribute("accountModel");
+	String accountJson = JSONObject.fromObject(accountModel).toString();
+	String fromNews=(String)request.getSession().getAttribute("fromNews");
 %>
 <html>
 <head>
@@ -53,10 +53,14 @@
 	<script type="text/javascript">
 	var account=<%=accountJson%>;
 	var myopenid='<%=openid%>';
+	var fromNews='<%=fromNews%>';
 		$(document).ready(function() {
+			console.log(fromNews);
 			if (account == null) {
 				$('#div_login_all').show();
 				$('#div_login').show();
+			}else if(fromNews=='yes'){
+				$("#bt_myprize").trigger("click");
 			}
 		});
 

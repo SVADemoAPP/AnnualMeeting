@@ -5,6 +5,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -144,11 +145,17 @@ public class WeixinController {
         AccountModel accountModel = weixinService.getAccountIdByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().removeAttribute("fromNews");
         return "weixin/" + STATE;
     }
 
-    @RequestMapping(value = "/intro", method = { RequestMethod.GET })
-    public String intro(HttpServletRequest req) {
+    @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
+    public String skipPrize(HttpServletRequest req) {
+        String openid = req.getParameter("openid");
+        AccountModel accountModel = weixinService.getAccountIdByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/intro";
     }
 
@@ -177,4 +184,5 @@ public class WeixinController {
         return resultMap;
     }
 
+    
 }
