@@ -8,9 +8,12 @@
  */
 package com.sva.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.sva.model.AccountModel;
+import com.sva.model.FuModel;
 
 /**
  * 
@@ -27,4 +30,16 @@ public interface WeixinDao
     public Integer login(AccountModel accountModel);
     
     public void logout(String openid);
+    
+    public List<FuModel> getFuList();
+    
+    public Integer changeOneFu(@Param("id")int id,@Param("one")int one);
+    
+    public Integer  userGetOneFu(@Param("columnName")String columnName,@Param("openid")String openid);
+
+    public AccountModel getUserFus(String openid);
+    
+    public AccountModel getUserInfo(String openid);
+    
+    public Integer compoundOneFu(String openid);
 }

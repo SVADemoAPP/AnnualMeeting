@@ -49,6 +49,84 @@ public class AccountModel {
     private String id;
 
     private String openid;
+    
+    private int fu1;
+    private int fu2;
+    private int fu3;
+    private int fu4;
+    private int fu5;
+    
+    
+
+    /**
+     * @return the fu1
+     */
+    public int getFu1() {
+        return fu1;
+    }
+
+    /**
+     * @param fu1 the fu1 to set
+     */
+    public void setFu1(int fu1) {
+        this.fu1 = fu1;
+    }
+
+    /**
+     * @return the fu2
+     */
+    public int getFu2() {
+        return fu2;
+    }
+
+    /**
+     * @param fu2 the fu2 to set
+     */
+    public void setFu2(int fu2) {
+        this.fu2 = fu2;
+    }
+
+    /**
+     * @return the fu3
+     */
+    public int getFu3() {
+        return fu3;
+    }
+
+    /**
+     * @param fu3 the fu3 to set
+     */
+    public void setFu3(int fu3) {
+        this.fu3 = fu3;
+    }
+
+    /**
+     * @return the fu4
+     */
+    public int getFu4() {
+        return fu4;
+    }
+
+    /**
+     * @param fu4 the fu4 to set
+     */
+    public void setFu4(int fu4) {
+        this.fu4 = fu4;
+    }
+
+    /**
+     * @return the fu5
+     */
+    public int getFu5() {
+        return fu5;
+    }
+
+    /**
+     * @param fu5 the fu5 to set
+     */
+    public void setFu5(int fu5) {
+        this.fu5 = fu5;
+    }
 
     /**
      * @Fields phoneNo : 电话号码

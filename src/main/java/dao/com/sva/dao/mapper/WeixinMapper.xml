@@ -15,6 +15,35 @@
 	</update>
 
 	<update id="logout">
-		update sys_account set openid='' where openid=#{openid}
+		update sys_account set openid='' where
+		openid=#{openid}
+	</update>
+
+	<select id="getFuList" resultType="FuModel">
+		select id,remainCount,weight from sys_fu where remainCount!=0
+	</select>
+
+	<update id="changeOneFu">
+		update sys_fu set remainCount=remainCount+#{one}
+		where id=#{id}
+	</update>
+
+	<update id="userGetOneFu">
+		update sys_account set ${columnName}=${columnName}+1
+		where openid=#{openid}
+	</update>
+
+	<select id="getUserFus" resultType="AccountModel">
+		select fu1,fu2,fu3,fu4,fu5 from sys_account where openid=#{openid}
+	</select>
+	
+	<select id="getUserInfo" resultType="AccountModel">
+		select * from sys_account where openid=#{openid}
+	</select>
+
+	<update id="compoundOneFu">
+		update sys_account set
+		fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1 where
+		openid=#{openid}
 	</update>
 </mapper>

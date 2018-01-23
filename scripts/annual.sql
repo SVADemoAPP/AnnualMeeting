@@ -16,19 +16,29 @@ USE `annual`;
 
 
 -- Dumping structure for table annual.sys_account
-CREATE TABLE IF NOT EXISTS `sys_account` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8_bin NOT NULL COMMENT '工号',
-  `password` varchar(50) COLLATE utf8_bin NOT NULL COMMENT '密码',
-  `realname` varchar(50) COLLATE utf8_bin NOT NULL COMMENT '真实姓名',
-  `phoneNo` varchar(50) COLLATE utf8_bin NOT NULL COMMENT '电话号码',
-  `lastLoginTime` datetime DEFAULT NULL COMMENT '最后一次登录时间',
-  `lastHeartbeat` datetime DEFAULT NULL COMMENT '最后一次心跳时间',
-  `onLineTime` int(10) unsigned NOT NULL COMMENT '累计在线时长',
-  `loginState` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否登录(0:未登录;1:登录)',
-  `openid` VARCHAR(50) NOT NULL COMMENT '微信用户唯一标识' COLLATE 'utf8_bin',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='账户信息表';
+CREATE TABLE `sys_account` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(50) NOT NULL COMMENT '工号' COLLATE 'utf8_bin',
+	`password` VARCHAR(50) NOT NULL COMMENT '密码' COLLATE 'utf8_bin',
+	`realname` VARCHAR(50) NOT NULL COMMENT '真实姓名' COLLATE 'utf8_bin',
+	`phoneNo` VARCHAR(50) NOT NULL COMMENT '电话号码' COLLATE 'utf8_bin',
+	`lastLoginTime` DATETIME NULL DEFAULT NULL COMMENT '最后一次登录时间',
+	`lastHeartbeat` DATETIME NULL DEFAULT NULL COMMENT '最后一次心跳时间',
+	`onLineTime` INT(10) UNSIGNED NOT NULL COMMENT '累计在线时长',
+	`loginState` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否登录(0:未登录;1:登录)',
+	`openid` VARCHAR(50) NOT NULL COMMENT '微信用户唯一标识' COLLATE 'utf8_bin',
+	`fu1` INT(11) NOT NULL COMMENT '燃 个数',
+	`fu2` INT(11) NOT NULL COMMENT '情 个数',
+	`fu3` INT(11) NOT NULL COMMENT '小 个数',
+	`fu4` INT(11) NOT NULL COMMENT '站 个数',
+	`fu5` INT(11) NOT NULL COMMENT '合成 个数',
+	PRIMARY KEY (`id`)
+)
+COMMENT='账户信息表'
+COLLATE='utf8_bin'
+ENGINE=InnoDB
+AUTO_INCREMENT=2;
+
 
 -- Dumping data for table annual.sys_account: ~1 rows (approximately)
 /*!40000 ALTER TABLE `sys_account` DISABLE KEYS */;
@@ -36,6 +46,27 @@ INSERT INTO `sys_account` (`id`, `username`, `password`, `realname`, `phoneNo`, 
 	(1, 'admin', 'admin@123', '管理员', '', NULL, NULL, 0, 0);
 /*!40000 ALTER TABLE `sys_account` ENABLE KEYS */;
 
+CREATE TABLE `sys_fu` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50) NOT NULL DEFAULT '0' COMMENT '名称' COLLATE 'utf8_bin',
+	`totalCount` INT(11) NOT NULL DEFAULT '0' COMMENT '总量',
+	`remainCount` INT(11) NOT NULL DEFAULT '0' COMMENT '余量',
+	`weight` INT(11) NOT NULL DEFAULT '0' COMMENT '权重，即概率',
+	PRIMARY KEY (`id`)
+)
+COMMENT=' 账户角色关系表'
+COLLATE='utf8_bin'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+INSERT INTO `sys_fu` (`id`, `name`, `totalCount`, `remainCount`, `weight`) VALUES
+	(1, '燃', 33, 33, 25);
+INSERT INTO `sys_fu` (`id`, `name`, `totalCount`, `remainCount`, `weight`) VALUES
+	(2, '情', 33, 33, 25);
+INSERT INTO `sys_fu` (`id`, `name`, `totalCount`, `remainCount`, `weight`) VALUES
+	(3, '小', 33, 33, 25);
+INSERT INTO `sys_fu` (`id`, `name`, `totalCount`, `remainCount`, `weight`) VALUES
+	(4, '站', 33, 33, 25);
 
 -- Dumping structure for table annual.sys_account_role
 CREATE TABLE IF NOT EXISTS `sys_account_role` (

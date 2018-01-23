@@ -1,23 +1,19 @@
 package com.sva.web.controllers;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sva.common.conf.Params;
 import com.sva.common.weixin.utils.CheckUtil;
 import com.sva.common.weixin.utils.MessageUtil;
 import com.sva.common.weixin.utils.WeixinUtil;
@@ -38,11 +34,11 @@ import net.sf.json.JSONObject;
 @RequestMapping(value = "/weixin")
 public class WeixinController {
 
-    private static final Logger LOG = Logger.getLogger(WeixinController.class);
+    private static final int CODE_SUCCESS = 200; // 成功，通用
 
-    private static final int CODE_SUCCESS = 200;
+    private static final int CODE_FAIL = 400; // 失败，通用
 
-    private static final int CODE_FAIL = 400;
+    private static final int CODE_LOSE_OPENID = 301; // openid被顶掉
 
     @Autowired
     private WeixinService weixinService;
@@ -173,16 +169,78 @@ public class WeixinController {
         }
         return resultMap;
     }
-    
+
     @RequestMapping(value = "/logout", method = { RequestMethod.POST })
     @ResponseBody
     public Map<String, Object> logout(HttpServletRequest req, String openid) {
         Map<String, Object> resultMap = new HashMap<>();
-        
+
         resultMap.put("resultCode", CODE_SUCCESS);
         req.removeAttribute("accountModel");
         return resultMap;
     }
 
+    /**
+     * 
+     * @Title: randomFu
+     * @Description: 随机抽取一个福字
+     * @param req
+     * @param openid
+     * @return
+     */
+    @RequestMapping(value = "/randomFu", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> randomFu(HttpServletRequest req, String openid) {
+        Map<String, Object> resultMap = new HashMap<>();
+        weixinService.operationFu(resultMap, openid);
+        return resultMap;
+    }
+
+    /**
+     * 
+     * @Title: getUserFus
+     * @Description: 获取用户的福字数量
+     * @param req
+     * @param openid
+     * @return
+     */
+    @RequestMapping(value = "/getUserFus", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> getUserFus(HttpServletRequest req, String openid) {
+        Map<String, Object> resultMap = new HashMap<>();
+        AccountModel accountModel = weixinService.getUserFus(openid);
+        if (accountModel != null) {
+            resultMap.put("resultCode", CODE_SUCCESS);
+            resultMap.put("fu1", accountModel.getFu1());
+            resultMap.put("fu2", accountModel.getFu2());
+            resultMap.put("fu3", accountModel.getFu3());
+            resultMap.put("fu4", accountModel.getFu4());
+            resultMap.put("fu5", accountModel.getFu5());
+        } else {
+            resultMap.put("resultCode", CODE_LOSE_OPENID);
+        }
+        return resultMap;
+    }
     
+    /**
+     * 
+     * @Title: getUserInfo 
+     * @Description: 获取用户信息
+     * @param req
+     * @param openid
+     * @return
+     */
+    @RequestMapping(value = "/getUserInfo", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> getUserInfo(HttpServletRequest req, String openid) {
+        Map<String, Object> resultMap = new HashMap<>();
+        AccountModel accountModel = weixinService.getUserInfo(openid);
+        if (accountModel != null) {
+            resultMap.put("resultCode", CODE_SUCCESS);
+            resultMap.put("resultMsg", accountModel);
+        } else {
+            resultMap.put("resultCode", CODE_LOSE_OPENID);
+        }
+        return resultMap;
+    }
 }
