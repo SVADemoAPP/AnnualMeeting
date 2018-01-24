@@ -15,19 +15,45 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <script type="text/javascript" src="../plugins/jquery.js"></script>
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
-<title>活动介绍</title>
+
+<link rel="stylesheet" type="text/css" href="../css/weixin/myinfo.css">
+<script type="text/javascript" src="../js/weixin/myinfo.js"></script>
+<title>我的信息</title>
 </head> 
 <body>
-	<img src="../images/top_bg.png" width="100%" />
-	<div id="prize">
-		<img src="../images/prize.png" width="100%" /> <img src="../images/prize_set.png"
-			style="margin-left: 2%; margin-top: 5%; width: 30%;" />
-			 <img id="bt_myprize"  src="../images/my_prize_info.png"
-			style="margin-top: -2%; float: right;; width: 45%;" />
-		<p>一等奖：iphone X 一名</p>
-		<p>二等奖：ipad mini4 三名</p>
-		<p>三等奖：iwatch3 五名</p>
+	<div id="baseInfo">
+		<div id="item_baseinfo">
+			<p class="p_title">工号</p>
+			<p class="value_jobnum">123456</p>
+		</div>
+		<div class="line"></div>
+		<div id="item_baseinfo">
+			<p class="p_title">电话</p>
+			<p class="value_pnum">13689082222</p>
+		</div>
+		<div class="line"></div>
+		<div id="item_baseinfo">
+			<p class="p_title">部门</p>
+			<p class="value_dptmt">无线</p>
+		</div>
 	</div>
+	
+	<div id="advanceInfo">
+		<div id="item_advance_pw">
+			<p class="p_title">修改密码</p>
+			<img src="../images/137.png"/>
+		</div>
+		<div class="line"></div>
+		<div id="item_advance_prz">
+			<p class="p_title">中奖信息</p>
+			<img src="../images/137.png"/>
+		</div>
+	</div>
+	
+	<div id="login_out">
+	<img alt="" src="../images/135.png">
+	<p class="">退出登录</p>
+	 </div>
 	<div id="div_login_all" style="display: none;">
 		<div class="div_login_layer"></div>
 		<div class="div_login_bg">
