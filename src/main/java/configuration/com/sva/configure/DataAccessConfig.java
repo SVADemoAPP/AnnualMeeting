@@ -9,7 +9,8 @@
 package com.sva.configure;
 
 import java.io.IOException;
-import org.apache.commons.dbcp.BasicDataSource;
+
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;

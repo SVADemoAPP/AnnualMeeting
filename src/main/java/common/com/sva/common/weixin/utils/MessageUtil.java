@@ -87,7 +87,7 @@ public class MessageUtil
      */
     public static String textMessageToXml(BaseMsg textMsg)
     {
-        XStream xStream = new XStream(new StaxDriver());
+        XStream xStream = new XStream();
         // 替换标签
         xStream.alias("xml", textMsg.getClass());
         return xStream.toXML(textMsg);
@@ -98,7 +98,7 @@ public class MessageUtil
      */
     public static String newsMessageToXml(NewsMessage newsMessage)
     {
-        XStream xStream = new XStream(new StaxDriver());
+        XStream xStream = new XStream();
         // 替换标签
         xStream.alias("xml", newsMessage.getClass());
         xStream.alias("item", new News().getClass());
