@@ -17,8 +17,8 @@
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
 
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../plugins/foka.css">
-<script type="text/javascript" src="../plugins/foka.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/weixin/foka.css">
+<script type="text/javascript" src="../js/weixin/foka.js"></script>
 
 <title>活动介绍</title>
 </head> 

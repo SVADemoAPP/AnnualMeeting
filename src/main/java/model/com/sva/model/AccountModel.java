@@ -56,7 +56,27 @@ public class AccountModel {
     private int fu4;
     private int fu5;
     
+    private int remainRandomCount;
     
+    private Date nextRandomTime;
+    
+    
+
+    public int getRemainRandomCount() {
+        return remainRandomCount;
+    }
+
+    public void setRemainRandomCount(int remainRandomCount) {
+        this.remainRandomCount = remainRandomCount;
+    }
+
+    public Date getNextRandomTime() {
+        return nextRandomTime;
+    }
+
+    public void setNextRandomTime(Date nextRandomTime) {
+        this.nextRandomTime = nextRandomTime;
+    }
 
     /**
      * @return the fu1

@@ -243,4 +243,9 @@ public class WeixinController {
         }
         return resultMap;
     }
+    
+    @RequestMapping(value = "/foka1", method = { RequestMethod.GET })
+    public String foka1(HttpServletRequest req) {
+        return "weixin/fuka";
+    }
 }

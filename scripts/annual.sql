@@ -32,12 +32,15 @@ CREATE TABLE `sys_account` (
 	`fu3` INT(11) NOT NULL COMMENT '小 个数',
 	`fu4` INT(11) NOT NULL COMMENT '站 个数',
 	`fu5` INT(11) NOT NULL COMMENT '合成 个数',
+	`remainRandomCount` INT(11) NOT NULL COMMENT '剩余抽奖次数',
+	`nextRandomTime` DATETIME NULL DEFAULT NULL COMMENT '下次抽奖时间',
 	PRIMARY KEY (`id`)
 )
 COMMENT='账户信息表'
 COLLATE='utf8_bin'
 ENGINE=InnoDB
-AUTO_INCREMENT=2;
+AUTO_INCREMENT=1;
+
 
 
 -- Dumping data for table annual.sys_account: ~1 rows (approximately)
