@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.sva.model.AccountModel;
 import com.sva.service.LotteryService;
+import com.sva.service.PushWeixin;
 import com.sva.web.models.LotteryInputModel;
 import com.sva.web.models.WinningInfoModel;
 import com.sva.web.models.extension.WinningInfoExtension;
@@ -39,6 +41,12 @@ public class LotteryController
     LotteryService service;
     
     /** 
+     * @Fields serverUrl : 外网可以访问的服务器地址 
+     */ 
+    @Value("${server.url}")
+    private String serverUrl;
+    
+    /** 
      * @Title: getNumber 
      * @Description: 抽取中奖员工 
      * @param model
@@ -56,6 +64,14 @@ public class LotteryController
         }
         // 具体中奖逻辑
         AccountModel winner = service.getWinningEmployee(model.getPrizeCode());
+        // 推送微信
+        PushWeixin thread = new PushWeixin();
+        thread.setCode(model.getPrizeCode());
+        thread.setModel(winner);
+        thread.setService(service);
+        thread.setUrl(serverUrl);
+        new Thread(thread).start();
+        
         modelMap.put("returnCode", "1");
         modelMap.put("data", winner);
         

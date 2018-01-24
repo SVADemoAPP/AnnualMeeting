@@ -136,6 +136,8 @@
 	function bindEvent(){
 		
 		$(".handle").on("click",function(e){
+			var count = parseInt($(".prizeCount").text());
+			if(count == 0) return false;
 			var flag = $(".handle").attr("data-flag");
 			if(flag && flag == "false") return false;
 			$(".handle").attr("data-flag","false");

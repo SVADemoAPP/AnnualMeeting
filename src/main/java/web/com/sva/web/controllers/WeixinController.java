@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,12 @@ public class WeixinController {
 
     private static final int CODE_LOSE_OPENID = 301; // openid被顶掉
 
+    /** 
+     * @Fields serverUrl : 服务器url 
+     */ 
+    @Value("${server.url}")
+    private String serverUrl;
+    
     @Autowired
     private WeixinService weixinService;
 
@@ -108,7 +115,7 @@ public class WeixinController {
             throws UnsupportedEncodingException {
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
                 + "&redirect_uri="
-                + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/switchPage", "utf-8")
+                + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
                 + "?response_type=code&scope=snsapi_userinfo&state=intro#wechat_redirect";
     }
 
@@ -117,7 +124,7 @@ public class WeixinController {
             throws UnsupportedEncodingException {
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
                 + "&redirect_uri="
-                + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/switchPage", "utf-8")
+                + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
                 + "?response_type=code&scope=snsapi_userinfo&state=fuka#wechat_redirect";
     }
 
@@ -126,7 +133,7 @@ public class WeixinController {
             throws UnsupportedEncodingException {
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
                 + "&redirect_uri="
-                + URLEncoder.encode("http://" + WeixinUtil.SERVER_URL + "/sva/weixin/switchPage", "utf-8")
+                + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
                 + "?response_type=code&scope=snsapi_userinfo&state=mine#wechat_redirect";
     }
 

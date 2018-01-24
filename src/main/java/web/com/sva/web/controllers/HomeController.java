@@ -52,6 +52,15 @@ public class HomeController
         return "web/lottery";
     }
     
+    /** 
+     * @Title: showCollectRecord 
+     * @Description: 显示集卡兑奖记录
+     * @return 
+     */
+    @RequestMapping(value = "/record", method = {RequestMethod.GET})
+    public String showCollectRecord(){
+        return "web/collectCardRecord";
+    }
 
     /** 
      * @Title: handleException 

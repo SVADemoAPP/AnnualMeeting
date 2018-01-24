@@ -37,6 +37,7 @@
     							+ '</div>';
     					}
     				}
+    				html += "<br/>";
     				$("#winDetail").append(html);
         		}
     		}
@@ -83,6 +84,10 @@
 		
 		$(".startRoll").on("click",function(e){
 			var code = $("#prize").attr("data-code");
+			var count = $("#selectedCount").text();
+			if(count == "0"){
+				return false;
+			}
 			if(code){
 				$("#confirmPrize").text($("#selectedText").text());
 				$("#confirmPrizeDetail").text($("#prize").attr("data-desc"));
