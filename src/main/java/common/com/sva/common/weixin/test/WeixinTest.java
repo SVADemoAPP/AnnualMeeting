@@ -8,7 +8,7 @@ public class WeixinTest {
         // test2();
 //        WeixinUtil.pushMsg("omWBL1pLyb_3AY3VLhj5iTpjQQyI", "text","");
 //        WeixinUtil.upload("d://car.jpg", "image");
-        String openid="omWBL1pLyb_3AY3VLhj5iTpjQQyI";
+        String openid="odLWc0m4zFFxpKx0fNwCtSYdES1w";
         WeixinUtil.pushNews(openid, "标题1", "描述文字", "http://3ahj8y.natappfree.cc/sva/weixin/skipPrize?openid="+openid, "http://3ahj8y.natappfree.cc/sva/images/prize.png");
         
     

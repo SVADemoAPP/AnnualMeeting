@@ -8,6 +8,7 @@
  */
 package com.sva.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -112,7 +113,8 @@ public class WeixinService {
         case 2:
         case 3:
         case 4:
-            int code = weixinDao.userGetOneFu("fu" + fu, openid);
+            Date nextRandomTime=new Date(System.currentTimeMillis()+15*60*1000);
+            int code = weixinDao.userGetOneFu("fu" + fu, openid,nextRandomTime);
             if (code == 0) {
                 // 失败则福字回滚且返回openid失效的说明
                 weixinDao.changeOneFu(fu, 1);
@@ -126,6 +128,8 @@ public class WeixinService {
                     int fu3 = account.getFu3();
                     int fu4 = account.getFu4();
                     int fu5 = account.getFu5();
+                    int remainRandomCount=account.getRemainRandomCount();
+                    
                     // 若4个福都有，则自动合成一个fu5
                     if (fu1 > 0 && fu2 > 0 && fu3 > 0 && fu4 > 0) {
                         int code2 = weixinDao.compoundOneFu(openid);
@@ -143,7 +147,8 @@ public class WeixinService {
                     resultMap.put("fu3", fu3);
                     resultMap.put("fu4", fu4);
                     resultMap.put("fu5", fu5);
-                    
+                    resultMap.put("remainRandomCount", remainRandomCount);
+                    resultMap.put("nextRandomTime", nextRandomTime);
                     //该次取得的福字id
                     resultMap.put("nowFu", fu);
 

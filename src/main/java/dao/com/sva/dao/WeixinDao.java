@@ -8,6 +8,7 @@
  */
 package com.sva.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -35,7 +36,7 @@ public interface WeixinDao
     
     public Integer changeOneFu(@Param("id")int id,@Param("one")int one);
     
-    public Integer  userGetOneFu(@Param("columnName")String columnName,@Param("openid")String openid);
+    public Integer  userGetOneFu(@Param("columnName")String columnName,@Param("openid")String openid,@Param("nextRandomTime")Date nextRandomTime);
 
     public AccountModel getUserFus(String openid);
     
