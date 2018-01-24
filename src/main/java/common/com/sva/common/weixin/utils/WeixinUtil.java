@@ -45,7 +45,7 @@ public class WeixinUtil {
     // private final static String appid = "wxbab55d45abfbb9bc";
     // private final static String secret = "246883272034517bdfbef75a74a991f5";
     // test
-    //public final static String SERVER_URL = "zrwb.mynatapp.cc";
+    // public final static String SERVER_URL = "zrwb.mynatapp.cc";
     public final static String APPID = "wx216621f9da064342";
     public final static String APPSECRET = "3de7691660915cbdcf9757825bb2e242";
 
@@ -268,7 +268,7 @@ public class WeixinUtil {
     /**
      * 
      * @Title: pushMsg
-     * @Description: 公众号界面消息推送
+     * @Description: 公众号界面各种消息推送，该方法保留备用
      * @param openid
      * @param type
      */
@@ -312,7 +312,7 @@ public class WeixinUtil {
         params.put("touser", openid);
         params.put("msgtype", "news");
         JSONObject msgBody = new JSONObject();
-        //放入一条图文消息
+        // 放入一条图文消息
         JSONArray articles = new JSONArray();
         JSONObject temp = new JSONObject();
         temp.put("title", title);
@@ -323,6 +323,25 @@ public class WeixinUtil {
         msgBody.put("articles", articles);
         params.put("news", msgBody);
         JSONObject jsonObj = WeixinUtil.doPostStr(wxUrl, params.toString());
+        System.out.println(jsonObj);
+    }
+
+    /**
+     * 
+     * @Title: pushMsg
+     * @Description: 推送文字消息
+     * @param openid
+     * @param type
+     */
+    public static void pushText(String openid, String content) {
+        String url = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
+        JSONObject params = new JSONObject();
+        params.put("touser", openid);
+        params.put("msgtype", "text");
+        JSONObject msgBody = new JSONObject();
+        msgBody.put("content", content);
+        params.put("text", msgBody);
+        JSONObject jsonObj = WeixinUtil.doPostStr(url, params.toString());
         System.out.println(jsonObj);
     }
 

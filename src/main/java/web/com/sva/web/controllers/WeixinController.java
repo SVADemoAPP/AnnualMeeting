@@ -251,8 +251,24 @@ public class WeixinController {
         return resultMap;
     }
     
-    @RequestMapping(value = "/foka1", method = { RequestMethod.GET })
-    public String foka1(HttpServletRequest req) {
-        return "weixin/fuka";
+    
+    
+    /**
+     * 
+     * @Title: giveFu 
+     * @Description: 按用户名赠送福字 
+     * @param req
+     * @param openid
+     * @param fromUsername
+     * @param toUsername
+     * @param fuId
+     * @return
+     */
+    @RequestMapping(value = "/giveFu", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> giveFu(HttpServletRequest req, String openid,String fromUsername,String toUsername,String fuId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        int resultCode=weixinService.giveFu(openid, fromUsername, toUsername, fuId);
+        return resultMap;
     }
 }

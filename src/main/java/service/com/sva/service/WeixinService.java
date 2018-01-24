@@ -113,7 +113,7 @@ public class WeixinService {
         case 2:
         case 3:
         case 4:
-            Date nextRandomTime=new Date(System.currentTimeMillis()+15*60*1000);
+            Date nextRandomTime=new Date((System.currentTimeMillis()+15*60*1000)/(15*60*1000)*(15*60*1000));
             int code = weixinDao.userGetOneFu("fu" + fu, openid,nextRandomTime);
             if (code == 0) {
                 // 失败则福字回滚且返回openid失效的说明
@@ -198,5 +198,19 @@ public class WeixinService {
             resultId = -1; // 取福失败
         }
         return resultId;
+    }
+    
+    /**
+     * 
+     * @Title: giveFu 
+     * @Description: 按用户名赠送福 
+     * @param openid
+     * @param fromUsername
+     * @param toUsername
+     * @param fuId
+     * @return
+     */
+    public int giveFu(String openid,String fromUsername,String toUsername,String fuId){
+        return 0;
     }
 }
