@@ -15,18 +15,116 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <script type="text/javascript" src="../plugins/jquery.js"></script>
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../plugins/foka.css">
+<script type="text/javascript" src="../plugins/foka.js"></script>
+
 <title>活动介绍</title>
 </head> 
 <body>
-	<img src="../images/top_bg.png" width="100%" />
-	<div id="prize">
-		<img src="../images/prize.png" width="100%" /> <img src="../images/prize_set.png"
-			style="margin-left: 2%; margin-top: 5%; width: 30%;" />
-			 <img id="bt_myprize"  src="../images/my_prize_info.png"
-			style="margin-top: -2%; float: right;; width: 45%;" />
-		<p>一等奖：iphone X 一名</p>
-		<p>二等奖：ipad mini4 三名</p>
-		<p>三等奖：iwatch3 五名</p>
+	<div id="container">
+		<div class="bg-header">
+			<img src="../images/89.png" alt="" />
+			<div class="lottery_times">
+				<div class="lottery_box"></div>
+				<img src="../images/90.png" alt="" />
+				<p class="lottery_time_info">
+					剩余次数 <span class="count">5</span> 次
+				</p>
+			</div>
+		</div>
+		<div class="bg-content">
+			<div id="projects">
+				<div class="project ">
+					<div class="mask">
+						<div class="back">
+							<img src="../images/129.png" alt="" />
+						</div>
+						<div class="front">
+							<img src="../images/68.png" alt="" />
+						</div>
+					</div>
+				</div>
+				<div class="project ">
+					<div class="mask">
+						<div class="back">
+							<img src="../images/130.png" alt="" />
+						</div>
+						<div class="front">
+							<img src="../images/68.png" alt="" />
+						</div>
+					</div>
+				</div>
+				<div class="project ">
+					<div class="mask">
+						<div class="back">
+							<img src="../images/131.png" alt="" />
+						</div>
+						<div class="front">
+							<img src="../images/68.png" alt="" />
+						</div>
+					</div>
+				</div>
+				<div class="project ">
+					<div class="mask">
+						<div class="back">
+							<img src="../images/132.png" alt="" />
+						</div>
+						<div class="front">
+							<img src="../images/68.png" alt="" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<img class="start_lottery" src="../images/44.png" alt="" />
+			<p class="lottery_start_info">开始抽奖</p>
+		</div>
+		<div class="bg-footer contentspace">
+			<div class="foka_num">
+				<img src="../images/69.png" class="card_ran" alt="" /> <img
+					src="../images/77.png" class="num_bg" alt="" />
+				<p1 class="ran">0
+				</p>
+			</div>
+			<div class="foka_num">
+				<img src="../images/70.png" class="card_qing" alt="" /> <img
+					src="../images/77.png" class="num_bg" alt="" />
+				<p class="qing">10</p>
+			</div>
+			<div class="foka_num">
+				<img src="../images/71.png" class="card_xiao" alt="" /> <img
+					src="../images/77.png" class="num_bg" alt="" />
+				<p class="xiao">8</p>
+			</div>
+			<div class="foka_num">
+				<img src="../images/72.png" class="card_zhan" alt="" /> <img
+					src="../images/77.png" class="num_bg" alt="" />
+				<p class="zhan">6</p>
+			</div>
+		</div>
+	</div>
+	<div id="flop_tag" style="display: none;">
+		<div class="flop_layer"></div>
+		<div id="flop_bg">
+			<img class="flop_card" alt="" src="../images/78.png">
+		</div>
+	</div>
+
+	<div id="flop_send_tag" style="display: none;">
+		<div class="flop_layer"></div>
+		<div id="flop_send_bg">
+			<img class="flop_send_card" alt="" src="../images/82.png"> <input
+				class="frend_input" placeholder="请输入好友工号">
+				<img class="flop_send" alt="" src="../images/87.png">
+		</div>
+	</div>
+	
+	<div id="flop_complete_tag" style="display: none;">
+		<div class="flop_layer"></div>
+		<div id="flop_complete_bg">
+			<img class="flop_complete_card" alt="" src="../images/88.png">
+		</div>
 	</div>
 	<div id="div_login_all" style="display: none;">
 		<div class="div_login_layer"></div>
