@@ -35,25 +35,27 @@ public class WeixinService {
 
     private static final int CODE_FAIL = 400; // 失败，通用
 
-    private static final int CODE_LOSE_OPENID = 301; // openid被顶掉
+    private static final int CODE_LOSE_OPENID = 301; // openid被顶掉了
+
+    private static final int CODE_TOUSER_NOT_EXIST = 302; // 赠送用户不存在
 
     @Autowired
     private WeixinDao weixinDao;
 
     /**
      * 
-     * @Title: getAccountIdByOpenid 
+     * @Title: getAccountByOpenid
      * @Description: 通过openid取得用户
      * @param openid
      * @return
      */
-    public AccountModel getAccountIdByOpenid(String openid) {
-        return weixinDao.getAccountIdByOpenid(openid);
+    public AccountModel getAccountByOpenid(String openid) {
+        return weixinDao.getAccountByOpenid(openid);
     }
 
     /**
      * 
-     * @Title: login 
+     * @Title: login
      * @Description: 登录功能，openid绑定用户
      * @param accountModel
      * @return
@@ -61,7 +63,7 @@ public class WeixinService {
     public AccountModel login(AccountModel accountModel) {
         int code = weixinDao.login(accountModel);
         if (code > 0) {
-            return weixinDao.getAccountIdByOpenid(accountModel.getOpenid());
+            return weixinDao.getAccountByOpenid(accountModel.getOpenid());
         } else {
             return null;
         }
@@ -69,7 +71,7 @@ public class WeixinService {
 
     /**
      * 
-     * @Title: logout 
+     * @Title: logout
      * @Description: 注销登录
      * @param openid
      */
@@ -79,18 +81,18 @@ public class WeixinService {
 
     /**
      * 
-     * @Title: getUserFus 
-     * @Description: 获取用户的福字数量 
+     * @Title: getUserFus
+     * @Description: 获取用户的福字数量
      * @param openid
      * @return
      */
     public AccountModel getUserFus(String openid) {
         return weixinDao.getUserFus(openid);
     }
-    
+
     /**
      * 
-     * @Title: getUserInfo 
+     * @Title: getUserInfo
      * @Description: 获取用户信息
      * @param openid
      * @return
@@ -98,7 +100,7 @@ public class WeixinService {
     public AccountModel getUserInfo(String openid) {
         return weixinDao.getUserInfo(openid);
     }
-    
+
     /**
      * 
      * @Title: operationFu
@@ -113,8 +115,9 @@ public class WeixinService {
         case 2:
         case 3:
         case 4:
-            Date nextRandomTime=new Date((System.currentTimeMillis()+15*60*1000)/(15*60*1000)*(15*60*1000));
-            int code = weixinDao.userGetOneFu("fu" + fu, openid,nextRandomTime);
+            Date nextRandomTime = new Date(
+                    (System.currentTimeMillis() + 15 * 60 * 1000) / (15 * 60 * 1000) * (15 * 60 * 1000));
+            int code = weixinDao.userGetOneFu("fu" + fu, openid, nextRandomTime);
             if (code == 0) {
                 // 失败则福字回滚且返回openid失效的说明
                 weixinDao.changeOneFu(fu, 1);
@@ -128,8 +131,8 @@ public class WeixinService {
                     int fu3 = account.getFu3();
                     int fu4 = account.getFu4();
                     int fu5 = account.getFu5();
-                    int remainRandomCount=account.getRemainRandomCount();
-                    
+                    int remainRandomCount = account.getRemainRandomCount();
+
                     // 若4个福都有，则自动合成一个fu5
                     if (fu1 > 0 && fu2 > 0 && fu3 > 0 && fu4 > 0) {
                         int code2 = weixinDao.compoundOneFu(openid);
@@ -149,7 +152,7 @@ public class WeixinService {
                     resultMap.put("fu5", fu5);
                     resultMap.put("remainRandomCount", remainRandomCount);
                     resultMap.put("nextRandomTime", nextRandomTime);
-                    //该次取得的福字id
+                    // 该次取得的福字id
                     resultMap.put("nowFu", fu);
 
                 } else {
@@ -199,18 +202,28 @@ public class WeixinService {
         }
         return resultId;
     }
-    
+
     /**
      * 
-     * @Title: giveFu 
-     * @Description: 按用户名赠送福 
+     * @Title: giveFu
+     * @Description: 按用户名赠送福
      * @param openid
      * @param fromUsername
      * @param toUsername
      * @param fuId
      * @return
      */
-    public int giveFu(String openid,String fromUsername,String toUsername,String fuId){
-        return 0;
+    public int giveFu(String openid, String fromUsername, String toUsername, String fuId) {
+        AccountModel toUser = weixinDao.getAccounByUsername(toUsername);
+        if (toUser == null) {
+            return CODE_TOUSER_NOT_EXIST;
+        }
+        int code = weixinDao.giveOneFu(fromUsername, openid, "fu" + fuId);
+        if (code == 0) {
+            return CODE_LOSE_OPENID;
+        }
+        weixinDao.acceptOneFu(toUsername, "fu" + fuId);
+        //再进行合成判断和推送openid公众号
+        return CODE_SUCCESS;
     }
 }

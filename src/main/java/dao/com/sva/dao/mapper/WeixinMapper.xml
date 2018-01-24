@@ -4,7 +4,7 @@
 
 <mapper namespace="com.sva.dao.WeixinDao">
 
-	<select id="getAccountIdByOpenid" resultType="AccountModel">
+	<select id="getAccountByOpenid" resultType="AccountModel">
 		SELECT * FROM
 		sys_account WHERE openid = #{openid}
 	</select>
@@ -50,5 +50,22 @@
 		update sys_account set
 		fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1 where
 		openid=#{openid}
+	</update>
+	
+	<select id="getAccountByUsername" resultType="AccountModel">
+		SELECT * FROM
+		sys_account WHERE username = #{username}
+	</select>
+	
+	
+	<update id="giveOneFu">
+		update sys_account set
+		${columnName}=${columnName}-1 where
+		 username=#{username} and openid=#{openid}
+	</update>
+	
+	<update id="acceptOneFu">
+		update sys_account set
+		${columnName}=${columnName}+1 where username=#{username}
 	</update>
 </mapper>

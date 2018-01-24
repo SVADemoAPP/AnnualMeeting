@@ -3,7 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../shared/taglib.jsp"%>
-<%@ include file="../shared/weixinCss.jsp"%>
 <%
 	String openid=(String)request.getSession().getAttribute("openid");
 //	String openid="aaa";
@@ -15,7 +14,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <script type="text/javascript" src="../plugins/jquery.js"></script>
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="../css/weixin/all.css">
 <link rel="stylesheet" type="text/css" href="../css/weixin/myinfo.css">
 <script type="text/javascript" src="../js/weixin/myinfo.js"></script>
 <title>我的信息</title>

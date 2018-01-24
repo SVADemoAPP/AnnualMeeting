@@ -22,7 +22,6 @@ CREATE TABLE `sys_account` (
 	`password` VARCHAR(50) NOT NULL COMMENT '密码' COLLATE 'utf8_bin',
 	`realname` VARCHAR(50) NOT NULL COMMENT '真实姓名' COLLATE 'utf8_bin',
 	`phoneNo` VARCHAR(50) NOT NULL COMMENT '电话号码' COLLATE 'utf8_bin',
-	`dept` VARCHAR(50) NOT NULL COMMENT '部门' COLLATE 'utf8_bin',
 	`lastLoginTime` DATETIME NULL DEFAULT NULL COMMENT '最后一次登录时间',
 	`lastHeartbeat` DATETIME NULL DEFAULT NULL COMMENT '最后一次心跳时间',
 	`onLineTime` INT(10) UNSIGNED NOT NULL COMMENT '累计在线时长',
@@ -35,13 +34,13 @@ CREATE TABLE `sys_account` (
 	`fu5` INT(11) NOT NULL COMMENT '合成 个数',
 	`remainRandomCount` INT(11) NOT NULL COMMENT '剩余抽奖次数',
 	`nextRandomTime` DATETIME NULL DEFAULT NULL COMMENT '下次抽奖时间',
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `username` (`username`)
 )
 COMMENT='账户信息表'
 COLLATE='utf8_bin'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
-
 
 
 -- Dumping data for table annual.sys_account: ~1 rows (approximately)

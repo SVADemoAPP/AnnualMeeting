@@ -3,7 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../shared/taglib.jsp"%>
-<%@ include file="../shared/weixinCss.jsp"%>
 <%
 	String openid=(String)request.getSession().getAttribute("openid");
 //	String openid="aaa";
@@ -17,6 +16,7 @@
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
 
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/weixin/all.css">
 <link rel="stylesheet" type="text/css" href="../css/weixin/foka.css">
 <script type="text/javascript" src="../js/weixin/foka.js"></script>
 

@@ -145,7 +145,7 @@ public class WeixinController {
                 .replace("APPID", WeixinUtil.APPID).replace("SECRET", WeixinUtil.APPSECRET).replace("CODE", CODE);
         JSONObject jsonObj = WeixinUtil.doGetStr(URL);
         String openid = jsonObj.get("openid").toString();
-        AccountModel accountModel = weixinService.getAccountIdByOpenid(openid);
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
         req.getSession().removeAttribute("fromNews");
@@ -155,7 +155,7 @@ public class WeixinController {
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
         String openid = req.getParameter("openid");
-        AccountModel accountModel = weixinService.getAccountIdByOpenid(openid);
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
         req.getSession().setAttribute("fromNews", "yes");

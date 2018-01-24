@@ -18,29 +18,36 @@ import com.sva.model.FuModel;
 
 /**
  * 
- * @ClassName: WeixinDao 
+ * @ClassName: WeixinDao
  * @Description: 微信相关dao
- * @author gyr 
- * @date 2018年1月18日 上午9:54:05 
+ * @author gyr
+ * @date 2018年1月18日 上午9:54:05
  *
  */
-public interface WeixinDao
-{
-    public AccountModel getAccountIdByOpenid(@Param("openid") String openid);
-    
+public interface WeixinDao {
+    public AccountModel getAccountByOpenid(@Param("openid") String openid);
+
     public Integer login(AccountModel accountModel);
-    
+
     public void logout(String openid);
-    
+
     public List<FuModel> getFuList();
-    
-    public Integer changeOneFu(@Param("id")int id,@Param("one")int one);
-    
-    public Integer  userGetOneFu(@Param("columnName")String columnName,@Param("openid")String openid,@Param("nextRandomTime")Date nextRandomTime);
+
+    public Integer changeOneFu(@Param("id") int id, @Param("one") int one);
+
+    public Integer userGetOneFu(@Param("columnName") String columnName, @Param("openid") String openid,
+            @Param("nextRandomTime") Date nextRandomTime);
 
     public AccountModel getUserFus(String openid);
-    
+
     public AccountModel getUserInfo(String openid);
-    
+
     public Integer compoundOneFu(String openid);
+
+    public AccountModel getAccounByUsername(@Param("username") String username);
+
+    public Integer giveOneFu(@Param("username") String username, @Param("openid") String openid,
+            @Param("columnName") String columnName);
+
+    public Integer acceptOneFu(@Param("username") String username, @Param("columnName") String columnName);
 }
