@@ -23,4 +23,9 @@ $(window).ready(function()
     
     
     
-})
+});
+
+function dataInit() {
+	if(account!=null){
+	}
+};

@@ -37,6 +37,8 @@ public interface WeixinDao {
 
     public Integer userGetOneFu(@Param("columnName") String columnName, @Param("openid") String openid,
             @Param("nextRandomTime") Date nextRandomTime);
+    
+    public Date getNextRandomTime(String openid);
 
     public AccountModel getUserInfo(String openid);
 

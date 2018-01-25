@@ -18,8 +18,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/weixin/all.css">
 <link rel="stylesheet" type="text/css" href="../css/weixin/foka.css">
-<script type="text/javascript" src="../js/weixin/all.js"></script>
-<script type="text/javascript" src="../js/weixin/foka.js"></script>
+
 
 <title>活动介绍</title>
 </head> 
@@ -31,7 +30,7 @@
 				<div class="lottery_box"></div>
 				<img src="../images/90.png" alt="" />
 				<p class="lottery_time_info">
-					剩余次数 <span class="count">5</span> 次
+					
 				</p>
 			</div>
 		</div>
@@ -91,17 +90,17 @@
 			<div class="foka_num">
 				<img src="../images/70.png" class="card_qing" alt="" /> <img
 					src="../images/77.png" class="num_bg" alt="" />
-				<p class="qing">10</p>
+				<p class="qing">0</p>
 			</div>
 			<div class="foka_num">
 				<img src="../images/71.png" class="card_xiao" alt="" /> <img
 					src="../images/77.png" class="num_bg" alt="" />
-				<p class="xiao">8</p>
+				<p class="xiao">0</p>
 			</div>
 			<div class="foka_num">
 				<img src="../images/72.png" class="card_zhan" alt="" /> <img
 					src="../images/77.png" class="num_bg" alt="" />
-				<p class="zhan">6</p>
+				<p class="zhan">0</p>
 			</div>
 		</div>
 	</div>
@@ -141,7 +140,8 @@
 
 		</div>
 	</div>
-	
+	<script type="text/javascript" src="../js/weixin/all.js"></script>
+<script type="text/javascript" src="../js/weixin/foka.js"></script>
 	<script type="text/javascript" >
 	var account=<%=accountJson%>;
 	var myopenid='<%=openid%>';

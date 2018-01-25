@@ -41,6 +41,8 @@ public class WeixinService {
 
     private static final int CODE_TOUSER_NOT_EXIST = 302; // 赠送用户不存在
 
+    private static final int CODE_NOT_TIME = 303; // 抽奖时间未到
+    
     @Autowired
     private WeixinDao weixinDao;
 
@@ -129,12 +131,23 @@ public class WeixinService {
      * @param openid
      */
     public void operationFu(Map<String, Object> resultMap, String openid) {
+        Date nextRandom=weixinDao.getNextRandomTime(openid);
+        if(nextRandom==null){
+            resultMap.put("resultCode", CODE_LOSE_OPENID);
+            return;
+        }
+        if(new Date().before(nextRandom)){
+            //抽奖时间未到
+            resultMap.put("resultCode", CODE_NOT_TIME);
+            return;
+        }
         int fu = randomFu();
         switch (fu) {
         case 1:
         case 2:
         case 3:
         case 4:
+            Date nowTime=new Date();
             Date nextRandomTime = new Date(
                     (System.currentTimeMillis() + 15 * 60 * 1000) / (15 * 60 * 1000) * (15 * 60 * 1000));
             int code = weixinDao.userGetOneFu("fu" + fu, openid, nextRandomTime);

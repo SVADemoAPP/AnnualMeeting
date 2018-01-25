@@ -92,4 +92,9 @@
 		fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1 where
 		username=#{username}
 	</update>
+	
+	<select id="getNextRandomTime" resultType="Date">
+		SELECT nextRandomTime FROM
+		sys_account WHERE openid = #{openid}
+	</select>
 </mapper>
