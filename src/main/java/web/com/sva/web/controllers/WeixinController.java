@@ -280,4 +280,14 @@ public class WeixinController {
         resultMap.put("resultCode", weixinService.giveFu(openid, fromUsername, toUsername, fuId));
         return resultMap;
     }
+    
+    @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
+    public String fuka1(HttpServletRequest req) {
+        String openid = "3";
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().setAttribute("fromNews", "yes");
+        return "weixin/fuka";
+    }
 }
