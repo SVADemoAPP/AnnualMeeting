@@ -18,6 +18,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/weixin/all.css">
 <link rel="stylesheet" type="text/css" href="../css/weixin/foka.css">
+<script type="text/javascript" src="../js/weixin/all.js"></script>
 <script type="text/javascript" src="../js/weixin/foka.js"></script>
 
 <title>活动介绍</title>

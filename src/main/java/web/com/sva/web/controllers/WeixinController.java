@@ -186,6 +186,15 @@ public class WeixinController {
         req.removeAttribute("accountModel");
         return resultMap;
     }
+    
+    
+    @RequestMapping(value = "/changePassword", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> changePassword(String openid,String oldPwd,String newPwd) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("resultCode", weixinService.changePassword(openid, oldPwd, newPwd));
+        return resultMap;
+    }
 
     /**
      * 
@@ -268,7 +277,7 @@ public class WeixinController {
     @ResponseBody
     public Map<String, Object> giveFu(HttpServletRequest req, String openid,String fromUsername,String toUsername,String fuId) {
         Map<String, Object> resultMap = new HashMap<>();
-        int resultCode=weixinService.giveFu(openid, fromUsername, toUsername, fuId);
+        resultMap.put("resultCode", weixinService.giveFu(openid, fromUsername, toUsername, fuId));
         return resultMap;
     }
 }

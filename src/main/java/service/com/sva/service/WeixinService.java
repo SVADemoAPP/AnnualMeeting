@@ -13,9 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.dao.WeixinDao;
 import com.sva.model.AccountModel;
 import com.sva.model.FuModel;
@@ -81,6 +83,24 @@ public class WeixinService {
 
     /**
      * 
+     * @Title: changePassword
+     * @Description: 修改密码
+     * @param openid
+     * @param oldPwd
+     * @param newPwd
+     * @return
+     */
+    public Integer changePassword(String openid, String oldPwd, String newPwd) {
+        int code = weixinDao.changePassword(openid, oldPwd, newPwd);
+        if (code > 0) {
+            return CODE_SUCCESS;
+        } else {
+            return CODE_FAIL;
+        }
+    }
+
+    /**
+     * 
      * @Title: getUserFus
      * @Description: 获取用户的福字数量
      * @param openid
@@ -134,7 +154,7 @@ public class WeixinService {
                     int remainRandomCount = account.getRemainRandomCount();
 
                     // 若4个福都有，则自动合成一个fu5
-                    if (fu1 > 0 && fu2 > 0 && fu3 > 0 && fu4 > 0) {
+                    if (fu1 > 0 && fu2 > 0 && fu3 > 0 && fu4 > 0 && fu5 < 1) {
                         int code2 = weixinDao.compoundOneFu(openid);
                         if (code2 > 0) {
                             fu1--;
@@ -214,7 +234,7 @@ public class WeixinService {
      * @return
      */
     public int giveFu(String openid, String fromUsername, String toUsername, String fuId) {
-        AccountModel toUser = weixinDao.getAccounByUsername(toUsername);
+        AccountModel toUser = weixinDao.getAccountByUsername(toUsername);
         if (toUser == null) {
             return CODE_TOUSER_NOT_EXIST;
         }
@@ -222,8 +242,49 @@ public class WeixinService {
         if (code == 0) {
             return CODE_LOSE_OPENID;
         }
-        weixinDao.acceptOneFu(toUsername, "fu" + fuId);
-        //再进行合成判断和推送openid公众号
+        int code2 = weixinDao.acceptOneFu(toUsername, "fu" + fuId);
+        // 再进行合成判断和推送openid公众号
+        if (code2 > 0) { // 成功收到赠送的福
+            // 加福字成功
+            String word = "";
+            switch (Integer.parseInt(fuId)) {
+            case 1:
+                word = "燃";
+                break;
+            case 2:
+                word = "情";
+                break;
+            case 3:
+                word = "小";
+                break;
+            case 4:
+                word = "站";
+                break;
+            default:
+                break;
+            }
+            String pushText = fromUsername + " 赠送你一个福字：" + word;
+            AccountModel account = weixinDao.getUserFusByUsername(toUsername);
+            if (account != null) {
+                int fu1 = account.getFu1();
+                int fu2 = account.getFu2();
+                int fu3 = account.getFu3();
+                int fu4 = account.getFu4();
+                int fu5 = account.getFu5();
+                // 若4个福都有，则自动合成一个fu5
+                if (fu1 > 0 && fu2 > 0 && fu3 > 0 && fu4 > 0 && fu5 < 1) {
+                    int code3 = weixinDao.compoundOneFuByUsername(toUsername);
+                    if (code3 > 0) {
+                        pushText += ",并成功合成一个!";
+                    }
+                }
+            }
+            String toUserOpenid = toUser.getOpenid();
+            // 获赠方openid不为空则推送到微信
+            if (StringUtils.isNotEmpty(toUserOpenid)) {
+                WeixinUtil.pushText(toUserOpenid, pushText);
+            }
+        }
         return CODE_SUCCESS;
     }
 }

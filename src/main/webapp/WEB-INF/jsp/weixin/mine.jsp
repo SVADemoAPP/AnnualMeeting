@@ -16,6 +16,7 @@
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/weixin/all.css">
 <link rel="stylesheet" type="text/css" href="../css/weixin/myinfo.css">
+<script type="text/javascript" src="../js/weixin/all.js"></script>
 <script type="text/javascript" src="../js/weixin/myinfo.js"></script>
 <title>我的信息</title>
 </head> 

@@ -49,6 +49,7 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="../js/weixin/all.js"></script>
 	<script type="text/javascript" src="../js/weixin/intro.js"></script>
 	<script type="text/javascript">
 	var account=<%=accountJson%>;

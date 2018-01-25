@@ -38,16 +38,22 @@ public interface WeixinDao {
     public Integer userGetOneFu(@Param("columnName") String columnName, @Param("openid") String openid,
             @Param("nextRandomTime") Date nextRandomTime);
 
-    public AccountModel getUserFus(String openid);
-
     public AccountModel getUserInfo(String openid);
+
+    public AccountModel getUserFus(String openid);
 
     public Integer compoundOneFu(String openid);
 
-    public AccountModel getAccounByUsername(@Param("username") String username);
+    public AccountModel getAccountByUsername(@Param("username") String username);
 
     public Integer giveOneFu(@Param("username") String username, @Param("openid") String openid,
             @Param("columnName") String columnName);
 
     public Integer acceptOneFu(@Param("username") String username, @Param("columnName") String columnName);
+    
+    public AccountModel getUserFusByUsername(String username);
+
+    public Integer compoundOneFuByUsername(String username);
+    
+    public Integer changePassword( @Param("openid")String openid,@Param("oldPwd")String oldPwd,@Param("newPwd")String newPwd);
 }

@@ -19,6 +19,12 @@
 		openid=#{openid}
 	</update>
 
+	<update id="changePassword">
+		update sys_account set password=#{newPwd} where
+		openid=#{openid} and password=#{oldPwd}
+	</update>
+
+
 	<select id="getFuList" resultType="FuModel">
 		select id,remainCount,weight
 		from sys_fu where remainCount!=0
@@ -35,14 +41,17 @@
 		where openid=#{openid}
 	</update>
 
-	<select id="getUserFus" resultType="AccountModel">
-		select
-		fu1,fu2,fu3,fu4,fu5,remainRandomCount,nextRandomTime from sys_account
-		where openid=#{openid}
-	</select>
+
 
 	<select id="getUserInfo" resultType="AccountModel">
 		select * from sys_account
+		where openid=#{openid}
+	</select>
+
+
+	<select id="getUserFus" resultType="AccountModel">
+		select
+		fu1,fu2,fu3,fu4,fu5,remainRandomCount,nextRandomTime from sys_account
 		where openid=#{openid}
 	</select>
 
@@ -51,21 +60,36 @@
 		fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1 where
 		openid=#{openid}
 	</update>
-	
+
 	<select id="getAccountByUsername" resultType="AccountModel">
 		SELECT * FROM
 		sys_account WHERE username = #{username}
 	</select>
-	
-	
+
+
 	<update id="giveOneFu">
 		update sys_account set
-		${columnName}=${columnName}-1 where
-		 username=#{username} and openid=#{openid}
+		${columnName}=${columnName}-1
+		where
+		username=#{username} and openid=#{openid}
 	</update>
-	
+
 	<update id="acceptOneFu">
 		update sys_account set
-		${columnName}=${columnName}+1 where username=#{username}
+		${columnName}=${columnName}+1
+		where username=#{username}
+	</update>
+
+
+	<select id="getUserFusByUsername" resultType="AccountModel">
+		select
+		fu1,fu2,fu3,fu4,fu5,remainRandomCount,nextRandomTime from sys_account
+		where username=#{username}
+	</select>
+
+	<update id="compoundOneFuByUsername">
+		update sys_account set
+		fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1 where
+		username=#{username}
 	</update>
 </mapper>
