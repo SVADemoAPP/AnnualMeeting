@@ -10,6 +10,12 @@
         WHERE username = #{value}
     </select>
     
+    <select id="getPersionByUsername" resultType="AccountModel">
+        SELECT * 
+        FROM sys_account 
+        WHERE username = #{value}
+    </select>
+    
     <select id="getPersionById" resultType="AccountModel">
         SELECT * 
         FROM sys_account 
@@ -26,6 +32,19 @@
                 FROM winning_record w 
                 WHERE w.prizeCode = #{prizeCode}
             )
+    </select>
+    
+    <update id="updateOnlineTime">
+        UPDATE sys_account
+        SET lastHeartbeat = #{lastHeartbeat}, onLineTime = #{onLineTime}
+        WHERE username = #{username}
+    </update>
+    
+    <select id="getOnlineInfo" resultType="AccountModel">
+        SELECT username, realname, onLineTime
+        FROM sys_account
+        ORDER BY onLineTime desc
+        LIMIT ${value}
     </select>
     
 </mapper>

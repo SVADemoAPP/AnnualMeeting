@@ -68,7 +68,7 @@ html,body{
     width:267px;
     height:145px;
     cursor:pointer;
-    background:url(<c:url value='/images/recordBtn.png'/>) top center no-repeat;
+    background:url(<c:url value='/images/recordBtn.png'/>) top center no-repeat,url(<c:url value='/images/recordBtnOver.png'/>) top center no-repeat,url(<c:url value='/images/recordBtnOn.png'/>) top center no-repeat;
 }
 .record:hover{
     background:url(<c:url value='/images/recordBtnOver.png'/>) top center no-repeat;
@@ -197,7 +197,7 @@ html,body{
     height:171px;
     cursor:pointer;
     margin: -20px 0 0 120px;
-    background:url(<c:url value='/images/startBtn.png'/>) top center no-repeat;
+    background:url(<c:url value='/images/startBtn.png'/>) top center no-repeat,url(<c:url value='/images/startBtnOver.png'/>) top center no-repeat,url(<c:url value='/images/startBtnOn.png'/>) top center no-repeat;
 }
 .startRoll:hover{
     background:url(<c:url value='/images/startBtnOver.png'/>) top center no-repeat;

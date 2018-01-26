@@ -38,6 +38,14 @@ public interface AccountDao
     public AccountModel getPersionById(int id);
     
     /** 
+     * @Title: getPersionByUsername 
+     * @Description: 根据用户名查找对应的账户信息 
+     * @param username
+     * @return 
+     */
+    public AccountModel getPersionByUsername(String username);
+    
+    /** 
      * @Title: getCandidate 
      * @Description: 查找符合抽奖条件的候选人
      * @param dept
@@ -45,4 +53,18 @@ public interface AccountDao
      * @return 
      */
     public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
+    
+    /** 
+     * @Title: updateOnlineTime 
+     * @Description: 更新在线时长 
+     * @param model 
+     */
+    public void updateOnlineTime(AccountModel model);
+    
+    /** 
+     * @Title: getOnlineInfo 
+     * @Description: 获取在线时长信息 
+     * @return 
+     */
+    public List<AccountModel> getOnlineInfo(int length);
 }
