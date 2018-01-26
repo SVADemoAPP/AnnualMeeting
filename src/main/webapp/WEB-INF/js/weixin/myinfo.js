@@ -48,12 +48,14 @@ function loginOut() {
 		success : function(data) {
 			if (data.resultCode == 200) {
 				showToast("退出登录成功");
+				account==null;
 				$("#div_login_all").show();
 				$("#div_login").show();
 
 				$(".value_jobnum").html("-");
 				$(".value_pnum").html("-");
 				$(".value_dptmt").html("-");
+				clearInterval(timer);
 
 			} else if (data.resultCode == 400) {
 				showToast("退出失败");

@@ -123,11 +123,11 @@ public class LotteryService
     /** 
      * @Title: getWinInfoByAccount 
      * @Description: 获取指定账户的中奖信息 
-     * @param accountId
+     * @param openid
      * @return 
      */
-    public List<WinningRecordModel> getWinInfoByAccount(String accountId){
-        return daoWinning.getWinInfoByAccount(accountId);
+    public List<WinningRecordModel> getWinInfoByAccount(String openid){
+        return daoWinning.getWinInfoByAccount(openid);
     }
     
     /** 

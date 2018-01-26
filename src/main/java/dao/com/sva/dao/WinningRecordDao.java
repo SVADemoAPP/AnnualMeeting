@@ -90,5 +90,5 @@ public interface WinningRecordDao
      * @param accountId
      * @return 
      */
-    public List<WinningRecordModel> getWinInfoByAccount(String accountId);
+    public List<WinningRecordModel> getWinInfoByAccount(String openid);
 }

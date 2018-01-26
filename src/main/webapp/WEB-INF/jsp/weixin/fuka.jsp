@@ -78,7 +78,7 @@
 					</div>
 				</div>
 			</div>
-			<img class="start_lottery" src="../images/44.png" alt="" />
+			<div class="start_lottery" alt="" />
 			<p class="lottery_start_info">开始抽奖</p>
 		</div>
 		<div class="bg-footer contentspace">

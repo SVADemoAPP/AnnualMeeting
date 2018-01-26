@@ -6,11 +6,16 @@
 
 	<select id="getAccountByOpenid" resultType="AccountModel">
 		SELECT * FROM
-		sys_account WHERE openid = #{openid}
+		sys_account WHERE openid = #{openid} limit 1
 	</select>
+	
+	<update id="updateHeart">
+		update sys_account set lastHeartbeat=#{lastHeartbeat} where username=#{username} 
+	</update>
+	
 
 	<update id="login">
-		update sys_account set openid=#{openid} where
+		update sys_account set openid=#{openid},lastHeartbeat=#{lastHeartbeat} where
 		username=#{username} and password=#{password}
 	</update>
 

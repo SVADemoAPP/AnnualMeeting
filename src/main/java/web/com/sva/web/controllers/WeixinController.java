@@ -3,11 +3,13 @@ package com.sva.web.controllers;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ import com.sva.common.weixin.utils.CheckUtil;
 import com.sva.common.weixin.utils.MessageUtil;
 import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.model.AccountModel;
+import com.sva.model.WinningRecordModel;
+import com.sva.service.LotteryService;
+import com.sva.service.StatisticService;
 import com.sva.service.WeixinService;
 
 import net.sf.json.JSONObject;
@@ -41,14 +46,39 @@ public class WeixinController {
 
     private static final int CODE_LOSE_OPENID = 301; // openid被顶掉
 
-    /** 
-     * @Fields serverUrl : 服务器url 
-     */ 
+    /**
+     * @Fields serverUrl : 服务器url
+     */
     @Value("${server.url}")
     private String serverUrl;
-    
+
     @Autowired
     private WeixinService weixinService;
+
+    @Autowired
+    private StatisticService statisticService;
+
+    @Autowired
+    private LotteryService lotteryService;
+
+    /**
+     * @Title: heartbeat
+     * @Description: 心跳处理
+     * @param accountId
+     * @return
+     */
+    @RequestMapping(value = "/heartbeat", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> heartbeat(String accountId) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if (StringUtils.isEmpty(accountId)) {
+            modelMap.put("error", "userId is empty");
+            return modelMap;
+        }
+        statisticService.refreshOnline(accountId);
+        modelMap.put("data", "ok");
+        return modelMap;
+    }
 
     @RequestMapping(value = "", method = { RequestMethod.GET })
     @ResponseBody
@@ -114,8 +144,7 @@ public class WeixinController {
     public String introRedirect(HttpServletRequest req, HttpServletResponse response)
             throws UnsupportedEncodingException {
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
-                + "&redirect_uri="
-                + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
+                + "&redirect_uri=" + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
                 + "?response_type=code&scope=snsapi_userinfo&state=intro#wechat_redirect";
     }
 
@@ -123,8 +152,7 @@ public class WeixinController {
     public String fukaRedirect(HttpServletRequest req, HttpServletResponse response)
             throws UnsupportedEncodingException {
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
-                + "&redirect_uri="
-                + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
+                + "&redirect_uri=" + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
                 + "?response_type=code&scope=snsapi_userinfo&state=fuka#wechat_redirect";
     }
 
@@ -132,8 +160,7 @@ public class WeixinController {
     public String mineRedirect(HttpServletRequest req, HttpServletResponse response)
             throws UnsupportedEncodingException {
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WeixinUtil.APPID
-                + "&redirect_uri="
-                + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
+                + "&redirect_uri=" + URLEncoder.encode("http://" + serverUrl + "/sva/weixin/switchPage", "utf-8")
                 + "?response_type=code&scope=snsapi_userinfo&state=mine#wechat_redirect";
     }
 
@@ -154,7 +181,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
-        String openid = req.getParameter("openid");
+        String openid = "3";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -181,16 +208,15 @@ public class WeixinController {
     @ResponseBody
     public Map<String, Object> logout(HttpServletRequest req, String openid) {
         Map<String, Object> resultMap = new HashMap<>();
-
+        weixinService.logout(openid);
         resultMap.put("resultCode", CODE_SUCCESS);
         req.removeAttribute("accountModel");
         return resultMap;
     }
-    
-    
+
     @RequestMapping(value = "/changePassword", method = { RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> changePassword(String openid,String oldPwd,String newPwd) {
+    public Map<String, Object> changePassword(String openid, String oldPwd, String newPwd) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultCode", weixinService.changePassword(openid, oldPwd, newPwd));
         return resultMap;
@@ -237,10 +263,10 @@ public class WeixinController {
         }
         return resultMap;
     }
-    
+
     /**
      * 
-     * @Title: getUserInfo 
+     * @Title: getUserInfo
      * @Description: 获取用户信息
      * @param req
      * @param openid
@@ -259,13 +285,33 @@ public class WeixinController {
         }
         return resultMap;
     }
-    
-    
-    
+
     /**
      * 
-     * @Title: giveFu 
-     * @Description: 按用户名赠送福字 
+     * @Title: getWinInfoByAccount
+     * @Description: 获取指定用户中奖信息
+     * @param req
+     * @param openid
+     * @return
+     */
+    @RequestMapping(value = "/getWinInfoByAccount", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> getWinInfoByAccount(HttpServletRequest req, String openid) {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<WinningRecordModel> winningRecordModelList = lotteryService.getWinInfoByAccount(openid);
+        if (winningRecordModelList == null) {
+            resultMap.put("resultCode", CODE_LOSE_OPENID);
+        } else {
+            resultMap.put("resultCode", CODE_SUCCESS);
+            resultMap.put("resultMsg", winningRecordModelList);
+        }
+        return resultMap;
+    }
+
+    /**
+     * 
+     * @Title: giveFu
+     * @Description: 按用户名赠送福字
      * @param req
      * @param openid
      * @param fromUsername
@@ -275,12 +321,13 @@ public class WeixinController {
      */
     @RequestMapping(value = "/giveFu", method = { RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> giveFu(HttpServletRequest req, String openid,String fromUsername,String toUsername,String fuId) {
+    public Map<String, Object> giveFu(HttpServletRequest req, String openid, String fromUsername, String toUsername,
+            String fuId) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultCode", weixinService.giveFu(openid, fromUsername, toUsername, fuId));
         return resultMap;
     }
-    
+
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
         String openid = "3";
@@ -290,7 +337,7 @@ public class WeixinController {
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/fuka";
     }
-    
+
     @RequestMapping(value = "/mine", method = { RequestMethod.GET })
     public String mine(HttpServletRequest req) {
         String openid = "3";
@@ -300,7 +347,7 @@ public class WeixinController {
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/mine";
     }
-    
+
     @RequestMapping(value = "/changePwd", method = { RequestMethod.GET })
     public String changePwd(HttpServletRequest req) {
         String openid = "3";
@@ -310,7 +357,7 @@ public class WeixinController {
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/changepwd";
     }
-    
+
     @RequestMapping(value = "/wininfo", method = { RequestMethod.GET })
     public String getwininfo(HttpServletRequest req) {
         String openid = "3";

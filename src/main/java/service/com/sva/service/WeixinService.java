@@ -54,7 +54,11 @@ public class WeixinService {
      * @return
      */
     public AccountModel getAccountByOpenid(String openid) {
-        return weixinDao.getAccountByOpenid(openid);
+        AccountModel accountModel= weixinDao.getAccountByOpenid(openid);
+        if(accountModel!=null){
+            weixinDao.updateHeart(accountModel.getUsername(), new Date());
+        }
+        return accountModel;
     }
 
     /**
@@ -65,6 +69,7 @@ public class WeixinService {
      * @return
      */
     public AccountModel login(AccountModel accountModel) {
+        accountModel.setLastHeartbeat(new Date());
         int code = weixinDao.login(accountModel);
         if (code > 0) {
             return weixinDao.getAccountByOpenid(accountModel.getOpenid());

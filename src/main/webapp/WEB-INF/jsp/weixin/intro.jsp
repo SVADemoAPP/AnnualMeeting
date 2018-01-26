@@ -46,6 +46,8 @@
 
 			<div id="div_prize" style="display: none;">
 				<img id="img_prizebg" src="../images/my_prize_dialog.png" />
+				<div id="div_wininfo">
+				</div>
 			</div>
 		</div>
 	</div>

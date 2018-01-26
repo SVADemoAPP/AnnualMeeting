@@ -27,6 +27,9 @@ import com.sva.model.FuModel;
 public interface WeixinDao {
     public AccountModel getAccountByOpenid(@Param("openid") String openid);
 
+    public Integer updateHeart(@Param("username") String username,
+            @Param("lastHeartbeat") Date lastHeartbeat);
+    
     public Integer login(AccountModel accountModel);
 
     public void logout(String openid);
