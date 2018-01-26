@@ -8,6 +8,7 @@
 body {
 	font: 1.6rem "microsoft yahei", Arial, Helvetica, sans-serif;
 	background-color: #e6284a;
+	padding-top: 10px;
 }
 
 html {
@@ -20,7 +21,6 @@ html {
 }
 
 #baseInfo {
-	margin-top: 10px;
 	background-color: #fce76b;
 	width: 100%;
 	position: relative;
@@ -104,7 +104,6 @@ p {
 
 #login_out p, #change_pwd p {
 	color: #ff1616;
-	z-index: 2;
 	position: absolute;
 	width: 100%;
 	text-align: center;

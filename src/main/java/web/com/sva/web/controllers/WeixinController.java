@@ -290,4 +290,34 @@ public class WeixinController {
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/fuka";
     }
+    
+    @RequestMapping(value = "/mine", method = { RequestMethod.GET })
+    public String mine(HttpServletRequest req) {
+        String openid = "3";
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().setAttribute("fromNews", "yes");
+        return "weixin/mine";
+    }
+    
+    @RequestMapping(value = "/changePwd", method = { RequestMethod.GET })
+    public String changePwd(HttpServletRequest req) {
+        String openid = "3";
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().setAttribute("fromNews", "yes");
+        return "weixin/changepwd";
+    }
+    
+    @RequestMapping(value = "/wininfo", method = { RequestMethod.GET })
+    public String getwininfo(HttpServletRequest req) {
+        String openid = "3";
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().setAttribute("fromNews", "yes");
+        return "weixin/wininfo";
+    }
 }

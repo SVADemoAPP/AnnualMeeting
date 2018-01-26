@@ -8,6 +8,7 @@
 //	String openid="aaa";
     AccountModel accountModel = (AccountModel)request.getSession().getAttribute("accountModel");
 	String accountJson = JSONObject.fromObject(accountModel).toString(); 
+	String fromNews = (String) request.getSession().getAttribute("fromNews");
 %>
 <html>
 <head>
@@ -145,6 +146,7 @@
 	<script type="text/javascript" >
 	var account=<%=accountJson%>;
 	var myopenid='<%=openid%>';
+	var fromNews='<%=fromNews%>';
 	</script>
 </body>
 <html>
