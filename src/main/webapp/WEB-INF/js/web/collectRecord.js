@@ -5,7 +5,7 @@
 	var oTable;
 	
 	function initTable(){
-		$.post("/sva/collectRecord/getData",function(data){
+		$.post("/sva/stat/getFullFuInfo",function(data){
 			if(!data.error){
 				if(oTable){oTable.fnDestroy();};
 				oTable = $('#table').dataTable({
@@ -34,7 +34,7 @@
 						},
 						{ 
 							"aTargets": [4],
-							"mData": "received",
+							"mData": "gotFu",
 							"mRender": function ( data, type, full ) {
 								var html = "未兑换";
 								if(data){
@@ -43,17 +43,8 @@
 								return html;
 							}
 						},
-						{ 
-							"aTargets": [5],
-							"mData": "time",
-							"mRender": function ( data, type, full ) {
-								var date = new Date();
-								date.setTime(data);
-								return dateFormat(date,"yyyy/MM/dd HH:mm:ss");
-							}
-						},
 						{
-							"aTargets": [6],
+							"aTargets": [5],
 							"bSortable": false,
 							"bFilter": false,
 							"mData": function(source, type, val) {
@@ -82,7 +73,7 @@
 		$("input[data-type='confirm']").live("click",function(e){
 			if(confirm("是否确认兑换")){
             	var id = $(this).data("id");
-        		$.post("/sva/collectRecord/receivePrizeById",{id:id},function(data){
+        		$.post("/sva/stat/updateFuInfo",{accountId:id},function(data){
         			if(data.returnCode != 1){
         				alert("兑换失败");
 	           		}else{

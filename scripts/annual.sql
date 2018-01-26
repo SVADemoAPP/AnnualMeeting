@@ -33,6 +33,7 @@ CREATE TABLE `sys_account` (
 	`fu3` INT(11) NOT NULL COMMENT '小 个数',
 	`fu4` INT(11) NOT NULL COMMENT '站 个数',
 	`fu5` INT(11) NOT NULL COMMENT '合成 个数',
+	`gotFu` INT(11) NOT NULL DEFAULT '0' COMMENT '是否领取福奖',
 	`remainRandomCount` INT(11) NOT NULL COMMENT '剩余抽奖次数',
 	`nextRandomTime` DATETIME NOT NULL COMMENT '下次抽奖时间',
 	PRIMARY KEY (`id`),

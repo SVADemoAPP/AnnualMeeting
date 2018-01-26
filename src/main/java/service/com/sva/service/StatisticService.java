@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import com.sva.dao.AccountDao;
+import com.sva.dao.WeixinDao;
 import com.sva.model.AccountModel;
 
 /** 
@@ -22,10 +24,14 @@ import com.sva.model.AccountModel;
  * @date 2018年1月25日 下午5:29:15 
  *  
  */
+@Service
 public class StatisticService
 {
     @Autowired
     private AccountDao dao;
+    
+    @Autowired
+    private WeixinDao wDao;
     
     @Value("${heartbeat.time}")
     private int time;
@@ -61,5 +67,24 @@ public class StatisticService
      */
     public List<AccountModel> getOnlineInfo(){
         return dao.getOnlineInfo(length);
+    }
+    
+    /** 
+     * @Title: getFullFuInfo 
+     * @Description: 查找所有集齐福卡的人 
+     * @return 
+     */
+    public List<AccountModel> getFullFuInfo(){
+        return wDao.getCollectedPeople();
+    }
+    
+    /** 
+     * @Title: updateFuInfo 
+     * @Description: 更新福卡的集齐状态 
+     * @param id
+     * @param flag 
+     */
+    public void updateFuInfo(String id, int flag){
+        wDao.updateFuInfo(id, flag);
     }
 }

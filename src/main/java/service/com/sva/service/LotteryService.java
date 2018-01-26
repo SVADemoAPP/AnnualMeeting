@@ -121,6 +121,16 @@ public class LotteryService
     }
     
     /** 
+     * @Title: getWinInfoByAccount 
+     * @Description: 获取指定账户的中奖信息 
+     * @param accountId
+     * @return 
+     */
+    public List<WinningRecordModel> getWinInfoByAccount(String accountId){
+        return daoWinning.getWinInfoByAccount(accountId);
+    }
+    
+    /** 
      * @Title: getWinningDept 
      * @Description: 根据各部门获奖概率，抽取获奖部门
      * @param deptRate

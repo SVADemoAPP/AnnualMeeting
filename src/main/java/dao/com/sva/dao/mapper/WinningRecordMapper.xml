@@ -54,4 +54,13 @@
         ORDER BY a.prizeCode,a.accountId
     </select>
     
+    <select id="getWinInfoByAccount" resultType="WinningRecordModel">
+        SELECT a.*,b.username, b.realname,c.name,c.desc  
+        FROM winning_record a 
+            left join sys_account b on a.accountId=b.id 
+            left join prize c on a.prizeCode= c.code 
+        WHERE b.username = #{value}
+        ORDER BY a.prizeCode
+    </select>
+    
 </mapper>

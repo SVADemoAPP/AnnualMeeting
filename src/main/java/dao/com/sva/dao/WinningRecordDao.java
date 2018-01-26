@@ -83,4 +83,12 @@ public interface WinningRecordDao
      * @return 
      */
     public List<WinningRecordModel> getAllWinRecord();
+    
+    /** 
+     * @Title: getWinInfoByAccount 
+     * @Description: 获取指定账户的中奖信息 
+     * @param accountId
+     * @return 
+     */
+    public List<WinningRecordModel> getWinInfoByAccount(String accountId);
 }

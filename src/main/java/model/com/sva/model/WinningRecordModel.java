@@ -63,6 +63,11 @@ public class WinningRecordModel
      * @Fields name : 奖品等级 
      */ 
     private String name;
+    
+    /** 
+     * @Fields desc : 奖品描述 
+     */ 
+    private String desc;
 
     /**
      * @return the id
@@ -206,6 +211,22 @@ public class WinningRecordModel
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    /**
+     * @return the desc
+     */
+    public String getDesc()
+    {
+        return desc;
+    }
+
+    /**
+     * @param desc the desc to set
+     */
+    public void setDesc(String desc)
+    {
+        this.desc = desc;
     }
     
 }

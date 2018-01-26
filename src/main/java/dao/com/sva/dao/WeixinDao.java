@@ -58,4 +58,19 @@ public interface WeixinDao {
     public Integer compoundOneFuByUsername(String username);
     
     public Integer changePassword( @Param("openid")String openid,@Param("oldPwd")String oldPwd,@Param("newPwd")String newPwd);
+    
+    /** 
+     * @Title: getCollectedPeople 
+     * @Description: 获取所有集齐福卡的人 
+     * @return 
+     */
+    public List<AccountModel> getCollectedPeople();
+    
+    /** 
+     * @Title: updateFuInfo 
+     * @Description: 更新福卡的集齐状态 
+     * @param id
+     * @param flag 
+     */
+    public void updateFuInfo(@Param("id")String id, @Param("flag")int flag);
 }

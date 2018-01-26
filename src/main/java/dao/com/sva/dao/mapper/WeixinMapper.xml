@@ -97,4 +97,14 @@
 		SELECT nextRandomTime FROM
 		sys_account WHERE openid = #{openid}
 	</select>
+	
+	<select id="getCollectedPeople" resultType="AccountModel">
+	   SELECT * FROM sys_account WHERE fu5 > 0
+	</select>
+	
+	<update id="updateFuInfo">
+	   UPDATE sys_account
+	   SET gotFu = #{flag}
+	   WHERE username = #{id}
+	</update>
 </mapper>

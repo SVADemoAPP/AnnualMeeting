@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.sva.model.AccountModel;
 import com.sva.service.StatisticService;
 
@@ -39,6 +40,7 @@ public class StatisticController
      * @return 
      */
     @RequestMapping(value="/heartbeat", method = { RequestMethod.POST })
+    @ResponseBody
     public Map<String, Object> heartbeat(String accountId){
         Map<String, Object> modelMap = new HashMap<String, Object>();
         if(StringUtils.isEmpty(accountId)){
@@ -56,10 +58,44 @@ public class StatisticController
      * @return 
      */
     @RequestMapping(value="/getOnlineInfo", method = { RequestMethod.POST })
+    @ResponseBody
     public Map<String, Object> getOnlineInfo(){
         Map<String, Object> modelMap = new HashMap<String, Object>();
         List<AccountModel> result = service.getOnlineInfo();
         modelMap.put("data", result);
+        return modelMap;
+    }
+    
+    /** 
+     * @Title: getFullFuInfo 
+     * @Description: 获取所有集齐福卡的人 
+     * @return 
+     */
+    @RequestMapping(value="/getFullFuInfo", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> getFullFuInfo(){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        List<AccountModel> result = service.getFullFuInfo();
+        modelMap.put("data", result);
+        return modelMap;
+    }
+    
+    /** 
+     * @Title: updateFuInfo 
+     * @Description: 更新福卡的集齐状态 
+     * @param accountId
+     * @return 
+     */
+    @RequestMapping(value="/updateFuInfo", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> updateFuInfo(String accountId){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if(StringUtils.isEmpty(accountId)){
+            modelMap.put("error", "userId is empty");
+            return modelMap;
+        }
+        service.updateFuInfo(accountId, 1);
+        modelMap.put("data", "ok");
         return modelMap;
     }
 }
