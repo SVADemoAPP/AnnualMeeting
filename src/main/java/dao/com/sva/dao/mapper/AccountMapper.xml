@@ -43,6 +43,7 @@
     <select id="getOnlineInfo" resultType="AccountModel">
         SELECT username, realname, onLineTime
         FROM sys_account
+        WHERE dept != ""
         ORDER BY onLineTime desc
         LIMIT ${value}
     </select>

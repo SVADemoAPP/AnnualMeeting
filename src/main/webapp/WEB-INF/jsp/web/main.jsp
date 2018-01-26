@@ -493,11 +493,17 @@ rotateCubeBottomIn {
         <iframe src="http://192.168.0.178:8088/sva/jsp/heatMap" width="100%" height="1080px" style="overflow:hidden;border: none;"></iframe>
         <div style="position:absolute;top:0;left:0;width:1920px;height:1080px;overflow:hidden;"></div>
     </div>
+    <div style="background-color:#fff6d9;">
+        <div id="onlineChart" style="width:1000px; height:600px;margin:50px auto;border: 10px solid rgb(230,41,74);border-radius: 10px;">
+        </div>
+    </div>
     </div>
 	<script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/plugins/cubeTransition/js/mousewheel.js'/>"></script>
     <script src="<c:url value='/plugins/cubeTransition/js/jquery.touchSwipe.js'/>"></script>
     <script src="<c:url value='/plugins/cubeTransition/js/cubeTransition.js'/>"></script> 
+    <script src="<c:url value='/plugins/underscore/underscore.js'/>" type="text/javascript"></script>
+    <script src="<c:url value='/plugins/echarts3/echarts.min.js'/>"></script>
     <script src="<c:url value='/js/web/main.js'/>" type="text/javascript"></script>
 	</body>
 </html>

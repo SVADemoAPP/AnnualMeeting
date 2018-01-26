@@ -7,10 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>集卡记录</title>
 <link href="<c:url value='/plugins/data-tables/media/css/demo_table.css'/>" rel="stylesheet" type="text/css" />
+<style>
+.table{
+    width:100%;
+}
+</style>
 </head>
 <body>
     <div>
-        <table id="table" class="table table-bordered">
+        <table id="table" class="table">
             <thead>
                 <tr>
                     <th></th>
@@ -18,7 +23,6 @@
                     <th>工号</th>
                     <th>部门</th>
                     <th>是否兑换</th>
-                    <th>兑换时间</th>
                     <th>操作</th>
                 </tr>
             </thead>

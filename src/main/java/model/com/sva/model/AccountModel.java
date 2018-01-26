@@ -47,6 +47,11 @@ public class AccountModel {
      * @Fields id : 数据库id
      */
     private String id;
+    
+    /** 
+     * @Fields gotFu : 是否集齐福卡 
+     */ 
+    private int gotFu;
 
     private String openid;
     
@@ -324,6 +329,22 @@ public class AccountModel {
 
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+    /**
+     * @return the gotFu
+     */
+    public int getGotFu()
+    {
+        return gotFu;
+    }
+
+    /**
+     * @param gotFu the gotFu to set
+     */
+    public void setGotFu(int gotFu)
+    {
+        this.gotFu = gotFu;
     }
 
 }

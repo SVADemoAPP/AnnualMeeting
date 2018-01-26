@@ -53,12 +53,12 @@
 							"mRender": function ( data, type, full ) {
 								var cssString = "width: 54px;height:30px;font-size: 13px;font-family:inherit;";
 								var diabled = "";
-								if(full.received){
-									cssString += "disabled";
+								if(full.gotFu){
+									diabled += "disabled";
 								}
 								var html = "" +
 									'<input type="button" data-type="confirm" '
-									+diabled+' style="'+cssString+'" data-id="'+full.id+'" value="兑换">';
+									+diabled+' style="'+cssString+'" data-id="'+full.username+'" value="兑换">';
 								
 								return html;
 							}
@@ -74,7 +74,7 @@
 			if(confirm("是否确认兑换")){
             	var id = $(this).data("id");
         		$.post("/sva/stat/updateFuInfo",{accountId:id},function(data){
-        			if(data.returnCode != 1){
+        			if(data.error){
         				alert("兑换失败");
 	           		}else{
 	           			initTable();
