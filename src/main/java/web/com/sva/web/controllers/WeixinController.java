@@ -179,15 +179,7 @@ public class WeixinController {
         return "weixin/" + STATE;
     }
 
-    @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
-    public String skipPrize(HttpServletRequest req) {
-        String openid = "3";
-        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
-        req.getSession().setAttribute("openid", openid);
-        req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
-        return "weixin/intro";
-    }
+    
 
     @RequestMapping(value = "/login", method = { RequestMethod.POST })
     @ResponseBody
@@ -327,6 +319,17 @@ public class WeixinController {
         resultMap.put("resultCode", weixinService.giveFu(openid, fromUsername, toUsername, fuId));
         return resultMap;
     }
+    
+    @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
+    public String skipPrize(HttpServletRequest req) {
+        String openid = "3";
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
+        req.getSession().setAttribute("openid", openid);
+        req.getSession().setAttribute("accountModel", accountModel);
+        req.getSession().setAttribute("fromNews", "yes");
+        return "weixin/intro";
+    }
+    
 
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
@@ -340,7 +343,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/mine", method = { RequestMethod.GET })
     public String mine(HttpServletRequest req) {
-        String openid = "3";
+        String openid = "odLWc0m4KQmZi-7QHOCqFEOwfRqY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -350,7 +353,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/changePwd", method = { RequestMethod.GET })
     public String changePwd(HttpServletRequest req) {
-        String openid = "3";
+        String openid = req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -360,7 +363,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/wininfo", method = { RequestMethod.GET })
     public String getwininfo(HttpServletRequest req) {
-        String openid = "3";
+        String openid = req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);

@@ -21,7 +21,7 @@
 <link rel="stylesheet" type="text/css" href="../css/weixin/foka.css">
 
 
-<title>活动介绍</title>
+<title>集福卡</title>
 </head> 
 <body>
 	<div id="container">

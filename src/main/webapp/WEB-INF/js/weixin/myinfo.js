@@ -6,13 +6,14 @@ $(window).load(function() {
 	$("#advanceInfo").css("height", h / 6);
 	$("#login_out").css("height", h / 13);
 	$("#change_pwd").css("height", h / 13);
-
+alert("12:"+myopenid);
 	userInfoInit();
 });
 $(window).ready(function() {
 	$("#item_advance_pw").click(function() {
-		console.log("点击了")
-		location.href = '../weixin/changePwd';
+		console.log("点击了");
+		alert(myopenid);
+		location.href = '../weixin/changePwd?openid='+myopenid;
 	})
 	$("#change_pwd").click(function() {
 		var oldpwd = $(".value_old_pwd").val();
