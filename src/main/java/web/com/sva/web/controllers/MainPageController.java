@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.sva.service.LotteryService;
+import com.sva.service.SystemService;
+import com.sva.service.WeixinService;
 
 /** 
  * @ClassName: MainPageController 
@@ -30,6 +32,12 @@ public class MainPageController
 {
     @Autowired
     private LotteryService service;
+    
+    @Autowired
+    private SystemService systemService;
+    
+    @Autowired
+    private WeixinService weixinService;
     /** 
      * @Title: getPrizeDetail 
      * @Description: 获取所有的奖品信息
@@ -55,6 +63,34 @@ public class MainPageController
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("returnCode", 1);
         model.put("data", service.getAllWinRecord());
+        return model;
+    }
+    
+    /** 
+     * @Title: refresh 
+     * @Description: 将数据恢复到最初状态 
+     * @return 
+     */
+    @RequestMapping(value="/refresh", method = {RequestMethod.POST})
+    @ResponseBody
+    public Map<String, Object> refresh(){
+        Map<String, Object> model = new HashMap<String, Object>();
+        systemService.refresh();
+        model.put("returnCode", 1);
+        return model;
+    }
+    
+    /** 
+     * @Title: sendFu 
+     * @Description: 将未发放完的福发出去 
+     * @return 
+     */
+    @RequestMapping(value="/sendFu", method = {RequestMethod.POST})
+    @ResponseBody
+    public Map<String, Object> sendFu(){
+        Map<String, Object> model = new HashMap<String, Object>();
+        int result = weixinService.checkAndSend();
+        model.put("returnCode", result);
         return model;
     }
 }

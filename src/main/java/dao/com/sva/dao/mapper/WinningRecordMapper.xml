@@ -16,6 +16,11 @@
         WHERE id = #{deptRate.id}
     </update>
     
+    <update id="refreshDeptRate">
+        UPDATE dept_winning_rate 
+        SET rate = #{value}
+    </update>
+    
     <select id="getPrizeCountByCode" resultType="Integer">
         SELECT count 
         FROM prize
@@ -62,5 +67,9 @@
         WHERE b.openid=#{openid} 
         ORDER BY a.prizeCode
     </select>
+    
+    <delete id="refreshRecord">
+        DELETE FROM winning_record
+    </delete>
     
 </mapper>

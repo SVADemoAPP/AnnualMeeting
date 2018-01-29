@@ -412,4 +412,31 @@ public class WeixinService {
         }
         return CODE_SUCCESS;
     }
+    
+    /** 
+     * @Title: checkAndSend 
+     * @Description: 检查发放剩余的福卡 
+     * @return 
+     */
+    public int checkAndSend(){
+        // 获取卡片详情
+        List<FuModel> list = weixinDao.getCardDetail();
+        // 判断是否获取到详情列表
+        if(list.isEmpty()){
+            return 0;
+        }
+        // 获取数量最少的卡片,如果还有剩余，就全发出去
+        if(list.get(0).getRemainCount()>0){
+            allotFu(1, list.get(0).getId(), list.get(0).getRemainCount());
+        }
+        
+        // 检查其余卡片的发放量是否大于数量最少的卡片总数，如不是，则发放至等于数量最少的卡片
+        for(int i=1; i<list.size(); i++){
+            int offset = (list.get(i).getTotalCount() - list.get(i).getRemainCount()) - list.get(0).getTotalCount();
+            if(offset < 0){
+                allotFu(1, list.get(i).getId(), offset);
+            }
+        }
+        return 1;
+    }
 }

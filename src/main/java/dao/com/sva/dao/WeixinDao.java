@@ -86,4 +86,11 @@ public interface WeixinDao {
      * @param flag 
      */
     public void updateFuInfo(@Param("id")String id, @Param("flag")int flag);
+    
+    /** 
+     * @Title: getCardDetail 
+     * @Description: 获取卡片的详情 
+     * @return 
+     */
+    public List<FuModel> getCardDetail();
 }

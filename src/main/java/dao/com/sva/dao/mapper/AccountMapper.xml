@@ -49,4 +49,9 @@
         LIMIT ${value}
     </select>
     
+    <update id="refreshAccount">
+        UPDATE sys_account
+        SET onLineTime = 0
+    </update>
+    
 </mapper>

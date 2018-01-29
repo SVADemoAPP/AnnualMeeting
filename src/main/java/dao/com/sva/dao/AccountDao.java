@@ -67,4 +67,10 @@ public interface AccountDao
      * @return 
      */
     public List<AccountModel> getOnlineInfo(int length);
+    
+    /** 
+     * @Title: refreshAccount 
+     * @Description: 更新账户信息  
+     */
+    public void refreshAccount();
 }

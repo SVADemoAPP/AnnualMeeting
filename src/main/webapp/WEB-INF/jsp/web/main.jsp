@@ -377,6 +377,52 @@ html,body{
   transform-origin: 50% 100%;
   animation: rotateCubeBottomIn .6s both ease-in;
 }
+
+.toolBox{
+    width: 62px;
+    height: 62px;
+    border: 5px solid #b11633;
+    border-radius: 36px;
+    background-color: #fae08d;
+    color: #f23457;
+    cursor: pointer;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.toolBox:hover{
+    box-shadow: 0 0 20px #fff;
+    background-color: #fdae18;
+}
+
+.toolDetail{
+    transition: All 0.2s ease-in-out;
+    width:62px;
+    height:0px;
+    overflow: hidden;
+    border: 5px solid #b11633;
+    position: absolute;
+    bottom: 60px;
+    right: 30px;
+    border-top-left-radius: 36px;
+    border-top-right-radius: 36px;
+}
+
+.tool{
+    background-color: #fae08d;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    margin-left: 8px;
+    margin-top: 12px;
+    color: #f23457;
+    cursor: pointer;
+}
+
+.tool:hover{
+    box-shadow: 0 0 20px #fff;
+}
  
 @keyframes 
 rotateCubeTopOut {  
@@ -461,6 +507,19 @@ rotateCubeBottomIn {
             </div>
             <div>
                 <div class="startRoll"></div>
+            </div>
+            <div>
+                <div class="toolDetail" data-height="0">
+                    <div id="refreshData" class="tool">
+                        <i class="icon-refresh" style="margin-left: 7px;"></i>
+                    </div>
+                    <div id="sendFu" class="tool">
+                        <i class="icon-puzzle-piece" style="margin-left: 7px;"></i>
+                    </div>
+                </div>
+                <div class="toolBox">
+                    <i class="icon-cog" style="font-size: 60px;margin: 5px;"></i>
+                </div>
             </div>
          </div>
 	   </div>

@@ -44,6 +44,11 @@
 		});
 	}
 	
+	function clear(){
+		$(".toolDetail").css("height","0px");
+		$(".toolDetail").attr("data-height",0);
+	}
+	
 	function bindEvent(){
 		$("#prize").on("click",function(e){
 			$(".cs-options").toggleClass("active");
@@ -111,6 +116,31 @@
 			setTimeout(function(){
 				$("#detailPopup").hide();
 			},500);
+		});
+		
+		$(".toolBox").on("click",function(e){
+			var height = parseInt($(".toolDetail").attr("data-height"));
+			height = (height+1)%2;
+			$(".toolDetail").css("height",height*160+"px");
+			$(".toolDetail").attr("data-height",height++%2);
+		});
+		
+		$("#refreshData").on("click",function(e){
+			$.post("/sva/mainPage/refresh",function(data){
+				if(data.returnCode == 1){
+					alert("ok");
+				}
+			});
+			clear();
+		});
+		
+		$("#sendFu").on("click",function(e){
+			$.post("/sva/mainPage/sendFu",function(data){
+				if(data.returnCode == 1){
+					alert("ok");
+				}
+			});
+			clear();
 		});
 	}
 	

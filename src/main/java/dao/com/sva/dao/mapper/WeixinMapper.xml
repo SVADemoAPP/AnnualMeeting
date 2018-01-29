@@ -158,4 +158,8 @@
 			#{item}
 		</foreach>
 	</update>
+	
+	<select id="getCardDetail" resultType="FuModel">
+	   SELECT * FROM sys_fu ORDER BY totalCount
+	</select>
 </mapper>

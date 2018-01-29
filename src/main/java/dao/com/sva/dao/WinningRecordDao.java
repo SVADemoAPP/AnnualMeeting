@@ -40,6 +40,13 @@ public interface WinningRecordDao
     public void updateDeptRate(@Param("deptRate")DeptRateModel deptRate);
     
     /** 
+     * @Title: refreshDeptRate 
+     * @Description: 将各部门概率恢复到初始值 
+     * @param rate 
+     */
+    public void refreshDeptRate(int rate);
+    
+    /** 
      * @Title: getPrizeCountByCode 
      * @Description: 获取指定等级的奖品总数 
      * @param prizeCode
@@ -91,4 +98,10 @@ public interface WinningRecordDao
      * @return 
      */
     public List<WinningRecordModel> getWinInfoByAccount(String openid);
+    
+    /** 
+     * @Title: refreshRecord 
+     * @Description: 清空获奖记录  
+     */
+    public void refreshRecord();
 }
