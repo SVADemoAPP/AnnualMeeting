@@ -458,11 +458,6 @@ rotateCubeBottomIn {
                         </ul>
                     </div>
                 </div>
-                <div>
-                    <div class="cs-count" data-code="">
-                        <span id="selectedCount" class="prizeSpan"></span>
-                    </div>
-                </div>
             </div>
             <div>
                 <div class="startRoll"></div>

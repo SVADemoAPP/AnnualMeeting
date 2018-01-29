@@ -111,7 +111,7 @@
 		$(".countNo-1").html("0");
 		$(".countNo-2").html("6");
 		clearInterval(timerCount);
-		showPrizeCount();
+		//showPrizeCount();
 	}
 	
 	function recordWinner(prizeCode, isReceived, callback){
@@ -136,8 +136,6 @@
 	function bindEvent(){
 		
 		$(".handle").on("click",function(e){
-			var count = parseInt($(".prizeCount").text());
-			if(count == 0) return false;
 			var flag = $(".handle").attr("data-flag");
 			if(flag && flag == "false") return false;
 			$(".handle").attr("data-flag","false");
@@ -196,7 +194,7 @@
 		// 初始化
 		init : function(opt){
 			startBlink();
-			showPrizeCount();
+			//showPrizeCount();
 			bindEvent();
 		}
 	};

@@ -60,21 +60,6 @@
 			
 			$(".cs-options").toggleClass("active");
 			$("#prize").toggleClass("active");
-			// 更新数量
-			var param = {prizeCode: selectedVal};
-			$.ajax({
-				url:"/sva/lottery/getPrizeCount",
-	    		type:"post",
-	    		data:JSON.stringify(param),
-	    		contentType:'application/json',
-	    		dataType:"json",
-	    		success:function(data){
-	    			if(data.returnCode == 1){
-	    				var prizeCount = data.data;
-	    				$("#selectedCount").html(prizeCount);
-	        		}
-	    		}
-			});
 			// 更新图片
 			$(".prizeBox-1").removeClass("active");
 			$(".prizeBox-2").removeClass("active");
@@ -84,10 +69,6 @@
 		
 		$(".startRoll").on("click",function(e){
 			var code = $("#prize").attr("data-code");
-			var count = $("#selectedCount").text();
-			if(count == "0"){
-				return false;
-			}
 			if(code){
 				$("#confirmPrize").text($("#selectedText").text());
 				$("#confirmPrizeDetail").text($("#prize").attr("data-desc"));
@@ -183,7 +164,11 @@
     		dataType:"json",
     		success:function(data){
     			if(data.data){
-    				var titleList = _.pluck(data.data, "username");
+    				//var titleList = _.pluck(data.data, "username");
+    				var titleList = [];
+    				_.each(data.data,function(e){
+    					titleList.push(e.realname+e.username);
+    				});
     				var dataList = _.pluck(data.data, "onLineTime");
     				var option = {
 					    color: ['#3398DB'],
@@ -203,7 +188,7 @@
 					    grid: {
 					        left: '3%',
 					        right: '4%',
-					        bottom: '7%',
+					        bottom: '9%',
 					        containLabel: true
 					    },
 					    xAxis : [

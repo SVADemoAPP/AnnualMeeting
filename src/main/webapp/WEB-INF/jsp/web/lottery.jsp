@@ -226,10 +226,6 @@
             </div>
             <div class="handle"></div>
         </div>
-        <div class="prizeCountBox">
-            <h1 style="font-size:2.7em;">剩余名额</h1>
-            <div class="prizeCount"></div>
-        </div>
     </div>
     <div class="popup" style="display:none;">
         <div class="notice">
