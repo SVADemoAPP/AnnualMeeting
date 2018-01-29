@@ -8,14 +8,16 @@
 		SELECT * FROM
 		sys_account WHERE openid = #{openid} limit 1
 	</select>
-	
+
 	<update id="updateHeart">
-		update sys_account set lastHeartbeat=#{lastHeartbeat} where username=#{username} 
+		update sys_account set lastHeartbeat=#{lastHeartbeat}
+		where username=#{username}
 	</update>
-	
+
 
 	<update id="login">
-		update sys_account set openid=#{openid},lastHeartbeat=#{lastHeartbeat} where
+		update sys_account set
+		openid=#{openid},lastHeartbeat=#{lastHeartbeat} where
 		username=#{username} and password=#{password}
 	</update>
 
@@ -72,6 +74,8 @@
 	</select>
 
 
+
+
 	<update id="giveOneFu">
 		update sys_account set
 		${columnName}=${columnName}-1
@@ -97,19 +101,61 @@
 		fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1 where
 		username=#{username}
 	</update>
-	
+
 	<select id="getNextRandomTime" resultType="Date">
-		SELECT nextRandomTime FROM
+		SELECT nextRandomTime
+		FROM
 		sys_account WHERE openid = #{openid}
 	</select>
-	
+
 	<select id="getCollectedPeople" resultType="AccountModel">
-	   SELECT * FROM sys_account WHERE fu5 > 0
+		SELECT * FROM
+		sys_account WHERE fu5 > 0
 	</select>
-	
+
 	<update id="updateFuInfo">
-	   UPDATE sys_account
-	   SET gotFu = #{flag}
-	   WHERE username = #{id}
+		UPDATE sys_account
+		SET gotFu = #{flag}
+		WHERE username =
+		#{id}
+	</update>
+
+
+	<select id="getCountByFuId" resultType="Integer">
+		SELECT remainCount FROM
+		sys_fu WHERE id = #{fuId}
+	</select>
+
+	<update id="reduceCountByFuId">
+		UPDATE sys_fu
+		SET remainCount = remainCount -
+		#{fuCount}
+		WHERE id = #{fuId}
+	</update>
+
+
+	<select id="getRandomAccount" resultType="AccountModel">
+		SELECT
+		id,fu1,fu2,fu3,fu4,fu5,openid FROM sys_account where ${columnName}=0
+		ORDER BY RAND() LIMIT #{fuCount}
+	</select>
+
+	<update id="updateRandomAccount" parameterType="List">
+
+		update sys_account
+		set  ${columnName}=${columnName}+1 where id in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<update id="compoundRandomAccount" parameterType="List" >
+		update
+		sys_account set fu1=fu1-1,fu2=fu2-1,fu3=fu3-1,fu4=fu4-1,fu5=fu5+1
+		where id in
+		<foreach collection="list" item="item" index="index" separator=","  open="(" close=")">
+			#{item}
+		</foreach>
 	</update>
 </mapper>

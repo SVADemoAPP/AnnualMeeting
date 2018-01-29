@@ -314,7 +314,7 @@ public class WeixinController {
     @RequestMapping(value = "/giveFu", method = { RequestMethod.POST })
     @ResponseBody
     public Map<String, Object> giveFu(HttpServletRequest req, String openid, String fromUsername, String toUsername,
-            String fuId) {
+            int fuId) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultCode", weixinService.giveFu(openid, fromUsername, toUsername, fuId));
         return resultMap;
@@ -369,5 +369,24 @@ public class WeixinController {
         req.getSession().setAttribute("accountModel", accountModel);
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/wininfo";
+    }
+    
+    
+    /**
+     * 
+     * @Title: allotFu 
+     * @Description: 批量送福接口
+     * @param req
+     * @param fuId
+     * @param fuCount
+     * @return
+     */
+    @RequestMapping(value = "/allotFu", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> allotFu(HttpServletRequest req, int fuId, int count) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("resultMsg", weixinService.allotFu(1, fuId, count));
+        resultMap.put("resultCode", CODE_SUCCESS);
+        return resultMap;
     }
 }

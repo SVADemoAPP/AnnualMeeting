@@ -46,7 +46,17 @@ public interface WeixinDao {
     public AccountModel getUserInfo(String openid);
 
     public AccountModel getUserFus(String openid);
+    
+    public Integer getCountByFuId(int fuId);
+    
+    public Integer reduceCountByFuId(@Param("fuId")int fuId,@Param("fuCount") int fuCount);
+    
+    public List<AccountModel> getRandomAccount(@Param("columnName") String columnName,@Param("fuCount") int fuCount);
 
+    public Integer updateRandomAccount(@Param("columnName") String  columnName, @Param("list") List<String> list);
+    
+    public Integer compoundRandomAccount(@Param("list") List<String> list);
+    
     public Integer compoundOneFu(String openid);
 
     public AccountModel getAccountByUsername(@Param("username") String username);
