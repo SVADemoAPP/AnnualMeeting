@@ -23,6 +23,7 @@ CREATE TABLE `sys_account` (
 	`realname` VARCHAR(50) NOT NULL COMMENT '真实姓名' COLLATE 'utf8_bin',
 	`phoneNo` VARCHAR(50) NOT NULL COMMENT '电话号码' COLLATE 'utf8_bin',
 	`dept` VARCHAR(50) NOT NULL COMMENT '部门' COLLATE 'utf8_bin',
+	`level` TINYINT(3) UNSIGNED NULL DEFAULT '0' COMMENT '员工级别',
 	`lastLoginTime` DATETIME NULL DEFAULT NULL COMMENT '最后一次登录时间',
 	`lastHeartbeat` DATETIME NULL DEFAULT NULL COMMENT '最后一次心跳时间',
 	`onLineTime` INT(10) UNSIGNED NOT NULL COMMENT '累计在线时长',
