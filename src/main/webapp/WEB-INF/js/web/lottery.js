@@ -58,7 +58,7 @@
 		isBegin = true;
 		var u = 229;
 		$(".num").css('backgroundPositionY',0);
-		var num_arr = (detail.username+'').split('');
+		var num_arr = (detail.username+'').substr(-6).split('');
 		$(".num").each(function(index){
 			var _num = $(this);
 			setTimeout(function(){
