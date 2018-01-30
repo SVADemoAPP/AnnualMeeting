@@ -26,17 +26,17 @@
 	<div id="baseInfo">
 		<div id="item_baseinfo">
 			<p class="p_title">工号</p>
-			<p class="value_jobnum">123456</p>
+			<p class="value_jobnum">-</p>
 		</div>
 		<div class="line"></div>
 		<div id="item_baseinfo">
 			<p class="p_title">电话</p>
-			<p class="value_pnum">13689082222</p>
+			<p class="value_pnum">-</p>
 		</div>
 		<div class="line"></div>
 		<div id="item_baseinfo">
 			<p class="p_title">部门</p>
-			<p class="value_dptmt">无线</p>
+			<p class="value_dptmt">-</p>
 		</div>
 	</div>
 
