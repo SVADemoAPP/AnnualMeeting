@@ -510,10 +510,10 @@ rotateCubeBottomIn {
             </div>
             <div>
                 <div class="toolDetail" data-height="0">
-                    <div id="refreshData" class="tool">
+                    <div id="refreshData" class="tool" title="数据初始化">
                         <i class="icon-refresh" style="margin-left: 7px;"></i>
                     </div>
-                    <div id="sendFu" class="tool">
+                    <div id="sendFu" class="tool" title="福到">
                         <i class="icon-puzzle-piece" style="margin-left: 7px;"></i>
                     </div>
                 </div>

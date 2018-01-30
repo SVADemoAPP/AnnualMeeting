@@ -53,6 +53,7 @@
 		$("#prize").on("click",function(e){
 			$(".cs-options").toggleClass("active");
 			$("#prize").toggleClass("active");
+			e.stopPropagation();
 		});
 		
 		$(".cs-options>ul>li").live("click",function(e){
@@ -62,9 +63,6 @@
 			$("#selectedText").text(selectedTxt);
 			$("#prize").attr("data-code", selectedVal);
 			$("#prize").attr("data-desc", selectedDesc);
-			
-			$(".cs-options").toggleClass("active");
-			$("#prize").toggleClass("active");
 			// 更新图片
 			$(".prizeBox-1").removeClass("active");
 			$(".prizeBox-2").removeClass("active");
@@ -123,6 +121,7 @@
 			height = (height+1)%2;
 			$(".toolDetail").css("height",height*160+"px");
 			$(".toolDetail").attr("data-height",height++%2);
+			e.stopPropagation();
 		});
 		
 		$("#refreshData").on("click",function(e){
@@ -142,6 +141,12 @@
 			});
 			clear();
 		});
+		
+		$("body").on("click",function(e){
+			clear();
+			$(".cs-options").removeClass("active");
+			$("#prize").removeClass("active");
+		})
 	}
 	
 	function initDetail(list){
