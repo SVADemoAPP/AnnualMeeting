@@ -137,8 +137,8 @@ public class MessageUtil
         News news = new News();
         news.setDescription("这是一段详情介绍");
         news.setTitle("SVA简介");
-        news.setPicUrl("http://hangao.free.ngrok.cc/Weixin/image/2.png");
-        news.setUrl("http://hangao.free.ngrok.cc/Weixin/html/sva_introduce.html");
+        news.setPicUrl("http://zrwb.mynatapp.cc/sva/images/prize.png");
+        news.setUrl("http://zrwb.mynatapp.cc/sva/weixin/skipPrize");
         
 //        News news1 = new News();
 //        news1.setDescription("测试内容2");

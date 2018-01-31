@@ -96,7 +96,7 @@ public class WeixinController {
 
     @RequestMapping(value = "", method = { RequestMethod.POST })
     @ResponseBody
-    public String weixinPost(HttpServletRequest req, HttpServletResponse resp) {
+    public String weixinPost(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
         // req.setCharacterEncoding("UTF-8");
         // resp.setCharacterEncoding("UTF-8");
         // 获取数据并转换为集合
@@ -114,13 +114,15 @@ public class WeixinController {
         case MessageUtil.MESSAGE_TEXT:
             if ("1".equals(content)) {
                 msg = MessageUtil.setTextMsg(fromUserName, toUserName, "内容1");
+                // WeixinUtil.pushText(fromUserName, "内容1 ");
             } else if ("2".equals(content)) {
                 msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
             } else if ("?".equals(content) || "？".equals(content)) {
                 msg = MessageUtil.setTextMsg(fromUserName, toUserName, MessageUtil.menuMsg());
             } else {
                 // 其他字符回复主菜单
-                msg = MessageUtil.setTextMsg(fromUserName, toUserName, MessageUtil.menuMsg());
+                // msg = MessageUtil.setTextMsg(fromUserName, toUserName,
+                // MessageUtil.menuMsg());
             }
             break;
         case MessageUtil.MESSAGE_EVENT:
@@ -128,6 +130,7 @@ public class WeixinController {
             // System.out.println("event事件类型："+event);
             if (MessageUtil.MESSAGE_SUBSCRIBE.equals(event)) {
                 msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
+                // WeixinUtil.pushText(fromUserName, "欢迎关注！");
             } else {
                 // req.getSession().setAttribute("fromUserName", fromUserName);
             }
@@ -137,6 +140,9 @@ public class WeixinController {
             break;
         }
         System.out.println(msgType + " " + fromUserName + " " + msg);
+        if (StringUtils.isNotEmpty(msg)) {
+            msg = new String(msg.getBytes(), "iso8859-1");
+        }
         return msg;
     }
 
@@ -178,8 +184,6 @@ public class WeixinController {
         req.getSession().removeAttribute("fromNews");
         return "weixin/" + STATE;
     }
-
-    
 
     @RequestMapping(value = "/login", method = { RequestMethod.POST })
     @ResponseBody
@@ -319,7 +323,7 @@ public class WeixinController {
         resultMap.put("resultCode", weixinService.giveFu(openid, fromUsername, toUsername, fuId));
         return resultMap;
     }
-    
+
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
         String openid = "3";
@@ -329,7 +333,6 @@ public class WeixinController {
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/intro";
     }
-    
 
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
@@ -370,11 +373,10 @@ public class WeixinController {
         req.getSession().setAttribute("fromNews", "yes");
         return "weixin/wininfo";
     }
-    
-    
+
     /**
      * 
-     * @Title: allotFu 
+     * @Title: allotFu
      * @Description: 批量送福接口
      * @param req
      * @param fuId
