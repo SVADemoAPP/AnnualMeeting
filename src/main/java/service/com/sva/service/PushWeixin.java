@@ -77,6 +77,14 @@ public class PushWeixin implements Runnable
     public void run()
     {
         if(!StringUtils.isEmpty(model.getOpenid())){
+            try
+            {
+                Thread.sleep(24000);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
             PrizeModel prize = service.getPrizeDetail(code);
             WeixinUtil.pushNews(
                     model.getOpenid(), 
