@@ -6,16 +6,10 @@ $(window).load(function() {
 	$("#advanceInfo").css("height", h / 6);
 	$("#login_out").css("height", h / 13);
 	$("#change_pwd").css("height", h / 13);
-	alert("12:" + myopenid);
 	userInfoInit();
-});
-$(window).ready(function() {
-
 });
 
 $("#item_advance_pw").click(function() {
-	console.log("点击了");
-	alert(myopenid);
 	location.href = '../weixin/changePwd?openid=' + myopenid;
 })
 $("#change_pwd").click(function() {
@@ -33,7 +27,7 @@ $("#change_pwd").click(function() {
 	changePwd(oldpwd, newpwd2);
 })
 $("#item_advance_prz").click(function() {
-	location.href = '../weixin/wininfo';
+	location.href = '../weixin/wininfo?openid=' + myopenid;
 })
 
 $("#login_out").click(function() {
@@ -78,7 +72,7 @@ function changePwd(myoldPwd, mynewPwd) {
 		success : function(data) {
 			if (data.resultCode == 200) {
 				showToast("修改完成");
-				location.href = '../weixin/mine?openid=' + myopenid;
+				history.back();
 			} else if (data.resultCode == 400) {
 				showToast("旧密码输入不对");
 			}
@@ -88,7 +82,7 @@ function changePwd(myoldPwd, mynewPwd) {
 function userInfoInit() {
 	$(".value_jobnum").html(account.username);
 	$(".value_pnum").html(account.phoneNo);
-	$(".value_dptmt").html(account.username);
+	$(".value_dptmt").html(account.dept);
 }
 
 function dataInit() {
