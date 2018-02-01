@@ -391,4 +391,12 @@ public class WeixinController {
         resultMap.put("resultCode", CODE_SUCCESS);
         return resultMap;
     }
+    
+//    @RequestMapping(value = "/initFu", method = { RequestMethod.POST })
+//    @ResponseBody
+//    public Map<String, Object> initFu() {
+//        Map<String, Object> resultMap = new HashMap<>();
+//        resultMap.put("resultMsg", weixinService.fuReturnStart());
+//        return resultMap;
+//    }
 }

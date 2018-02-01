@@ -162,4 +162,15 @@
 	<select id="getCardDetail" resultType="FuModel">
 	   SELECT * FROM sys_fu ORDER BY totalCount
 	</select>
+	
+	 <update id="initFuOfAccount">
+        UPDATE sys_account
+        SET fu1 = 0,fu2=0,fu3=0,fu4=0,fu5=0,gotFu=0,remainRandomCount=#{startcount},nextRandomTime=#{starttime}
+    </update>
+    
+    <update id="initSysFu">
+        UPDATE sys_fu
+        SET remainCount = totalCount
+    </update>
+    
 </mapper>

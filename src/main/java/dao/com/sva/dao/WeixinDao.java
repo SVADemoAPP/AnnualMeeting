@@ -93,4 +93,10 @@ public interface WeixinDao {
      * @return 
      */
     public List<FuModel> getCardDetail();
+    
+    
+    public void initFuOfAccount(@Param("startcount")int startcount,@Param("starttime")String starttime);
+    
+    public void initSysFu();
+    
 }

@@ -17,8 +17,11 @@ import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.sva.common.ConvertUtil;
+import com.sva.common.conf.Params;
 import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.dao.WeixinDao;
 import com.sva.model.AccountModel;
@@ -45,10 +48,30 @@ public class WeixinService {
 
     private static final int CODE_NOT_TIME = 303; // 抽奖时间未到
 
+    private static final int CODE_END_TIME = 305; // 活动时间结束
+
     private static final int CODE_NOT_ENOUGH = -304; // 批量送福数量不够
 
     @Autowired
     private WeixinDao weixinDao;
+
+    /**
+     * @Fields starttime : 抽福开始时间
+     */
+    @Value("${fu.starttime}")
+    private String fuStarttime;
+
+    /**
+     * @Fields endtime : 抽福结束时间
+     */
+    @Value("${fu.endtime}")
+    private String fuEndtime;
+
+    /**
+     * @Fields interminute : 抽福间隔分钟数
+     */
+    @Value("${fu.interminute}")
+    private int interminute;
 
     /**
      * 
@@ -145,9 +168,16 @@ public class WeixinService {
             resultMap.put("resultCode", CODE_LOSE_OPENID);
             return;
         }
-        if (new Date().before(nextRandom)) {
+        Date nowDate = new Date();
+        if (!nowDate.before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))) {
+            // 活动时间结束
+            resultMap.put("resultCode", CODE_END_TIME);
+            return;
+        }
+        if (nowDate.before(nextRandom)) {
             // 抽奖时间未到
             resultMap.put("resultCode", CODE_NOT_TIME);
+            resultMap.put("nextRandomTime", nextRandom);
             return;
         }
         int fu = allotFu(0, 0, 0);
@@ -157,8 +187,9 @@ public class WeixinService {
         case 3:
         case 4:
             Date nowTime = new Date();
-            Date nextRandomTime = new Date(
-                    (System.currentTimeMillis() + 15 * 60 * 1000) / (15 * 60 * 1000) * (15 * 60 * 1000));
+            long lastTimestamp=nextRandom.getTime();
+            //下次抽奖时间推迟间隔分钟
+            Date nextRandomTime = new Date(lastTimestamp + interminute * 60 * 1000);
             int code = weixinDao.userGetOneFu("fu" + fu, openid, nextRandomTime);
             if (code == 0) {
                 // 失败则福字回滚且返回openid失效的说明
@@ -412,31 +443,38 @@ public class WeixinService {
         }
         return CODE_SUCCESS;
     }
-    
-    /** 
-     * @Title: checkAndSend 
-     * @Description: 检查发放剩余的福卡 
-     * @return 
+
+    /**
+     * @Title: checkAndSend
+     * @Description: 检查发放剩余的福卡
+     * @return
      */
-    public int checkAndSend(){
+    public int checkAndSend() {
         // 获取卡片详情
         List<FuModel> list = weixinDao.getCardDetail();
         // 判断是否获取到详情列表
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             return 0;
         }
         // 获取数量最少的卡片,如果还有剩余，就全发出去
-        if(list.get(0).getRemainCount()>0){
+        if (list.get(0).getRemainCount() > 0) {
             allotFu(1, list.get(0).getId(), list.get(0).getRemainCount());
         }
-        
+
         // 检查其余卡片的发放量是否大于数量最少的卡片总数，如不是，则发放至等于数量最少的卡片
-        for(int i=1; i<list.size(); i++){
+        for (int i = 1; i < list.size(); i++) {
             int offset = (list.get(i).getTotalCount() - list.get(i).getRemainCount()) - list.get(0).getTotalCount();
-            if(offset < 0){
+            if (offset < 0) {
                 allotFu(1, list.get(i).getId(), offset);
             }
         }
         return 1;
+    }
+
+    public int fuReturnStart() {
+        int startcount = (int)((ConvertUtil.dateFormatStringtoLong(fuEndtime, Params.YYYYMMDDHHMMSS)-ConvertUtil.dateFormatStringtoLong(fuStarttime, Params.YYYYMMDDHHMMSS))/(interminute*60*1000));
+        weixinDao.initFuOfAccount(startcount, fuStarttime);
+        weixinDao.initSysFu();
+        return CODE_SUCCESS;
     }
 }
