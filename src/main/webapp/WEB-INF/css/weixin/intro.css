@@ -1,0 +1,60 @@
+#div_prize {
+	position: absolute;
+	height: 100%;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin-top:-180%;
+}
+#div_wininfo{
+	height: auto;
+	position: absolute;
+	color: black;
+	top: 65%;
+	left:18%;
+	width:60%;
+}
+
+#img_prizebg {
+	position: absolute;
+	width: 97%;
+	height: 100%;
+	margin: auto;
+	margin-left: 3%;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#prize {
+	margin-right: 5%;
+	margin-left: 5%;
+	margin-top: -50%;
+	margin-left: 5%;
+}
+
+#prize p {
+	margin-left: 2%;
+	margin-top: 3%;
+	color: #fff;
+	font-size: 14px;
+}
+
+#div_wininfo .prizename {
+	margin-top:-3%;
+	font-weight:bold;
+	color:fbe27c;
+	font-size: 20px;
+	margin-left:8%;
+}
+
+#div_wininfo .prizedesc {
+	margin-top:-5%;
+	font-weight:bold;
+	color:fc335a;
+	font-size: 18px;
+	margin-left:20%;
+}
