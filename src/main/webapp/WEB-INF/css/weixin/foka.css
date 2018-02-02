@@ -115,6 +115,7 @@ html {
 	bottom: 0;
 	background-image: url("../../images/126.png");
 	background-size: 100%;
+	background-repeat:no-repeat;
 }
 
 #flop_send_bg, #flop_complete_bg {
@@ -235,13 +236,19 @@ html {
 }
 
 .lottery_start_info {
-	position: absolute;
-	bottom: 35%;
-	text-align: center;
+	position: relative;
 	width: 100%;
+	height: 100%;
 	font-size: 20px;
+	display: -webkit-flex;
+	padding-bottom: 0.6rem; display : flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
 	font-family: sans-serif;
 	color: red;
+	display: flex;
 }
 
 .start_lottery {
@@ -252,14 +259,17 @@ html {
 	margin: auto;
 	left: 27%;
 	background: url("../../images/44.png");
-	background-size:100%;
+	background-size: 100%;
 }
+
 .start_lottery:active {
 	background: url("../../images/67.png");
-	background-size:100%;
+	background-size: 100%;
 	-webkit-background: url("../../images/67.png");
-	-moz-background:url("../../images/67.png");
+	-moz-background: url("../../images/67.png");
 }
+
+
 
 /*#projects, #projects .grid {*/
 /*height: 248px;*/

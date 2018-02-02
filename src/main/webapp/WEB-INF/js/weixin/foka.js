@@ -1,6 +1,6 @@
 var a, b, right, bottom, nextRandomTime, lastFu5;
 var sendAble = true;// 可送福卡状态
-
+var timer;
 var card;
 var winData;
 // 获取中奖信息
@@ -93,11 +93,20 @@ $(".front img").click(function() {
 		$(this).addClass("active");
 		setTimeout(function() {
 			$("#flop_tag").show();
+			rotation();
 			// 更新卡片数量
 			nextRandomTime = new Date(winData.nextRandomTime);
 		}, 800);
 	}
 })
+var rotation = function() { 
+	var angle = 0;  
+	 timer= setInterval(function(){  
+	    angle +=3;  
+	    $('#flop_bg').rotate(angle);  
+	}, 50);  
+} 
+
 
 // 点击开始抽奖按钮
 $(".start_lottery").click(function() {
@@ -110,6 +119,7 @@ $(".start_lottery").click(function() {
 $("#flop_tag").click(function() {
 	setViewData();
 	reInit();
+	clearInterval(timer); 
 })
 // 隐藏送好友界面
 $(".flop_layer").click(function() {

@@ -136,6 +136,11 @@ public class WeixinService {
      * @return
      */
     public Integer changePassword(String openid, String oldPwd, String newPwd) {
+        AccountModel accountModel=weixinDao.getAccountByOpenid(openid);
+        if(accountModel==null){
+            
+            return CODE_LOSE_OPENID;
+        }
         int code = weixinDao.changePassword(openid, oldPwd, newPwd);
         if (code > 0) {
             return CODE_SUCCESS;

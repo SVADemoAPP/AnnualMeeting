@@ -233,9 +233,13 @@ public class WeixinController {
 
     @RequestMapping(value = "/changePassword", method = { RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> changePassword(String openid, String oldPwd, String newPwd) {
+    public Map<String, Object> changePassword(HttpServletRequest req,String openid, String oldPwd, String newPwd) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("resultCode", weixinService.changePassword(openid, oldPwd, newPwd));
+        int code =weixinService.changePassword(openid, oldPwd, newPwd);
+        if(code==301){
+            req.removeAttribute("accountModel");
+        }
+        resultMap.put("resultCode", code);
         return resultMap;
     }
 

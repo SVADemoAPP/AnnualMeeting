@@ -15,6 +15,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <script type="text/javascript" src="../plugins/jquery.js"></script>
 <script type="text/javascript" src="../plugins/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="../plugins/jQueryRotate.js"></script>
 
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/weixin/all.css">
@@ -108,8 +109,8 @@
 	<div id="flop_tag" style="display: none;">
 		<div class="flop_layer"></div>
 		<div id="flop_bg">
-			<img class="flop_card" alt="" src="../images/78.png">
 		</div>
+		<img class="flop_card" alt="" src="../images/78.png">
 	</div>
 
 	<div id="flop_send_tag" style="display: none;">

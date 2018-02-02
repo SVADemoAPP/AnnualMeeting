@@ -71,7 +71,7 @@ function showLogin() {
  * 重新登录
  */
 function reLogin() {
-	showToast('登录失效', 1000);
+//	showToast('登录失效', 1000);
 	account == null;
 	$('#div_login_all').show();
 	$('#div_login').show();
@@ -94,6 +94,7 @@ function showToast(msg, duration) {
 		}, d * 1000);
 	}, duration);
 };
+
 
 /**
  * 转化日期格式
