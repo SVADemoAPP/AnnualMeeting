@@ -494,7 +494,7 @@ rotateCubeBottomIn {
                 <div class="prizeDetail">
                 </div>
             </div>
-            <div style="margin-top: 500px;">
+            <div style="margin-top: 400px;">
                 <div class="cs-skin-border">
                     <div class="cs-placeholder" id="prize" data-code="">
                         <span id="selectedText" class="prizeSpan">请选择</span>
