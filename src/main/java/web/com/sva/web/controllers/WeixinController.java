@@ -226,7 +226,7 @@ public class WeixinController {
         if (accountModel != null) {
             resultMap.put("resultCode", CODE_SUCCESS);
         } else {
-            resultMap.put("resultCode", CODE_FAIL);
+            resultMap.put("resultCode", CODE_LOSE_OPENID);
         }
         return resultMap;
     }
