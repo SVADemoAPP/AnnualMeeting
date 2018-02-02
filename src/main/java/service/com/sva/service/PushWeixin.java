@@ -91,7 +91,7 @@ public class PushWeixin implements Runnable
                     "中奖信息", 
                     "恭喜您中奖了，您中了"+prize.getName()+"!奖品为"+prize.getDesc(), 
                     "http://"+url+"/sva/weixin/skipPrize?openid="+model.getOpenid(), 
-                    "http://"+url+"/sva/images/prize"+code+".png"
+                    "http://"+url+"/sva/images/prize_"+code+".png"
             );
         }
     }

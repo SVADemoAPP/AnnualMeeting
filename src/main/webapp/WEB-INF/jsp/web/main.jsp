@@ -479,21 +479,22 @@ rotateCubeBottomIn {
 	   <div class="main_bg">
          <div class="leftPart">
             <div class="prizeShow">
+                <!-- 
                 <div class="prizeBox prizeBox-1"></div>
                 <div class="prizeBox prizeBox-2"></div>
-                <div class="prizeBox prizeBox-3"></div>
+                <div class="prizeBox prizeBox-3"></div> -->
             </div>
          </div>
          <div class="rightPart">
             <div style="height:145px;">
                 <div class="record"></div>
             </div>
-            <div>
+            <div style="display:none;">
                 <div class="title"></div>
                 <div class="prizeDetail">
                 </div>
             </div>
-            <div>
+            <div style="margin-top: 500px;">
                 <div class="cs-skin-border">
                     <div class="cs-placeholder" id="prize" data-code="">
                         <span id="selectedText" class="prizeSpan">请选择</span>
@@ -526,8 +527,8 @@ rotateCubeBottomIn {
 	   <div id="confirmPopup"  class="popup" style="display:none;">
 	       <div class="popupBox">
 	           <div id="confirmPrize" style="margin-top: 450px;"></div>
-	           <div id="confirmPrizeDetail"></div>
-	           <div>获奖名额一人</div>
+	           <!-- <div id="confirmPrizeDetail"></div> -->
+	           <div style="margin-top: 50px;">获奖名额一人</div>
 	           <div>
 	               <div class="confirmBtn"></div>
 	               <div class="cancelBtn"></div>

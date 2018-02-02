@@ -48,6 +48,7 @@
     <select id="getAllPrizeDetail" resultType="PrizeModel">
         SELECT *
         FROM prize
+        ORDER BY code
     </select>
     
     <select id="getAllWinRecord" resultType="WinningRecordModel">

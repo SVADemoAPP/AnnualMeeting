@@ -107,6 +107,7 @@
 		startBlink();
 		$(".num").css('backgroundPositionY',0);
 		$(".arrow").css({transform:"rotate(0deg)"});
+		$(".arrow").attr("data-angle",0);
 		$(".quitBox").css({transform:"rotate(180deg)"});
 		$(".countNo-1").html("0");
 		$(".countNo-2").html("6");

@@ -8,6 +8,7 @@
  */
 package com.sva.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.sva.dao.AccountDao;
@@ -26,15 +27,17 @@ public class SystemService
     /** 
      * @Fields daoAccount : 账户dao 
      */ 
+    @Autowired
     private AccountDao daoAccount;
-    
-    @Value("${rate.init}")
-    private int initRate;
     
     /** 
      * @Fields daoRecord : 获奖记录dao
      */ 
+    @Autowired
     private WinningRecordDao daoRecord;
+    
+    @Value("${rate.init}")
+    private int initRate;
     
     public void refresh(){
         // 员工在线时长归零
