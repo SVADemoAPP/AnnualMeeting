@@ -79,13 +79,13 @@ function reLogin() {
 };
 
 function showToast(msg, duration) {
-	duration = isNaN(duration) ? 3000 : duration;
+	duration = 3000;
 	var m = document.createElement('div');
 	m.innerHTML = msg;
-	m.style.cssText = "width: 60%;min-width: 150px;opacity: 0.5;height: 30px;color: rgb(255, 255, 255);line-height: 30px;text-align: center;border-radius: 5px;position: fixed;top: 30%;left: 20%;z-index: 999999;background: rgb(0, 0, 0);font-size: 12px;";
+	m.style.cssText = "width: 80%;opacity: 0.6;height: 15%;color:#fff;line-height: 30px;text-align: center;border-radius: 5px;position:fixed ;top: 40%;left: 10%;z-index: 999999;background: rgb(0,0,0);font-size: 18px;display: -webkit-flex;display: flex;-webkit-align-items: center;align-items: center;-webkit-justify-content: center;justify-content: center;";
 	document.body.appendChild(m);
 	setTimeout(function() {
-		var d = 0.5;
+		var d = 1;
 		m.style.webkitTransition = '-webkit-transform ' + d
 				+ 's ease-in, opacity ' + d + 's ease-in';
 		m.style.opacity = '0';
@@ -98,7 +98,7 @@ function showToast(msg, duration) {
 /**
  * 转化日期格式
  * 
- * @param format 
+ * @param format
  * @returns
  */
 Date.prototype.format = function(format) {

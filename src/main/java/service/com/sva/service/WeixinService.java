@@ -82,9 +82,9 @@ public class WeixinService {
      */
     public AccountModel getAccountByOpenid(String openid) {
         AccountModel accountModel = weixinDao.getAccountByOpenid(openid);
-        if (accountModel != null) {
-            weixinDao.updateHeart(accountModel.getUsername(), new Date());
-        }
+//        if (accountModel != null) {
+//            weixinDao.updateHeart(accountModel.getUsername(), new Date());
+//        }
         return accountModel;
     }
 
@@ -95,14 +95,25 @@ public class WeixinService {
      * @param accountModel
      * @return
      */
-    public AccountModel login(AccountModel accountModel) {
-        accountModel.setLastHeartbeat(new Date());
-        int code = weixinDao.login(accountModel);
-        if (code > 0) {
-            return weixinDao.getAccountByOpenid(accountModel.getOpenid());
-        } else {
-            return null;
+    public AccountModel login(String username, String password, String openid) {
+        Date nowDate = new Date();
+        AccountModel accountModel = weixinDao.getAccountByUsernameAndPassword(username, password);
+        if (accountModel != null) {
+            String oldOpenid = accountModel.getOpenid();
+            accountModel.setLastHeartbeat(nowDate);
+            accountModel.setOpenid(openid);
+            int code = weixinDao.login(accountModel);
+            if (code > 0) {
+                if (StringUtils.isNotEmpty(oldOpenid)) {
+                    // 不为空则推送
+                    WeixinUtil.pushText(oldOpenid, "你的账号于 "+ConvertUtil.dateFormat(nowDate, Params.YYYYMMDDHHMMSS)+" 在其它设备登录！");
+                }
+                return accountModel;
+            } else {
+                return null;
+            }
         }
+        return null;
     }
 
     /**
@@ -187,8 +198,8 @@ public class WeixinService {
         case 3:
         case 4:
             Date nowTime = new Date();
-            long lastTimestamp=nextRandom.getTime();
-            //下次抽奖时间推迟间隔分钟
+            long lastTimestamp = nextRandom.getTime();
+            // 下次抽奖时间推迟间隔分钟
             Date nextRandomTime = new Date(lastTimestamp + interminute * 60 * 1000);
             int code = weixinDao.userGetOneFu("fu" + fu, openid, nextRandomTime);
             if (code == 0) {
@@ -329,13 +340,13 @@ public class WeixinService {
                 final String temp = pushText;
                 // 放入text推送的map
                 if (null != account.getOpenid()) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // TODO Auto-generated method stub
-                            WeixinUtil.pushText(account.getOpenid(), temp);
-                        }
-                    }).start();
+                    // new Thread(new Runnable() {
+                    // @Override
+                    // public void run() {
+                    // // TODO Auto-generated method stub
+                    WeixinUtil.pushText(account.getOpenid(), temp);
+                    // }
+                    // }).start();
                 }
             }
             if (idList.size() > 0) {
@@ -472,7 +483,8 @@ public class WeixinService {
     }
 
     public int fuReturnStart() {
-        int startcount = (int)((ConvertUtil.dateFormatStringtoLong(fuEndtime, Params.YYYYMMDDHHMMSS)-ConvertUtil.dateFormatStringtoLong(fuStarttime, Params.YYYYMMDDHHMMSS))/(interminute*60*1000));
+        int startcount = (int) ((ConvertUtil.dateFormatStringtoLong(fuEndtime, Params.YYYYMMDDHHMMSS)
+                - ConvertUtil.dateFormatStringtoLong(fuStarttime, Params.YYYYMMDDHHMMSS)) / (interminute * 60 * 1000));
         weixinDao.initFuOfAccount(startcount, fuStarttime);
         weixinDao.initSysFu();
         return CODE_SUCCESS;

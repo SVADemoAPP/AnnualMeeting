@@ -20,21 +20,37 @@ function loginOut() {
 		},
 		success : function(data) {
 			if (data.resultCode == 200) {
-				showToast("退出登录成功");
+				showToast("退出登录成功2");
 				account == null;
-				$("#div_login_all").show();
-				$("#div_login").show();
-
-				$(".value_jobnum").html("-");
-				$(".value_pnum").html("-");
-				$(".value_dptmt").html("-");
+//				$("#div_login_all").show();
+//				$("#div_login").show();
+//
+//				$(".value_jobnum").html("-");
+//				$(".value_pnum").html("-");
+//				$(".value_dptmt").html("-");
 				clearInterval(timer);
+				weixinClosePage();
 
 			} else if (data.resultCode == 400) {
 				showToast("退出失败");
 			}
 		}
 	});
+}
+
+//关闭微信页面
+function weixinClosePage() {
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', weixin_ClosePage, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', weixin_ClosePage);
+            document.attachEvent('onWeixinJSBridgeReady', weixin_ClosePage);
+        }
+    } else {
+        weixin_ClosePage();
+    }
+    showToast("退出")
 }
 
 function startInit() {

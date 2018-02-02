@@ -14,11 +14,16 @@
 		where username=#{username}
 	</update>
 
+<select id="getAccountByUsernameAndPassword" resultType="AccountModel">
+		SELECT * FROM
+		sys_account WHERE username=#{username} and password=#{password}
+	</select>
+
 
 	<update id="login">
 		update sys_account set
 		openid=#{openid},lastHeartbeat=#{lastHeartbeat} where
-		username=#{username} and password=#{password}
+		id=#{id} 
 	</update>
 
 	<update id="logout">

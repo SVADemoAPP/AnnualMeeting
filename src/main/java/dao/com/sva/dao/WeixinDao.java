@@ -30,6 +30,8 @@ public interface WeixinDao {
     public Integer updateHeart(@Param("username") String username,
             @Param("lastHeartbeat") Date lastHeartbeat);
     
+    public AccountModel getAccountByUsernameAndPassword(@Param("username")String username,@Param("password")String password);
+    
     public Integer login(AccountModel accountModel);
 
     public void logout(String openid);
