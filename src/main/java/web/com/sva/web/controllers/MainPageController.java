@@ -76,6 +76,7 @@ public class MainPageController
     public Map<String, Object> refresh(){
         Map<String, Object> model = new HashMap<String, Object>();
         systemService.refresh();
+        weixinService.fuReturnStart();
         model.put("returnCode", 1);
         return model;
     }
