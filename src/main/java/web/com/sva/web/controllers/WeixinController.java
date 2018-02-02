@@ -187,9 +187,9 @@ public class WeixinController {
 
     @RequestMapping(value = "/login", method = { RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> login(HttpServletRequest req, AccountModel accountModel) {
+    public Map<String, Object> login(HttpServletRequest req, String username, String password, String openid) {
         Map<String, Object> resultMap = new HashMap<>();
-        AccountModel loginModel = weixinService.login(accountModel);
+        AccountModel loginModel = weixinService.login(username, password, openid);
         if (loginModel != null) {
             resultMap.put("resultCode", CODE_SUCCESS);
             req.setAttribute("accountModel", loginModel);
@@ -210,11 +210,36 @@ public class WeixinController {
         return resultMap;
     }
 
+    /**
+     * 
+     * @Title: isLogin
+     * @Description: 是否在登录状态
+     * @param req
+     * @param openid
+     * @return
+     */
+    @RequestMapping(value = "/isLogin", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> isLogin(HttpServletRequest req, String openid) {
+        Map<String, Object> resultMap = new HashMap<>();
+        AccountModel accountModel = weixinService.getAccountByOpenid(openid);
+        if (accountModel != null) {
+            resultMap.put("resultCode", CODE_SUCCESS);
+        } else {
+            resultMap.put("resultCode", CODE_LOSE_OPENID);
+        }
+        return resultMap;
+    }
+
     @RequestMapping(value = "/changePassword", method = { RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> changePassword(String openid, String oldPwd, String newPwd) {
+    public Map<String, Object> changePassword(HttpServletRequest req,String openid, String oldPwd, String newPwd) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("resultCode", weixinService.changePassword(openid, oldPwd, newPwd));
+        int code =weixinService.changePassword(openid, oldPwd, newPwd);
+        if(code==301){
+            req.removeAttribute("accountModel");
+        }
+        resultMap.put("resultCode", code);
         return resultMap;
     }
 
@@ -391,12 +416,12 @@ public class WeixinController {
         resultMap.put("resultCode", CODE_SUCCESS);
         return resultMap;
     }
-    
-//    @RequestMapping(value = "/initFu", method = { RequestMethod.POST })
-//    @ResponseBody
-//    public Map<String, Object> initFu() {
-//        Map<String, Object> resultMap = new HashMap<>();
-//        resultMap.put("resultMsg", weixinService.fuReturnStart());
-//        return resultMap;
-//    }
+
+    @RequestMapping(value = "/initFu", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> initFu() {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("resultMsg", weixinService.fuReturnStart());
+        return resultMap;
+    }
 }

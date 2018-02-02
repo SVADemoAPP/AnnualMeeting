@@ -306,24 +306,32 @@ public class WeixinUtil {
      * @param type
      * @param media_id
      */
-    public static void pushNews(String openid, String title, String description, String url, String picurl) {
-        String wxUrl = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
-        JSONObject params = new JSONObject();
-        params.put("touser", openid);
-        params.put("msgtype", "news");
-        JSONObject msgBody = new JSONObject();
-        // 放入一条图文消息
-        JSONArray articles = new JSONArray();
-        JSONObject temp = new JSONObject();
-        temp.put("title", title);
-        temp.put("description", description);
-        temp.put("url", url);
-        temp.put("picurl", picurl);
-        articles.add(temp);
-        msgBody.put("articles", articles);
-        params.put("news", msgBody);
-        JSONObject jsonObj = WeixinUtil.doPostStr(wxUrl, params.toString());
-        System.out.println(jsonObj);
+    public static void pushNews(final String openid, final String title, final String description, final String url, final String picurl) {
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                String wxUrl = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
+                JSONObject params = new JSONObject();
+                params.put("touser", openid);
+                params.put("msgtype", "news");
+                JSONObject msgBody = new JSONObject();
+                // 放入一条图文消息
+                JSONArray articles = new JSONArray();
+                JSONObject temp = new JSONObject();
+                temp.put("title", title);
+                temp.put("description", description);
+                temp.put("url", url);
+                temp.put("picurl", picurl);
+                articles.add(temp);
+                msgBody.put("articles", articles);
+                params.put("news", msgBody);
+                JSONObject jsonObj = WeixinUtil.doPostStr(wxUrl, params.toString());
+                System.out.println(jsonObj);
+            }
+        }).start();
+       
     }
 
     /**
@@ -333,16 +341,24 @@ public class WeixinUtil {
      * @param openid
      * @param type
      */
-    public static void pushText(String openid, String content) {
-        String url = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
-        JSONObject params = new JSONObject();
-        params.put("touser", openid);
-        params.put("msgtype", "text");
-        JSONObject msgBody = new JSONObject();
-        msgBody.put("content", content);
-        params.put("text", msgBody);
-        JSONObject jsonObj = WeixinUtil.doPostStr(url, params.toString());
-        System.out.println(jsonObj);
+    public static void pushText(final String openid, final String content) {
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                String url = PUSH_MSG_URL.replace("ACCESS_TOKEN", getTokenString());
+                JSONObject params = new JSONObject();
+                params.put("touser", openid);
+                params.put("msgtype", "text");
+                JSONObject msgBody = new JSONObject();
+                msgBody.put("content", content);
+                params.put("text", msgBody);
+                JSONObject jsonObj = WeixinUtil.doPostStr(url, params.toString());
+                System.out.println(jsonObj);
+            }
+        }).start();
+       
     }
 
 }
