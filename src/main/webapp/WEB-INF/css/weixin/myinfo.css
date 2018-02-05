@@ -35,6 +35,15 @@ html {
 
 #item_baseinfo {
 	width: 100%;
+	height: 50%;
+	position: relative;
+	display: flex;
+	align-items: Center;
+	-webkit-display:flex;
+	-webkit-align-items: Center;
+}
+#item_baseinfo1 {
+	width: 100%;
 	height: 33.33%;
 	position: relative;
 	display: flex;
@@ -47,6 +56,9 @@ html {
 	bottom: 10%;
 	display: flex;
 	align-items: Center;
+	-webkit-display:flex;
+	-webkit-align-items: Center;
+	
 }
 
 #change_pwd {
@@ -55,6 +67,8 @@ html {
 	align-items: Center;
 	display: flex;
 	position: relative;
+	-webkit-display:flex;
+	-webkit-align-items: Center;
 }
 
 #item_advance_pw, #item_advance_prz {
@@ -63,6 +77,8 @@ html {
 	position: relative;
 	display: flex;
 	align-items: Center;
+	-webkit-display:flex;
+	-webkit-align-items: Center;
 }
 
 p {

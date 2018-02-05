@@ -21,17 +21,17 @@
 </head>
 <body>
 	<div id="baseInfo">
-		<div id="item_baseinfo">
+		<div id="item_baseinfo1">
 			<p class="p_title">旧密码</p>
 			<input class="value_old_pwd" />
 		</div>
 		<div class="line"></div>
-		<div id="item_baseinfo">
+		<div id="item_baseinfo1">
 			<p class="p_title">密码</p>
 			<input class="value_new_pwd" />
 		</div>
 		<div class="line"></div>
-		<div id="item_baseinfo">
+		<div id="item_baseinfo1">
 			<p class="p_title">确认密码</p>
 			<input class="value_new_check_pwd" />
 		</div>

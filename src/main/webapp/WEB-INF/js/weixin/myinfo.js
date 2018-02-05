@@ -61,7 +61,8 @@ function startInit() {
 	// 页面高度
 	var h = window.innerHeight;
 	// var w = window.innerWidth;
-	$("#baseInfo").css("height", h / 4);
+	$("#baseInfo").css("height", h / 6);
+	$("#baseInfo1").css("height", h / 4);
 	$("#advanceInfo").css("height", h / 6);
 	$("#login_out").css("height", h / 13);
 	// $("#change_pwd").css("height", h / 13);
@@ -80,5 +81,5 @@ function loginInit() {
 function userInfoInit() {
 	$(".value_jobnum").html(account.username);
 	$(".value_pnum").html(account.phoneNo);
-	$(".value_dptmt").html(account.dept);
+//	$(".value_dptmt").html(account.dept);
 }

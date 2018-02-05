@@ -33,11 +33,11 @@
 			<p class="p_title">电话</p>
 			<p class="value_pnum">-</p>
 		</div>
-		<div class="line"></div>
+		<!-- <div class="line"></div>
 		<div id="item_baseinfo">
 			<p class="p_title">部门</p>
 			<p class="value_dptmt">-</p>
-		</div>
+		</div> -->
 	</div>
 
 	<div id="advanceInfo">
