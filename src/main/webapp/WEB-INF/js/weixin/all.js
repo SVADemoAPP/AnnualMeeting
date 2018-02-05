@@ -91,8 +91,7 @@ function showLogin() {
 	startInit();
 	if (account == null) {
 		notloginInit();
-		$('#div_login_all').show();
-		$('#div_login').show();
+		showLoginDialog();
 	} else {
 		startSse(account.id, account.openid);
 		loginInit();
@@ -107,18 +106,27 @@ function showLogin() {
  * 重新登录
  */
 function reLogin() {
-	var temp=$('#div_prize');
-	if(temp&&temp.is(':visible')){
-		$('.div_login_bg') .unbind("click");
+	var temp = $('#div_prize');
+	if (temp && temp.is(':visible')) {
+		$('.div_login_bg').unbind("click");
 		temp.hide();
 	}
 	// showToast('登录失效', 1000);
 	account == null;
-	$('#div_login_all').show();
-	$('#div_login').show();
+	showLoginDialog();
 	clearInterval(timer);
 	eventSource.close();
 };
+function showLoginDialog() {
+	$('#div_login_all').show();
+	$('#div_login').show();
+	// 初始化登录框高度
+	setTimeout(function() {
+		$("#img_login").css("height", $("#img_login").height());
+		$(".login_input").css("height", $("#img_login").height() / 8);
+		$("#login_submit").css("height", $("#img_login").height() / 10);
+	}, 100);
+}
 
 function showToast(msg, duration) {
 	duration = 3000;

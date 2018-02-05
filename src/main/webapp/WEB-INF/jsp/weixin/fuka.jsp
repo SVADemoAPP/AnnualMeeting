@@ -27,7 +27,7 @@
 <title>集福卡</title>
 </head> 
 <body>
-	<div id="container">
+	<div id="container" style="display: none;">
 		<div class="bg-header">
 			<img src="../images/89.png" alt="" />
 			<div class="lottery_times">

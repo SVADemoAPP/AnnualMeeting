@@ -293,6 +293,10 @@ function init() {
 	// 页面高度
 	var h = window.innerHeight;
 	var w = window.innerWidth;
+//	$("#img_login").css("height",$("#img_login").height());
+//	$(".login_input").css("height",$("#img_login").height()/8);
+//	$("#login_submit").css("height",$("#img_login").height()/10);
+	
 	// 最上层图片高度
 	var imgh = $(".bg-header img").height();
 	// 设置下面布局高度
@@ -320,7 +324,10 @@ function init() {
 	bottom = height + 10;
 }
 function startInit() {
-	init();
+	setTimeout(function() {
+		$("#container").show();
+		init();
+	}, 150);
 };
 
 function notloginInit() {
