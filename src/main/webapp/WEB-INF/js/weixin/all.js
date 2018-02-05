@@ -1,23 +1,37 @@
-var timer,eventSource;
+var timer, eventSource;
 
 $(document).ready(function() {
-	
+
 	showLogin();
 });
 
 /**
  * Server推送逻辑
+ * 
  * @param id
  * @param openid
  */
-function startSse(id,openid){
+function startSse(id, openid) {
 	if (typeof (EventSource) !== "undefined") {
-		eventSource = new EventSource("../weixin/pushSse?id="+id+"&openid="+openid);
+		eventSource = new EventSource("../weixin/pushSse?id=" + id + "&openid="
+				+ openid);
 		eventSource.onmessage = function(event) {
 			// alert(123);
 		};
 		eventSource.addEventListener('pushMessage', function(event) {
-			console.log(event.data); 
+			console.log(event.data);
+			var key = event.data;
+			if ("notlogin" == key) {
+				reLogin();
+				showToast('账号在其他设备登录', 1000);
+			} else if ("overtime" == key) {
+				showToast('确认领奖超时', 1000);
+			} else {
+				var strArr = key.split("_");
+				if (strArr.length == 3) {
+
+				}
+			}
 		}, false);
 	} else {
 		alert("您的浏览器版本过低，不支持SSE！");
@@ -41,7 +55,7 @@ $("#login_submit").click(function() {
 			if (data.resultCode == 200) {
 				showToast('登录成功', 1000);
 				account = data.resultMsg;
-				startSse(account.id,account.openid);
+				startSse(account.id, account.openid);
 				$('#div_login').hide();
 				$('#div_login_all').hide();
 				setInterval(heartbeat, 3000);
@@ -57,7 +71,7 @@ $("#login_submit").click(function() {
  * 心跳以记录在线时长
  */
 function heartbeat() {
-//	console.log(new Date());
+	// console.log(new Date());
 	$.ajax({
 		type : "post",
 		url : "../weixin/heartbeat",
@@ -65,7 +79,7 @@ function heartbeat() {
 			accountId : account.username
 		},
 		success : function(data) {
-//			console.log(data);
+			// console.log(data);
 		}
 	});
 };
@@ -80,7 +94,7 @@ function showLogin() {
 		$('#div_login_all').show();
 		$('#div_login').show();
 	} else {
-		startSse(account.id,account.openid);
+		startSse(account.id, account.openid);
 		loginInit();
 		if (fromNews == 'yes') {
 			$("#bt_myprize").trigger("click");
@@ -93,7 +107,12 @@ function showLogin() {
  * 重新登录
  */
 function reLogin() {
-//	showToast('登录失效', 1000);
+	var temp=$('#div_prize');
+	if(temp&&temp.is(':visible')){
+		$('.div_login_bg') .unbind("click");
+		temp.hide();
+	}
+	// showToast('登录失效', 1000);
 	account == null;
 	$('#div_login_all').show();
 	$('#div_login').show();
@@ -117,7 +136,6 @@ function showToast(msg, duration) {
 		}, d * 1000);
 	}, duration);
 };
-
 
 /**
  * 转化日期格式

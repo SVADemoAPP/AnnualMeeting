@@ -453,8 +453,13 @@ public class WeixinController {
                 int restTime = 60 + (int) ((winnerTime - System.currentTimeMillis()) / 1000);
                 if (restTime < 0) {
                     msg = "overtime";
+                    WeixinUtil.winnerTime=0;
+                    WeixinUtil.winnerId="";     
                 } else {
-                    msg = "winner:" + restTime;
+                    List<WinningRecordModel> winningRecordModels=lotteryService.getWinInfoByAccount(openid);
+                    if(winningRecordModels!=null&&winningRecordModels.size()>0){
+                        msg = "winner_"+winningRecordModels.get(0).getPrizeCode() +"_"+ restTime;
+                    }
                 }
             }
         }

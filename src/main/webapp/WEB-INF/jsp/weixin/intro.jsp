@@ -35,6 +35,11 @@
 	<div id="div_login_all" style="display: none;">
 		<div class="div_login_layer"></div>
 		<div class="div_login_bg">
+			<div id="div_prize" style="display: none;">
+				<img id="img_prizebg" src="../images/my_prize_dialog.png" />
+				<div id="div_wininfo">
+				</div>
+			</div>
 			<div id="div_login" style="display: none;">
 				<img id="img_login" src="../images/bg_login.png" /> <input
 					id="username" type="text" class="login_input"
@@ -42,12 +47,6 @@
 					id="password" type="password" class="login_input"
 					style="margin-top: 48%;" placeholder="请输入您的密码" /> <img
 					id="login_submit" src="../images/login_submit.png" style="" />
-			</div>
-
-			<div id="div_prize" style="display: none;">
-				<img id="img_prizebg" src="../images/my_prize_dialog.png" />
-				<div id="div_wininfo">
-				</div>
 			</div>
 		</div>
 	</div>
