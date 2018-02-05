@@ -1,8 +1,28 @@
-var timer;
+var timer,eventSource;
 
 $(document).ready(function() {
+	
 	showLogin();
 });
+
+/**
+ * Server推送逻辑
+ * @param id
+ * @param openid
+ */
+function startSse(id,openid){
+	if (typeof (EventSource) !== "undefined") {
+		eventSource = new EventSource("../weixin/pushSse?id="+id+"&openid="+openid);
+		eventSource.onmessage = function(event) {
+			// alert(123);
+		};
+		eventSource.addEventListener('pushMessage', function(event) {
+			console.log(event.data); 
+		}, false);
+	} else {
+		alert("您的浏览器版本过低，不支持SSE！");
+	}
+};
 
 $("#login_submit").click(function() {
 	if ($("#username").val() == '' || $("#password").val() == '') {
@@ -21,6 +41,7 @@ $("#login_submit").click(function() {
 			if (data.resultCode == 200) {
 				showToast('登录成功', 1000);
 				account = data.resultMsg;
+				startSse(account.id,account.openid);
 				$('#div_login').hide();
 				$('#div_login_all').hide();
 				setInterval(heartbeat, 3000);
@@ -36,7 +57,7 @@ $("#login_submit").click(function() {
  * 心跳以记录在线时长
  */
 function heartbeat() {
-	console.log(new Date());
+//	console.log(new Date());
 	$.ajax({
 		type : "post",
 		url : "../weixin/heartbeat",
@@ -44,7 +65,7 @@ function heartbeat() {
 			accountId : account.username
 		},
 		success : function(data) {
-			console.log(data);
+//			console.log(data);
 		}
 	});
 };
@@ -59,6 +80,7 @@ function showLogin() {
 		$('#div_login_all').show();
 		$('#div_login').show();
 	} else {
+		startSse(account.id,account.openid);
 		loginInit();
 		if (fromNews == 'yes') {
 			$("#bt_myprize").trigger("click");
@@ -76,6 +98,7 @@ function reLogin() {
 	$('#div_login_all').show();
 	$('#div_login').show();
 	clearInterval(timer);
+	eventSource.close();
 };
 
 function showToast(msg, duration) {

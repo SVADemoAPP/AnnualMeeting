@@ -151,18 +151,18 @@ html {
 }
 
 .flop_send {
-	position: absolute;
+	position: relative;
 	z-index: 2;
-	bottom: -3px;
+	top: 76%;
 	left: 25%;
 	width: 50%;
 	height: 4.5rem;
 }
 
 .frend_input {
-	position: absolute;
+	position: relative;
 	z-index: 2;
-	bottom: 18%;
+	top: 72%;
 	left: 20%;
 	margin: auto;
 	width: 60%;

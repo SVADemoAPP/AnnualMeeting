@@ -99,14 +99,13 @@ $(".front img").click(function() {
 		}, 800);
 	}
 })
-var rotation = function() { 
-	var angle = 0;  
-	 timer= setInterval(function(){  
-	    angle +=3;  
-	    $('#flop_bg').rotate(angle);  
-	}, 50);  
-} 
-
+var rotation = function() {
+	var angle = 0;
+	timer = setInterval(function() {
+		angle += 3;
+		$('#flop_bg').rotate(angle);
+	}, 50);
+}
 
 // 点击开始抽奖按钮
 $(".start_lottery").click(function() {
@@ -119,7 +118,7 @@ $(".start_lottery").click(function() {
 $("#flop_tag").click(function() {
 	setViewData();
 	reInit();
-	clearInterval(timer); 
+	clearInterval(timer);
 })
 // 隐藏送好友界面
 $(".flop_layer").click(function() {
@@ -282,6 +281,8 @@ function setViewData() {
 	if (nextRandomTime > new Date()) {
 		var nextTime = new Date(nextRandomTime).format("hh:mm");
 		$(".lottery_start_info").html(nextTime + "再次抽奖");
+	} else if (nextRandomTime < new Date()) {
+		$(".lottery_start_info").html("活动已结束");
 	} else {
 		$(".lottery_start_info").html("开始抽奖");
 	}

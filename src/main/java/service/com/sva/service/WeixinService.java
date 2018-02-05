@@ -82,10 +82,19 @@ public class WeixinService {
      */
     public AccountModel getAccountByOpenid(String openid) {
         AccountModel accountModel = weixinDao.getAccountByOpenid(openid);
-//        if (accountModel != null) {
-//            weixinDao.updateHeart(accountModel.getUsername(), new Date());
-//        }
+        // if (accountModel != null) {
+        // weixinDao.updateHeart(accountModel.getUsername(), new Date());
+        // }
         return accountModel;
+    }
+
+    public boolean isLoginByOpenid(String openid) {
+        Integer count = weixinDao.isLoginByOpenid(openid);
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -106,7 +115,8 @@ public class WeixinService {
             if (code > 0) {
                 if (StringUtils.isNotEmpty(oldOpenid)) {
                     // 不为空则推送
-                    WeixinUtil.pushText(oldOpenid, "你的账号于 "+ConvertUtil.dateFormat(nowDate, Params.YYYYMMDDHHMMSS)+" 在其它设备登录！");
+                    WeixinUtil.pushText(oldOpenid,
+                            "你的账号于 " + ConvertUtil.dateFormat(nowDate, Params.YYYYMMDDHHMMSS) + " 在其它设备登录！");
                 }
                 return accountModel;
             } else {
@@ -136,9 +146,9 @@ public class WeixinService {
      * @return
      */
     public Integer changePassword(String openid, String oldPwd, String newPwd) {
-        AccountModel accountModel=weixinDao.getAccountByOpenid(openid);
-        if(accountModel==null){
-            
+        AccountModel accountModel = weixinDao.getAccountByOpenid(openid);
+        if (accountModel == null) {
+
             return CODE_LOSE_OPENID;
         }
         int code = weixinDao.changePassword(openid, oldPwd, newPwd);

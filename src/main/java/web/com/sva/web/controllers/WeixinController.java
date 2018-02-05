@@ -1,5 +1,7 @@
 package com.sva.web.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -233,10 +236,10 @@ public class WeixinController {
 
     @RequestMapping(value = "/changePassword", method = { RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> changePassword(HttpServletRequest req,String openid, String oldPwd, String newPwd) {
+    public Map<String, Object> changePassword(HttpServletRequest req, String openid, String oldPwd, String newPwd) {
         Map<String, Object> resultMap = new HashMap<>();
-        int code =weixinService.changePassword(openid, oldPwd, newPwd);
-        if(code==301){
+        int code = weixinService.changePassword(openid, oldPwd, newPwd);
+        if (code == 301) {
             req.removeAttribute("accountModel");
         }
         resultMap.put("resultCode", code);
@@ -423,5 +426,39 @@ public class WeixinController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultMsg", weixinService.fuReturnStart());
         return resultMap;
+    }
+
+    @RequestMapping(value = "/pushSse", method = { RequestMethod.GET })
+    public void pushSse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String id = req.getParameter("id");
+        String openid = req.getParameter("openid");
+        resp.setContentType("text/event-stream");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Cache-Control", "no-cache");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
+        PrintWriter writer = resp.getWriter();
+        // writer.print("retry: 10000\n"); //设置请求间隔时间
+        // writer.print("data: " + System.currentTimeMillis()+"\n\n");
+        writer.println("event:pushMessage"); // 设置请求间隔时间
+        writer.println("retry: 1000"); // 设置请求间隔时间
+        String msg = "";
+        if (!weixinService.isLoginByOpenid(openid)) {
+            msg = "notlogin";
+        } else if (WeixinUtil.winnerId.equals(id)) {
+            // id匹配上才算中奖
+            long winnerTime = WeixinUtil.winnerTime;
+            if (winnerTime > 0) {
+                int restTime = 60 + (int) ((winnerTime - System.currentTimeMillis()) / 1000);
+                if (restTime < 0) {
+                    msg = "overtime";
+                } else {
+                    msg = "winner:" + restTime;
+                }
+            }
+        }
+        writer.println("data: " + msg + "\n");
+        writer.flush();
     }
 }

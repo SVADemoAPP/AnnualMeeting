@@ -9,6 +9,8 @@
     AccountModel accountModel = (AccountModel)request.getSession().getAttribute("accountModel");
 	String accountJson = JSONObject.fromObject(accountModel).toString(); 
 	String fromNews = (String) request.getSession().getAttribute("fromNews");
+	
+	request.setAttribute("parentPath", request.getContextPath());
 %>
 <html>
 <head>
@@ -148,6 +150,7 @@
 	var account=<%=accountJson%>;
 	var myopenid='<%=openid%>';
 	var fromNews='<%=fromNews%>';
+
 	</script>
 </body>
 <html>

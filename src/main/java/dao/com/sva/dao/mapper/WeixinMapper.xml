@@ -9,6 +9,11 @@
 		sys_account WHERE openid = #{openid} limit 1
 	</select>
 
+<select id="isLoginByOpenid" resultType="Integer">
+		SELECT count(id) FROM
+		sys_account WHERE openid = #{openid} 
+	</select>
+
 	<update id="updateHeart">
 		update sys_account set lastHeartbeat=#{lastHeartbeat}
 		where username=#{username}

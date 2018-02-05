@@ -23,6 +23,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.springframework.web.bind.ServletRequestBindingException;
 
 import com.sva.common.weixin.bean.AccessToken;
 
@@ -35,6 +36,10 @@ import net.sf.json.JSONObject;
 
 public class WeixinUtil {
 
+    public static String winnerId="";
+    
+    public static long winnerTime=0;
+    
     // accessToken
     public static String lastToken = "";
 
