@@ -36,7 +36,7 @@ public class SystemService
     @Autowired
     private WinningRecordDao daoRecord;
     
-    @Value("${rate.init}")
+    @Value("${rate.initRate}")
     private String initRate;
     
     public void refresh(){
