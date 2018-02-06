@@ -44,7 +44,7 @@ public interface WinningRecordDao
      * @Description: 将各部门概率恢复到初始值 
      * @param rate 
      */
-    public void refreshDeptRate(int rate);
+    public void refreshDeptRate(String dept,int rate);
     
     /** 
      * @Title: getPrizeCountByCode 

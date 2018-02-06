@@ -18,7 +18,8 @@
     
     <update id="refreshDeptRate">
         UPDATE dept_winning_rate 
-        SET rate = #{value}
+        SET rate = #{rate}
+        WHERE dept = #{dept}
     </update>
     
     <select id="getPrizeCountByCode" resultType="Integer">

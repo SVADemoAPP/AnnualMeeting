@@ -501,7 +501,7 @@ rotateCubeBottomIn {
                         <div class="caret-down"></div>
                     </div>
                     <div class="cs-options">
-                        <ul style="padding: 10px 0 0 0;">
+                        <ul style="padding: 10px 0 0 0;margin:5px 0px;">
                         </ul>
                     </div>
                 </div>
