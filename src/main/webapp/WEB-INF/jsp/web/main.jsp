@@ -549,7 +549,7 @@ rotateCubeBottomIn {
         <div style="position:absolute;top:0;left:0;width:1920px;height:1080px;overflow:hidden;"></div>
     </div>
     <div style="background-color:#fff6d9;">
-        <div id="onlineChart" style="width:1000px; height:600px;margin:50px auto;border: 10px solid rgb(230,41,74);border-radius: 10px;">
+        <div id="onlineChart" style="width:1500px; height:800px;margin:50px auto;border: 20px solid rgb(230,41,74);border-radius: 20px;">
         </div>
     </div>
     </div>

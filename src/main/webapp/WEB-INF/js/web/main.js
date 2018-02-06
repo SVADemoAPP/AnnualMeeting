@@ -205,6 +205,10 @@
     					titleList.push(e.realname+e.username);
     				});
     				var dataList = _.pluck(data.data, "onLineTime");
+					var dataarry = [];
+					for(var i = 0; i < dataList.length; i++){
+						dataarry.push(dataList[i] / 60000);
+					}
     				var option = {
 					    color: ['#3398DB'],
 					    backgroundColor: '#f5cece',
@@ -217,7 +221,7 @@
 					            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
 					        },
 					        formatter:function (params, ticket, callback) {
-					            return parseInt(params[0].value/60000) + "分" + (params[0].value%60000/1000) + "秒";
+					            return parseInt(params[0].value * 60000 / 60000) + "分" + (params[0].value * 60000 % 60000 / 1000) + "秒";
 					        }
 					    },
 					    grid: {
@@ -260,7 +264,7 @@
 					        {
 					            name:'累计在线时长',
 					            type:'bar',
-					            data:dataList
+					            data:dataarry
 					        }
 					    ]
     				};

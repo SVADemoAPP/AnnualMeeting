@@ -11,7 +11,6 @@ package com.sva.service;
 import org.apache.commons.lang.StringUtils;
 import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.model.AccountModel;
-import com.sva.model.PrizeModel;
 
 /** 
  * @ClassName: PushWeixin 
@@ -22,10 +21,6 @@ import com.sva.model.PrizeModel;
  */
 public class PushWeixin implements Runnable
 {
-    /** 
-     * @Fields code : 奖品代码 
-     */ 
-    private String code;
     
     /** 
      * @Fields model : 中奖用户信息 
@@ -33,22 +28,19 @@ public class PushWeixin implements Runnable
     private AccountModel model;
     
     /** 
-     * @Fields service : 抽奖服务
+     * @Fields url : 跳转链接url
      */ 
-    private LotteryService service;
+    private String urlLink;
     
     /** 
-     * @Fields url : 服务器的url
+     * @Fields urlImage : 推送图片 
      */ 
-    private String url;
+    private String urlImage;
     
-    /**
-     * @param code the code to set
-     */
-    public void setCode(String code)
-    {
-        this.code = code;
-    }
+    /** 
+     * @Fields message : 推送消息 
+     */ 
+    private String message;
     
     /**
      * @param model the model to set
@@ -57,41 +49,50 @@ public class PushWeixin implements Runnable
     {
         this.model = model;
     }
-    
+
     /**
-     * @param service the service to set
+     * @param urlLink the urlLink to set
      */
-    public void setService(LotteryService service)
+    public void setUrlLink(String urlLink)
     {
-        this.service = service;
-    }
-    
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url)
-    {
-        this.url = url;
+        this.urlLink = urlLink;
     }
 
+    /**
+     * @param urlImage the urlImage to set
+     */
+    public void setUrlImage(String urlImage)
+    {
+        this.urlImage = urlImage;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
+
+    // 恭喜您中奖了，请在规定时间内取领奖页面确认"http://"+url+"/sva/weixin/mine?openid="+model.getOpenid()
+    // 恭喜您中了"+prize.getName()+"!","http://"+url+"/sva/images/prize_"+code+".png"
     public void run()
     {
         if(!StringUtils.isEmpty(model.getOpenid())){
             try
             {
-                Thread.sleep(24000);
+                Thread.sleep(23000);
             }
             catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
-            PrizeModel prize = service.getPrizeDetail(code);
             WeixinUtil.pushNews(
                     model.getOpenid(), 
                     "中奖信息", 
-                    "恭喜您中奖了，您中了"+prize.getName()+"!奖品为"+prize.getDesc(), 
-                    "http://"+url+"/sva/weixin/skipPrize?openid="+model.getOpenid(), 
-                    "http://"+url+"/sva/images/prize_"+code+".png"
+                    message, 
+                    urlLink, 
+                    urlImage
             );
         }
     }

@@ -8,9 +8,14 @@
  */
 package com.sva.web.controllers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.model.AccountModel;
 import com.sva.service.LotteryService;
 import com.sva.service.PushWeixin;
@@ -66,10 +72,9 @@ public class LotteryController
         AccountModel winner = service.getWinningEmployee(model.getPrizeCode());
         // 推送微信
         PushWeixin thread = new PushWeixin();
-        thread.setCode(model.getPrizeCode());
         thread.setModel(winner);
-        thread.setService(service);
-        thread.setUrl(serverUrl);
+        thread.setUrlLink("http://"+serverUrl+"/sva/weixin/mine?openid="+winner.getOpenid());
+        thread.setMessage("恭喜您中奖了，请在规定时间内取领奖页面确认");
         new Thread(thread).start();
         
         modelMap.put("returnCode", "1");
@@ -121,5 +126,51 @@ public class LotteryController
         service.saveWinningRecord(WinningInfoExtension.toWinningRecordModel(model));
         modelMap.put("returnCode", 1);
         return modelMap;
+    }
+    
+    /** 
+     * @Title: recordAtServer 
+     * @Description: 记录抽奖开始计时时的时间 
+     * @param accountId
+     * @return 
+     */
+    @RequestMapping(value="/recordAtServer", method = {RequestMethod.POST})
+    @ResponseBody
+    public Map<String, Object> recordAtServer(String accountId){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        WeixinUtil.winnerId = accountId;
+        WeixinUtil.winnerTime = System.currentTimeMillis()/1000;
+        modelMap.put("returnCode", 1);
+        return modelMap;
+    }
+    
+    @RequestMapping(value = "/pushSse", method = { RequestMethod.GET })
+    public void pushSse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String id = req.getParameter("id");
+        resp.setContentType("text/event-stream");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Cache-Control", "no-cache");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
+        PrintWriter writer = resp.getWriter();
+        writer.println("retry: 1000"); // 设置请求间隔时间
+        String msg = "";
+        if (StringUtils.isNotEmpty(WeixinUtil.winnerId) && WeixinUtil.winnerId.equals(id)) {
+            // id匹配上才算中奖
+            long winnerTime = WeixinUtil.winnerTime;
+            if (winnerTime > 0) {
+                int restTime = 60 + (int) ((winnerTime - System.currentTimeMillis() / 1000));
+                if (restTime < 0) {
+                    msg = "overtime";
+                    WeixinUtil.winnerTime = 0;
+                    WeixinUtil.winnerId = "";
+                } else {
+                    msg = "winner:" + restTime;
+                }
+            }
+        }
+        writer.println("data: " + msg + "\n");
+        writer.flush();
     }
 }
