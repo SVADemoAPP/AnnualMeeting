@@ -14,6 +14,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.dao.AccountDao;
 import com.sva.dao.WinningRecordDao;
 import com.sva.model.AccountModel;
@@ -48,6 +49,12 @@ public class LotteryService
      */ 
     @Value("${rate.percent}")
     int percent;
+    
+    /** 
+     * @Fields serverUrl : 外网可以访问的服务器地址 
+     */ 
+    @Value("${server.url}")
+    private String serverUrl;
     
     /** 
      * @Title: getWinningEmployee 
@@ -108,7 +115,23 @@ public class LotteryService
      * @param model 
      */
     public void saveWinningRecord(WinningRecordModel model){
+        // 记录中奖信息
         daoWinning.saveWinningRecord(model);
+        // 刷新静态变量
+        WeixinUtil.winnerId = "";
+        WeixinUtil.winnerTime = 0;
+        // 领取成功的情况，推送信息
+        if(model.getReceived() == 1){
+         // 具体中奖逻辑
+            AccountModel winner = getWinningEmployee(Integer.toString(model.getPrizeCode()));
+            // 推送微信
+            PushWeixin thread = new PushWeixin();
+            thread.setModel(winner);
+            thread.setUrlLink("http://"+serverUrl+"/sva/weixin/skipPrize?openid="+winner.getOpenid());
+            thread.setUrlImage("http://"+serverUrl+"/sva/images/prize_"+model.getPrizeCode()+".png");
+            thread.setMessage("恭喜您中了"+model.getName()+"!");
+            new Thread(thread).start();
+        }
     }
     
     /** 

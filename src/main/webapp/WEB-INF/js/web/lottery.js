@@ -8,6 +8,30 @@
 	var isBegin;
 	var accountInfo;
 	
+	/**
+	 * Server推送逻辑
+	 * @param id
+	 * @param openid
+	 */
+	function startSse(id){
+		if (typeof (EventSource) !== "undefined") {
+			eventSource = new EventSource("/sva/lottery/pushSse?id="+id);
+			eventSource.onmessage = function(event) {
+				if(event.data == "overtime"){
+					refresh();
+				}
+			};
+			eventSource.onerror = function(event){  
+		        console.log(event);  
+		    }; 
+		    eventSource.onopen = function(event) {
+		    	console.log(event);
+	    	};
+		} else {
+			alert("您的浏览器版本过低，不支持SSE！");
+		}
+	};
+	
 	function startBlink(){
 		timerBlink = setInterval(function(){
 			var oldImg = $(".mask").attr("data-img");
@@ -46,11 +70,28 @@
 		});
 	}
 	
+	function recordAtServer(accountId){
+		$.ajax({
+			url:"/sva/lottery/recordAtServer?accountId="+accountId,
+    		type:"post",
+    		data:"",
+    		contentType:'application/json',
+    		dataType:"json",
+    		success:function(data){
+    			if(data.returnCode != 1){
+    				alert("server error!");
+        		}
+    		}
+		});
+	}
+	
 	function waitForNotice(detail){
 		$(".popup").show();
 		$("#people").html(detail.realname+" "+detail.username);
 		$("#phone").html(detail.phoneNo);
 		startCount();
+		recordAtServer(accountInfo.id);
+		startSse(accountInfo.id);
 	}
 	
 	function startShowResult(detail, callback){
@@ -87,7 +128,6 @@
 		timerCount = setInterval(function(){
 			var intStr = ""+all;
 			if(all < 10) intStr = "0"+intStr;
-			console.log(intStr);
 			var num_arr = intStr.split('');
 			$(".countNo").each(function(index){
 				$(this).html(num_arr[1-index]);
@@ -113,6 +153,10 @@
 		$(".countNo-2").html("6");
 		clearInterval(timerCount);
 		//showPrizeCount();
+		if(eventSource){
+			eventSource.close();
+			eventSource = null;
+		}
 	}
 	
 	function recordWinner(prizeCode, isReceived, callback){
