@@ -120,6 +120,7 @@ public class LotteryService
         // 刷新静态变量
         WeixinUtil.winnerId = "";
         WeixinUtil.winnerTime = 0;
+        WeixinUtil.winningCode = "";
         // 领取成功的情况，推送信息
         if(model.getReceived() == 1){
          // 具体中奖逻辑

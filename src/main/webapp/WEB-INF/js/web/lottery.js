@@ -72,7 +72,7 @@
 	
 	function recordAtServer(accountId){
 		$.ajax({
-			url:"/sva/lottery/recordAtServer?accountId="+accountId,
+			url:"/sva/lottery/recordAtServer?accountId="+accountId+"&code="+$("#typeHidden").val(),
     		type:"post",
     		data:"",
     		contentType:'application/json',

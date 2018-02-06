@@ -40,6 +40,8 @@ public class WeixinUtil {
     
     public static long winnerTime=0;
     
+    public static String winningCode="";
+    
     // accessToken
     public static String lastToken = "";
 

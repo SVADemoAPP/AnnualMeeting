@@ -136,10 +136,11 @@ public class LotteryController
      */
     @RequestMapping(value="/recordAtServer", method = {RequestMethod.POST})
     @ResponseBody
-    public Map<String, Object> recordAtServer(String accountId){
+    public Map<String, Object> recordAtServer(String accountId, String code){
         Map<String, Object> modelMap = new HashMap<String, Object>();
         WeixinUtil.winnerId = accountId;
         WeixinUtil.winnerTime = System.currentTimeMillis()/1000;
+        WeixinUtil.winningCode = code;
         modelMap.put("returnCode", 1);
         return modelMap;
     }
@@ -165,6 +166,7 @@ public class LotteryController
                     msg = "overtime";
                     WeixinUtil.winnerTime = 0;
                     WeixinUtil.winnerId = "";
+                    WeixinUtil.winningCode = "";
                 } else {
                     msg = "winner:" + restTime;
                 }
