@@ -1,4 +1,4 @@
-var timer, eventSource;
+var timer, eventSource,winner;
 
 $(document).ready(function() {
 
@@ -16,9 +16,6 @@ function startSse(id, openid) {
 		eventSource = new EventSource("../weixin/pushSse?id=" + id + "&openid="
 				+ openid);
 		eventSource.onmessage = function(event) {
-			// alert(123);
-		};
-		eventSource.addEventListener('pushMessage', function(event) {
 			console.log(event.data);
 			var key = event.data;
 			if ("notlogin" == key) {
@@ -29,10 +26,24 @@ function startSse(id, openid) {
 			} else {
 				var strArr = key.split("_");
 				if (strArr.length == 3) {
-
+					var temp = $('#div_prize');
+					if (temp && temp.is(':visible')) {
+						$('.div_login_bg').unbind("click");
+						temp.hide();
+						$('#div_login_all').hide();
+					}
+					if($('#div_login_all').is(':hidden')){
+						winner=JSON.parse(strArr[2]);
+						$('#div_login_all').show();
+						$("#div_confirm").animate({
+							marginBottom : "0%"
+						});
+					}
+					
+					
 				}
 			}
-		}, false);
+		};
 	} else {
 		alert("您的浏览器版本过低，不支持SSE！");
 	}
@@ -67,6 +78,25 @@ $("#login_submit").click(function() {
 	});
 });
 
+$("#bt_confirm").click(function() {
+	$.ajax({
+		type : "post",
+		url : "../weixin/saveWinningRecord",
+		data : {
+			accountId : winner.id,
+			prizeCode : winner.prizeCode,
+			received : '1',
+			time:new Date()
+		},
+		success : function(data) {
+			$("#div_confirm").animate({
+				marginBottom : "-60%"
+			});
+			$('#div_login_all').hide();
+		}
+	});
+});
+
 /**
  * 心跳以记录在线时长
  */
@@ -79,7 +109,7 @@ function heartbeat() {
 			accountId : account.username
 		},
 		success : function(data) {
-			// console.log(data);
+			 console.log(data);
 		}
 	});
 };
@@ -93,12 +123,13 @@ function showLogin() {
 		notloginInit();
 		showLoginDialog();
 	} else {
-		startSse(account.id, account.openid);
-		loginInit();
-		if (fromNews == 'yes') {
-			$("#bt_myprize").trigger("click");
-		}
-		timer = setInterval(heartbeat, 3000);
+//		startSse(account.id, account.openid);
+//		loginInit();
+//		if (fromNews == 'yes') {
+//			$("#bt_myprize").trigger("click");
+//		}
+//		timer = setInterval(heartbeat, 3000);
+//		$('#div_login_all').show();
 	}
 };
 
@@ -110,6 +141,7 @@ function reLogin() {
 	if (temp && temp.is(':visible')) {
 		$('.div_login_bg').unbind("click");
 		temp.hide();
+		$('#div_login_all').hide();
 	}
 	// showToast('登录失效', 1000);
 	account == null;
@@ -125,7 +157,7 @@ function showLoginDialog() {
 		$("#img_login").css("height", $("#img_login").height());
 		$(".login_input").css("height", $("#img_login").height() / 8);
 		$("#login_submit").css("height", $("#img_login").height() / 10);
-	}, 100);
+	}, 200);
 }
 
 function showToast(msg, duration) {

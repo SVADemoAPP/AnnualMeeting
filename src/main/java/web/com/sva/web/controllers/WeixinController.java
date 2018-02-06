@@ -142,10 +142,11 @@ public class WeixinController {
         default:
             break;
         }
-        System.out.println(msgType + " " + fromUserName + " " + msg);
+//        System.out.println(msgType + " " + fromUserName + " " + msg);
         if (StringUtils.isNotEmpty(msg)) {
             msg = new String(msg.getBytes(), "iso8859-1");
         }
+        System.out.println("看看消息：" + msg);
         return msg;
     }
 
@@ -427,6 +428,16 @@ public class WeixinController {
         resultMap.put("resultMsg", weixinService.fuReturnStart());
         return resultMap;
     }
+    
+    @RequestMapping(value = "/saveWinningRecord", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> saveWinningRecord(WinningRecordModel model) {
+        Map<String, Object> resultMap = new HashMap<>();
+         lotteryService.saveWinningRecord(model);
+         resultMap.put("resultCode", CODE_SUCCESS);
+        return resultMap;
+    }
+    
 
     @RequestMapping(value = "/pushSse", method = { RequestMethod.GET })
     public void pushSse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -441,7 +452,7 @@ public class WeixinController {
         PrintWriter writer = resp.getWriter();
         // writer.print("retry: 10000\n"); //设置请求间隔时间
         // writer.print("data: " + System.currentTimeMillis()+"\n\n");
-        writer.println("event:pushMessage"); // 设置请求间隔时间
+//        writer.println("event:pushMessage"); // 设置请求自定义事件
         writer.println("retry: 1000"); // 设置请求间隔时间
         String msg = "";
         if (!weixinService.isLoginByOpenid(openid)) {
@@ -456,10 +467,10 @@ public class WeixinController {
                     WeixinUtil.winnerTime=0;
                     WeixinUtil.winnerId="";     
                 } else {
-                    List<WinningRecordModel> winningRecordModels=lotteryService.getWinInfoByAccount(openid);
-                    if(winningRecordModels!=null&&winningRecordModels.size()>0){
-                        msg = "winner_"+winningRecordModels.get(0).getPrizeCode() +"_"+ restTime;
-                    }
+//                    List<WinningRecordModel> winningRecordModels=lotteryService.getWinInfoByAccount(openid);
+//                    if(winningRecordModels!=null&&winningRecordModels.size()>0){
+//                        msg = "winner_"+ restTime+"_"+JSONObject.fromObject(winningRecordModels.get(0)).toString();
+//                    }
                 }
             }
         }

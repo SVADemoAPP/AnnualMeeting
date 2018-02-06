@@ -65,6 +65,40 @@ body {
 	height: 10%;
 	left: 0;
 	right: 0;
-	margin-top:-27%;
+	top:60%;
 }
 
+#div_confirm {
+	position: absolute;
+	bottom:0;
+	height: 30%;
+	width:100%;
+	background-color: #fc335a;
+	 text-align:center;
+	 margin-bottom:-60%;
+}
+
+#img_confirm {
+	width: 80%;
+	margin-top:-7%;
+}
+
+#div_confirm p {
+	color: #ffffff;
+	font-size: 25px;
+	margin-top:0%;
+}
+
+#img_prizecode {
+	width: 55%;
+	margin-top:-7%;
+}
+
+#bt_confirm {
+	background-image:url('../../images/bt_confirm.png');
+	width: 45%;
+	height:25%;
+	color: #e6284a;
+	font-size: 16px;
+	margin-top:2%;
+}

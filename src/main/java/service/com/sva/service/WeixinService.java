@@ -462,6 +462,7 @@ public class WeixinService {
                 }
             }
             String toUserOpenid = toUser.getOpenid();
+            System.out.println("赠送openid:"+toUserOpenid+",内容："+pushText);
             // 获赠方openid不为空则推送到微信
             if (StringUtils.isNotEmpty(toUserOpenid)) {
                 WeixinUtil.pushText(toUserOpenid, pushText);
