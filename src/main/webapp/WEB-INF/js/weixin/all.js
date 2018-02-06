@@ -1,4 +1,4 @@
-var timer, eventSource,winner;
+var timer, eventSource,winnerCode;
 
 $(document).ready(function() {
 
@@ -33,12 +33,33 @@ function startSse(id, openid) {
 						$('#div_login_all').hide();
 					}
 					if($('#div_login_all').is(':hidden')){
-						winner=JSON.parse(strArr[2]);
+						winnerCode=strArr[2];
+						$('#img_prizecode').attr("src","../images/prize_code"+winnerCode+".png");
 						$('#div_login_all').show();
 						$("#div_confirm").animate({
 							marginBottom : "0%"
 						});
+						$('#bt_confirm').one("click", function() {
+							$.ajax({
+								type : "post",
+								url : "../weixin/saveWinningRecord",
+								data : {
+									accountId : account.id,
+									prizeCode : winnerCode,
+									received : '1',
+									time:new Date()
+								},
+								success : function(data) {
+									showToast('领奖成功', 1000);
+									$("#div_confirm").animate({
+										marginBottom : "-60%"
+									});
+									$('#div_login_all').hide();
+								}
+							});
+						})
 					}
+					$('#bt_confirm').html("确认领奖（"+strArr[1]+"s）");
 					
 					
 				}
@@ -78,24 +99,7 @@ $("#login_submit").click(function() {
 	});
 });
 
-$("#bt_confirm").click(function() {
-	$.ajax({
-		type : "post",
-		url : "../weixin/saveWinningRecord",
-		data : {
-			accountId : winner.id,
-			prizeCode : winner.prizeCode,
-			received : '1',
-			time:new Date()
-		},
-		success : function(data) {
-			$("#div_confirm").animate({
-				marginBottom : "-60%"
-			});
-			$('#div_login_all').hide();
-		}
-	});
-});
+
 
 /**
  * 心跳以记录在线时长
@@ -123,13 +127,13 @@ function showLogin() {
 		notloginInit();
 		showLoginDialog();
 	} else {
-//		startSse(account.id, account.openid);
-//		loginInit();
-//		if (fromNews == 'yes') {
-//			$("#bt_myprize").trigger("click");
-//		}
-//		timer = setInterval(heartbeat, 3000);
-//		$('#div_login_all').show();
+		startSse(account.id, account.openid);
+// loginInit();
+// if (fromNews == 'yes') {
+// $("#bt_myprize").trigger("click");
+// }
+// timer = setInterval(heartbeat, 3000);
+// $('#div_login_all').show();
 	}
 };
 

@@ -72,13 +72,20 @@
 			</div>
 
 		</div>
+		<div id="div_confirm">
+			<img id="img_confirm" src="../images/img_confirm.png" />
+			<p>恭喜您获得</p>
+			<img id="img_prizecode" src="../images/prize_code2.png" />
+			<button id="bt_confirm" type="button">确认领奖（60s）</button>
+		</div>
 	</div>
 	<script type="text/javascript" src="../js/weixin/all.js"></script>
 	<script type="text/javascript" src="../js/weixin/myinfo.js"></script>
 	<script type="text/javascript">
 	var account=<%=accountJson%>;
 	var myopenid='<%=openid%>';
-	var fromNews='<%=fromNews%>';
+	var fromNews='<%=fromNews%>
+		';
 	</script>
 </body>
 <html>

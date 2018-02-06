@@ -73,9 +73,14 @@
 		$(".startRoll").on("click",function(e){
 			var code = $("#prize").attr("data-code");
 			if(code){
-				$("#confirmPrize").text($("#selectedText").text());
+				var selectedText = $("#selectedText").text();
+				$("#confirmPrize").text(selectedText);
 				$("#confirmPrizeDetail").text($("#prize").attr("data-desc"));
-				
+				if(selectedText == "幸运奖"){
+					$("#newPrize").html("每次抽取二十人");
+				}else {
+					$("#newPrize").html("每次抽取一人");
+				}
 				$("#confirmPopup").show();
 				//$(".popupBox").css("top","0");
 				setTimeout(function(){

@@ -528,7 +528,7 @@ rotateCubeBottomIn {
 	       <div class="popupBox">
 	           <div id="confirmPrize" style="margin-top: 450px;"></div>
 	           <!-- <div id="confirmPrizeDetail"></div> -->
-	           <div style="margin-top: 50px;">获奖名额一人</div>
+	           <div id="newPrize" style="margin-top: 50px;"></div>
 	           <div>
 	               <div class="confirmBtn"></div>
 	               <div class="cancelBtn"></div>

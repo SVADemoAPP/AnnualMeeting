@@ -141,7 +141,12 @@
 					style="margin-top: 48%;" placeholder="请输入您的密码" /> <img
 					id="login_submit" src="../images/login_submit.png" style="" />
 			</div>
-
+		</div>
+		<div id="div_confirm">
+			<img id="img_confirm" src="../images/img_confirm.png" />
+			<p>恭喜您获得</p>
+			<img id="img_prizecode" src="../images/prize_code2.png" />
+			<button id="bt_confirm" type="button">确认领奖（60s）</button>
 		</div>
 	</div>
 	<script type="text/javascript" src="../js/weixin/all.js"></script>

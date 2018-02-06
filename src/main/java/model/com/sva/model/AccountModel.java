@@ -65,7 +65,7 @@ public class AccountModel {
     
     private Date nextRandomTime;
     
-    
+    private String district;
 
     public int getRemainRandomCount() {
         return remainRandomCount;
@@ -347,4 +347,12 @@ public class AccountModel {
         this.gotFu = gotFu;
     }
 
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+    
 }

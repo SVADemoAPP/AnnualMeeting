@@ -142,7 +142,7 @@ public class WeixinController {
         default:
             break;
         }
-//        System.out.println(msgType + " " + fromUserName + " " + msg);
+        // System.out.println(msgType + " " + fromUserName + " " + msg);
         if (StringUtils.isNotEmpty(msg)) {
             msg = new String(msg.getBytes(), "iso8859-1");
         }
@@ -174,14 +174,20 @@ public class WeixinController {
                 + "?response_type=code&scope=snsapi_userinfo&state=mine#wechat_redirect";
     }
 
+    private Map<String, String> openidMap = new HashMap<>();
+
     @RequestMapping(value = "/switchPage", method = { RequestMethod.GET })
     public String fuka(HttpServletRequest req) {
         String CODE = req.getParameter("code");
         String STATE = req.getParameter("state");
-        String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code"
-                .replace("APPID", WeixinUtil.APPID).replace("SECRET", WeixinUtil.APPSECRET).replace("CODE", CODE);
-        JSONObject jsonObj = WeixinUtil.doGetStr(URL);
-        String openid = jsonObj.get("openid").toString();
+        String openid = openidMap.get(CODE);
+        if (StringUtils.isEmpty(openid)) {
+            String URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code"
+                    .replace("APPID", WeixinUtil.APPID).replace("SECRET", WeixinUtil.APPSECRET).replace("CODE", CODE);
+            JSONObject jsonObj = WeixinUtil.doGetStr(URL);
+            openid = jsonObj.get("openid").toString();
+            openidMap.put(CODE, openid);
+        }
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -428,16 +434,15 @@ public class WeixinController {
         resultMap.put("resultMsg", weixinService.fuReturnStart());
         return resultMap;
     }
-    
+
     @RequestMapping(value = "/saveWinningRecord", method = { RequestMethod.POST })
     @ResponseBody
     public Map<String, Object> saveWinningRecord(WinningRecordModel model) {
         Map<String, Object> resultMap = new HashMap<>();
-         lotteryService.saveWinningRecord(model);
-         resultMap.put("resultCode", CODE_SUCCESS);
+        lotteryService.saveWinningRecord(model);
+        resultMap.put("resultCode", CODE_SUCCESS);
         return resultMap;
     }
-    
 
     @RequestMapping(value = "/pushSse", method = { RequestMethod.GET })
     public void pushSse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -452,7 +457,7 @@ public class WeixinController {
         PrintWriter writer = resp.getWriter();
         // writer.print("retry: 10000\n"); //设置请求间隔时间
         // writer.print("data: " + System.currentTimeMillis()+"\n\n");
-//        writer.println("event:pushMessage"); // 设置请求自定义事件
+        // writer.println("event:pushMessage"); // 设置请求自定义事件
         writer.println("retry: 1000"); // 设置请求间隔时间
         String msg = "";
         if (!weixinService.isLoginByOpenid(openid)) {
@@ -464,13 +469,10 @@ public class WeixinController {
                 int restTime = 60 + (int) ((winnerTime - System.currentTimeMillis()) / 1000);
                 if (restTime < 0) {
                     msg = "overtime";
-                    WeixinUtil.winnerTime=0;
-                    WeixinUtil.winnerId="";     
-                } else {
-//                    List<WinningRecordModel> winningRecordModels=lotteryService.getWinInfoByAccount(openid);
-//                    if(winningRecordModels!=null&&winningRecordModels.size()>0){
-//                        msg = "winner_"+ restTime+"_"+JSONObject.fromObject(winningRecordModels.get(0)).toString();
-//                    }
+                    WeixinUtil.winnerTime = 0;
+                    WeixinUtil.winnerId = "";
+                } else if (StringUtils.isNotEmpty(WeixinUtil.winningCode)) {
+                    msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
                 }
             }
         }
