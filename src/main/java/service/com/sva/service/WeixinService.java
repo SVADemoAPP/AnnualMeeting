@@ -85,6 +85,9 @@ public class WeixinService {
         // if (accountModel != null) {
         // weixinDao.updateHeart(accountModel.getUsername(), new Date());
         // }
+        if(accountModel!=null&&!new Date().before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))){
+            accountModel.setNextRandomTime(null);
+        }
         return accountModel;
     }
 
@@ -112,6 +115,9 @@ public class WeixinService {
             accountModel.setLastHeartbeat(nowDate);
             accountModel.setOpenid(openid);
             int code = weixinDao.login(accountModel);
+            if(!nowDate.before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))){
+                accountModel.setNextRandomTime(null);
+            }
             if (code > 0) {
                 if (StringUtils.isNotEmpty(oldOpenid)) {
                     // 不为空则推送

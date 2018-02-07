@@ -53,8 +53,8 @@ public class WeixinUtil {
     // private final static String secret = "246883272034517bdfbef75a74a991f5";
     // test
     // public final static String SERVER_URL = "zrwb.mynatapp.cc";
-    public final static String APPID = "wx216621f9da064342";
-    public final static String APPSECRET = "3de7691660915cbdcf9757825bb2e242";
+    public final static String APPID = "wx171dc71d88509bec";
+    public final static String APPSECRET = "d1b76a48240967a419af0f01619add36";
 
     // 获取token地址
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
@@ -135,6 +135,7 @@ public class WeixinUtil {
             token.setAccess_token(jsonObject.getString("access_token"));
             token.setExpires_in(jsonObject.getInt("expires_in"));
         }
+        System.out.println(token.getAccess_token());
         return token;
     }
 
@@ -149,12 +150,14 @@ public class WeixinUtil {
     public static String getTokenString() {
         String token = "";
         long nowTime = System.currentTimeMillis();
+        System.out.println("相差时间:"+(nowTime - tokenTime)+",上个token:"+lastToken);
         // 相差小于100分钟并且token不为空则直接取，否则重新获取
         if (nowTime - tokenTime < 1000 * 60 * 100 && StringUtils.isNotEmpty(lastToken)) {
             token = lastToken;
         } else {
             String url = ACCESS_TOKEN_URL.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
             JSONObject jsonObject = doGetStr(url);
+            System.out.println("jsonObject:"+jsonObject.toString());
             if (jsonObject != null) {
                 token = jsonObject.getString("access_token");
             }
@@ -162,7 +165,7 @@ public class WeixinUtil {
             tokenTime = nowTime;
             lastToken = token;
         }
-        System.out.println("token:" + token);
+//        System.out.println("token:" + token);
         return token;
     }
 
