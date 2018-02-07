@@ -53,13 +53,58 @@
     
     .num_box{
         background:url(<c:url value='/images/luckyBox.png'/>) no-repeat;
-        width:1119px;
+        width:1050px;
         height:435px;
         position:absolute;
         top:608px;
         overflow:hidden;
         text-align:center;
         padding: 92px 0 0 80px;
+    }
+    
+    .nameBox{
+        width: 180px;
+        height: 53px;
+        float: left;
+        color:#fcf14e;
+        font-size:36px;
+        text-align:center;
+    }
+    
+    .col-1{
+        margin-left: 3px;
+    }
+    
+    .col-2{
+        margin-left: 11px;
+    }
+    
+    .col-3{
+        margin-left: 10px;
+    }
+    
+    .col-4{
+        margin-left: 10px;
+    }
+    
+    .col-5{
+        margin-left: 11px;
+    }
+    
+    .row-1{
+        margin-top:3px;
+    }
+    
+    .row-2{
+        margin-top:5px;
+    }
+    
+    .row-3{
+        margin-top:5px;
+    }
+    
+    .row-4{
+        margin-top:5px;
     }
     
     .handle{
@@ -73,25 +118,6 @@
         clear:both;
     }
     
-    .prizeCountBox{
-        width: 200px;
-        height: 50px;
-        position:absolute;
-        right: 80px;
-        top:666px;
-        color:rgb(251,245,19);
-        text-align:center;
-    }
-    
-    .prizeCount{
-        width: 200px;
-        margin-top: -40px;
-        font-family: "Arial";
-        font-weight: bold;
-        font-size:200px;
-        text-shadow: 5px 5px 10px #1b1b19;
-    }
-    
     .popup{
         position:absolute;
         top:0;
@@ -100,86 +126,87 @@
         height:1080px;
         background-color:rgba(0,0,0,0.5);
     }
-    
-    .notice{
-        width: 858px;
-        height: 892px;
-        margin:50px auto;
-        z-index:9;
-    }
-    
-    .noticeBox{
+
+    .winPopupBox{
         position:absolute;
-        width: 858px;
-        height: 892px;
-        background:url(<c:url value='/images/winner.png'/>) bottom no-repeat;
-        z-index:12;
+        top:-910px;
+        width:947px;
+        height:860px;
+        margin-left: 500px;
+        background:url(<c:url value='/images/winRecordBg.png'/>) top center no-repeat;
+        transition: top 0.5s ease-in-out;
     }
     
-    .arrow{
-        background:url(<c:url value='/images/arrow.png'/>) bottom no-repeat;
+    .closeDetail{
         float:right;
-        width: 85px;
-        height: 50px;
-        margin: 100px 70px;
-        cursor: pointer;
-        transition: All 0.4s ease-in-out;
+        width:70px;
+        height:70px;
+        margin: 20px;
+        cursor:pointer;
+        transition: All 0.5s ease-in-out;
+        background:url(<c:url value='/images/close.png'/>) top center no-repeat;
     }
-    
-    .countNo{
-        float: right;
-        width: 150px;
-        height: 200px;
-        margin-top: 247px;
-        font-size: 150px;
-        color: #fc335a;
-        font-weight: bold;
-        text-align: center
+    .closeDetail:hover{
+        transform:rotate(360deg);
     }
-    
-    .countNo-1{
-        margin-right:6px;
+    #winDetail{
+    margin-top: 245px;
+    margin-left: 138px;
+    width: 620px;
+    height: 590px;
+    overflow-y: scroll;
+}
+.record-name{
+    padding: 10px 0 0 20px;
+    height: 50px;
+    color: rgb(251,226,124);
+    font-size: 38px;
+    font-weight: bold;
+    text-shadow: 0 3px 0px rgb(242,95,68);
+}
+.record-detail{
+    margin: 15px 0 0 20px;
+    height: 40px;
+    font-size: 36px;
+    font-weight:bold;
+    color: #fc335a;
+}
+.record-detail-1{
+    float: left;
+    width: 230px;
+}
+.record-detail-2{
+    float: left;
+    width: 160px;
+}
+.record-detail-3{
+    float: left;
+    width: 180px;
+}
+.record-detail-3:before{
+    content: "尾号";
+}
+#winDetail::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 20px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+#winDetail::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    background-color:rgb(251,226,124);
+    box-shadow: 0px 5px 0px rgb(242,94,68);
+    border-radius:10px;
+}
+#winDetail::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #EDEDED;
+}
+    .detail-mask{
+        width: 598px;
+        height: 590px;
+        position: absolute;
+        top: 245px;
+        left: 140px;
+        box-shadow:0 0 20px 10px #fff inset;
     }
-    
-    .countNo-2{
-        margin-right:80px;
-    }
-    
-    .prizeType{
-        text-align:center;
-        font-size: 60px;
-        font-weight: bold;
-        text-shadow: 0px 5px 5px #ff0000;
-        color: #fbe27c;
-        margin-top: 470px;
-    }
-    
-    .detail{
-        text-align: center;
-        font-size: 48px;
-        color: #fff;
-    }
-    
-    .detail-1:before{
-        content:"中奖人：";
-    }
-    
-    .detail-2:before{
-        content:"电话：";
-    }
-    
-    .confirm{
-        width:332px;
-        height:160px;
-        margin: 0 0 0 240px;
-        cursor: pointer;
-        background:url(<c:url value='/images/confirmPrize.png'/>) bottom no-repeat;
-    }
-    
-    .confirm:active{
-        background:url(<c:url value='/images/confirmPrizeOn.png'/>) bottom no-repeat;
-    }
-    
 </style>
 </head>
 <body>
@@ -189,44 +216,40 @@
             <div class="mask"></div>
             <div class="num_box">
                 <div class="col-1 row-1 nameBox"></div>
-                <div class="col-1 row-2 nameBox"></div>
-                <div class="col-1 row-3 nameBox"></div>
-                <div class="col-1 row-4 nameBox"></div>
                 <div class="col-2 row-1 nameBox"></div>
-                <div class="col-2 row-2 nameBox"></div>
-                <div class="col-2 row-3 nameBox"></div>
-                <div class="col-2 row-4 nameBox"></div>
                 <div class="col-3 row-1 nameBox"></div>
-                <div class="col-3 row-2 nameBox"></div>
-                <div class="col-3 row-3 nameBox"></div>
-                <div class="col-3 row-4 nameBox"></div>
                 <div class="col-4 row-1 nameBox"></div>
-                <div class="col-4 row-2 nameBox"></div>
-                <div class="col-4 row-3 nameBox"></div>
-                <div class="col-4 row-4 nameBox"></div>
                 <div class="col-5 row-1 nameBox"></div>
+                <div class="col-1 row-2 nameBox"></div>
+                <div class="col-2 row-2 nameBox"></div>
+                <div class="col-3 row-2 nameBox"></div>
+                <div class="col-4 row-2 nameBox"></div>
                 <div class="col-5 row-2 nameBox"></div>
+                <div class="col-1 row-3 nameBox"></div>
+                <div class="col-2 row-3 nameBox"></div>
+                <div class="col-3 row-3 nameBox"></div>
+                <div class="col-4 row-3 nameBox"></div>
                 <div class="col-5 row-3 nameBox"></div>
+                <div class="col-1 row-4 nameBox"></div>
+                <div class="col-2 row-4 nameBox"></div>
+                <div class="col-3 row-4 nameBox"></div>
+                <div class="col-4 row-4 nameBox"></div>
                 <div class="col-5 row-4 nameBox"></div>
             </div>
             <div class="handle"></div>
         </div>
     </div>
-    <div class="popup" style="display:none;">
-        <div class="notice">
-            <div class="noticeBox">
-                <div class="arrow" data-angle="0"></div>
-                <div class="countNo countNo-1">0</div>
-                <div class="countNo countNo-2">6</div>
-                <div class="prizeType" id="prize">${prize}</div>
-                <div class="detail detail-1" id="people"></div>
-                <div class="detail detail-2" id="phone"></div>
-                <div class="confirm"></div>
-            </div>
-        </div>
-    </div>
+    <div id="detailPopup" class="popup" style="display:none;">
+           <div class=winPopupBox>
+                <div class="closeDetail">
+                </div>
+                <div id="winDetail"></div>
+                <div class="detail-mask"></div>
+           </div>
+       </div>
     <input id="typeHidden" type="hidden" value="${prizeCode}"/>
     <script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
+    <script src="<c:url value='/plugins/underscore/underscore-min.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/plugins/easing.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/js/web/luckyLottery.js'/>" type="text/javascript"></script>
 </body>

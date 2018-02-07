@@ -7,6 +7,7 @@
 	var timerLuckeName2;
 	var timerLuckeName3;
 	var timerLuckeName4;
+	var timerLuckeName5;
 	var isBegin;
 	var accountInfo;
 	var candidates;
@@ -50,12 +51,13 @@
 	}
 	
 	function startNum() {
+		if(!candidates || !candidates.length) return false;
 		timerLuckeName1 = setInterval(function(){
 			$(".col-1").each(function(index){
 				var _name = $(this);
 				var pcount = candidates.length;
 				var name = Math.floor(Math.random() * pcount);
-				_name.innerTxt(candidates[num]);
+				_name.html(candidates[name]);
 			});
 		},0);
 		timerLuckeName2 = setInterval(function(){
@@ -63,7 +65,7 @@
 				var _name = $(this);
 				var pcount = candidates.length;
 				var name = Math.floor(Math.random() * pcount);
-				_name.innerTxt(candidates[num]);
+				_name.html(candidates[name]);
 			});
 		},0);
 		timerLuckeName3 = setInterval(function(){
@@ -71,7 +73,7 @@
 				var _name = $(this);
 				var pcount = candidates.length;
 				var name = Math.floor(Math.random() * pcount);
-				_name.innerTxt(candidates[num]);
+				_name.html(candidates[name]);
 			});
 		},0);
 		timerLuckeName4 = setInterval(function(){
@@ -79,7 +81,7 @@
 				var _name = $(this);
 				var pcount = candidates.length;
 				var name = Math.floor(Math.random() * pcount);
-				_name.innerTxt(candidates[num]);
+				_name.html(candidates[name]);
 			});
 		},0);
 		timerLuckeName5 = setInterval(function(){
@@ -87,55 +89,85 @@
 				var _name = $(this);
 				var pcount = candidates.length;
 				var name = Math.floor(Math.random() * pcount);
-				_name.innerTxt(candidates[num]);
+				_name.html(candidates[name]);
 			});
 		},0);
 	}
 	
-	function showResult(data){
-		
+	function showResult(detail){
+		$("#winDetail").empty();
+		var code = "";
+		var html = "";
+		for(var i=0; i<detail.length; i++){
+			var item = detail[i];
+				html = html + ""
+					+ '<div class="record-detail">'
+					+ '<div class="record-detail-1">' + item.username + '</div>'
+					+ '<div class="record-detail-2">' + item.realname + '</div>'
+					+ '<div class="record-detail-3">' + item.phoneNo.substring(item.phoneNo.length-4) + '</div>'
+					+ '</div>';
+		}
+		html += "<br/>";
+		$("#winDetail").append(html);
+		$("#detailPopup").show();
+		setTimeout(function(){
+			$(".winPopupBox").css("top","110px");
+		},10);
 	}
 	
 	function startShowResult(detail, callback){
+		if(detail.length == 0){
+			if(callback) callback();
+			return false;
+		}
 		if(isBegin) return false;
 		isBegin = true;
 		var tempList = _.union(detail,[]);
-		for(var i=1; i<6; i++){
-			setTimeout(function(){
-				var _names = $(".col-"+i);
-				_names.each(function(index){
-					if(tempList.length){
-						$(this).innerText = tempList[0].realname;
-						tempList.shift();
-					}
-				});
-				if(i==5){
-					isBegin = false;
-					// 灯泡动画 
-					stopBlink();
-					allLightOn();
-					showResult(detail);
-					if(callback) callback();
+		var i=1;
+		var timeout = setInterval(function(){
+			switch(i){
+			case 1:
+				clearInterval(timerLuckeName1);
+				break;
+			case 2:
+				clearInterval(timerLuckeName2);
+				break;
+			case 3:
+				clearInterval(timerLuckeName3);
+				break;
+			case 4:
+				clearInterval(timerLuckeName4);
+				break;
+			case 5:
+				clearInterval(timerLuckeName5);
+				break;
+			}
+				
+			var _names = $(".col-"+i);
+			for(var index=0; index<4; index++){
+				if(tempList.length){
+					$(_names[index]).html(tempList[0].realname);
+					tempList.shift();
 				}
-			}, i*3000);
-		}
+			}
+			if(i==5){
+				isBegin = false;
+				// 灯泡动画 
+				stopBlink();
+				allLightOn();
+				showResult(detail);
+				getCandidate();
+				if(callback) callback();
+				clearInterval(timeout);
+			}
+			i++;
+		}, i*3000);
 	}
 	
 	function refresh(){
 		$(".popup").hide();
 		startBlink();
-		$(".num").css('backgroundPositionY',0);
-		$(".arrow").css({transform:"rotate(0deg)"});
-		$(".arrow").attr("data-angle",0);
-		$(".quitBox").css({transform:"rotate(180deg)"});
-		$(".countNo-1").html("0");
-		$(".countNo-2").html("6");
-		clearInterval(timerCount);
-		//showPrizeCount();
-		if(eventSource){
-			eventSource.close();
-			eventSource = null;
-		}
+		$(".nameBox").html("");
 	}
 	
 	function bindEvent(){
@@ -175,6 +207,14 @@
 		
 		$("#back").on("click",function(e){
 			window.location.href="/sva/home/showMain";
+		});
+		
+		$(".closeDetail").on("click",function(e){
+			$(".winPopupBox").css("top","-910px");
+			setTimeout(function(){
+				$("#detailPopup").hide();
+				refresh();
+			},500);
 		});
 	}
 	

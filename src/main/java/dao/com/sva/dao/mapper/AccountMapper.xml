@@ -56,7 +56,8 @@
     <select id="getLuckyCandidate" resultType="String">
         SELECT realname
         FROM sys_account s 
-        WHERE s.id not in (
+        WHERE s.dept != ""
+              and s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record
             )
@@ -65,7 +66,8 @@
     <select id="getLuckyCandidateDetail" resultType="AccountModel">
         SELECT *
         FROM sys_account s 
-        WHERE s.id not in (
+        WHERE s.dept != ""
+              and s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record
             )
