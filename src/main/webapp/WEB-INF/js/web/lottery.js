@@ -17,7 +17,7 @@
 		if (typeof (EventSource) !== "undefined") {
 			eventSource = new EventSource("/sva/lottery/pushSse?id="+id);
 			eventSource.onmessage = function(event) {
-				if(event.data == "overtime"){
+				if(event.data == "closed"){
 					refresh();
 				}
 			};
