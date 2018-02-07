@@ -15,6 +15,9 @@
 	top: 65%;
 	left:18%;
 	width:60%;
+	height:29%;
+	overflow: scroll;
+	padding:5px;
 }
 
 #img_prizebg {

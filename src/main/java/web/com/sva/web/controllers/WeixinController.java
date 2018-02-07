@@ -116,17 +116,8 @@ public class WeixinController {
         switch (msgType) {
         case MessageUtil.MESSAGE_TEXT:
 //            if ("1".equals(content)) {
-//                msg = MessageUtil.setTextMsg(fromUserName, toUserName, "内容1");
-//                // WeixinUtil.pushText(fromUserName, "内容1 ");
-//            } else if ("2".equals(content)) {
-//                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
-//            } else if ("?".equals(content) || "？".equals(content)) {
-//                msg = MessageUtil.setTextMsg(fromUserName, toUserName, MessageUtil.menuMsg());
-//            } else {
-//                // 其他字符回复主菜单
-//                // msg = MessageUtil.setTextMsg(fromUserName, toUserName,
-//                // MessageUtil.menuMsg());
-//            }
+                WeixinUtil.pushText(fromUserName, "我不知道你在说什么！");
+//            } 
             break;
         case MessageUtil.MESSAGE_EVENT:
             String event = map.get("Event");
@@ -135,10 +126,6 @@ public class WeixinController {
 //                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
                 // WeixinUtil.pushText(fromUserName, "欢迎关注！");
                 WeixinUtil.pushNews(fromUserName, "SVA简介", "这是一段详情介绍", "http://"+serverUrl+"/sva/weixin/skipPrize?openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
-//                news.setDescription("这是一段详情介绍");
-//                news.setTitle("SVA简介");
-//                news.setPicUrl("http://zrwb.mynatapp.cc/sva/images/focus.png");
-//                news.setUrl("http://zrwb.mynatapp.cc/sva/weixin/skipPrize");
             } else {
                 // req.getSession().setAttribute("fromUserName", fromUserName);
             }
@@ -367,6 +354,7 @@ public class WeixinController {
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
         String openid = req.getParameter("openid");
+//        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -377,6 +365,7 @@ public class WeixinController {
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
         String openid = req.getParameter("openid");
+//        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -469,7 +458,7 @@ public class WeixinController {
             msg = "notlogin";
         } else if (WeixinUtil.winnerId.equals(id)) {
             // id匹配上才算中奖
-            long winnerTime = WeixinUtil.winnerTime;
+            long winnerTime = WeixinUtil.winnerTime*1000;
             if (winnerTime > 0) {
                 int restTime = 60 + (int) ((winnerTime - System.currentTimeMillis()) / 1000);
                 if (restTime < 0) {
@@ -477,6 +466,8 @@ public class WeixinController {
                     WeixinUtil.winnerTime = 0;
                     WeixinUtil.winnerId = "";
                 } else if (StringUtils.isNotEmpty(WeixinUtil.winningCode)) {
+                    msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
+                }else{
                     msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
                 }
             }

@@ -49,16 +49,16 @@
 					id="login_submit" src="../images/login_submit.png" style="" />
 			</div>
 		</div>
-		
-	</div>
-	<div id="div_confirm" style="display: none;" >
+		<div id="div_confirm" style="display: none;" >
 				<img id="img_confirm" src="../images/img_confirm.png" />
 				<p>恭喜您获得</p>
 				<img id="img_prizecode" src="../images/prize_code2.png" />
 				<button id="bt_confirm" type="button" >确认领奖（60s）</button>
 			</div>
+	</div>
+	
 	<script type="text/javascript" src="../js/weixin/all.js"></script>
-	<script type="text/javascript" src="../js/weixin/intro.js"></script>
+	<script type="text/javascript" src="../js/weixin/intro.js"></script> 
 	<script type="text/javascript">
 	var account=<%=accountJson%>;
 	var myopenid='<%=openid%>';
