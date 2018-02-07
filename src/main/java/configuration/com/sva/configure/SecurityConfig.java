@@ -61,19 +61,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http
-            .authorizeRequests()
-                .antMatchers("/home/**","/lottery/**").hasRole("ADMIN")
-                .antMatchers("/app/**").hasRole("CUSTOMER")
-                .antMatchers("/weixin/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login/do")
-                //.successHandler(successHandler)设置登录成功后的处理动作即跳转
-                .permitAll()
-                .and()
-            .csrf().disable();
+        	.sessionManagement().maximumSessions(2).and()
+        		.and().authorizeRequests()
+	                .antMatchers("/home/**","/lottery/**").hasRole("ADMIN")
+	                .antMatchers("/app/**").hasRole("CUSTOMER")
+	                .antMatchers("/weixin/**").permitAll()
+	                .anyRequest().authenticated()
+                .and().formLogin()
+	                .loginPage("/login")
+	                .loginProcessingUrl("/login/do")
+	                //.successHandler(successHandler)设置登录成功后的处理动作即跳转
+	                .permitAll()
+                .and().csrf().disable();
     }
     
     /**   

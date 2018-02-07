@@ -172,6 +172,8 @@ public class LotteryController
                     msg = "winner:" + restTime;
                 }
             }
+        }else{
+            msg = "closed";
         }
         writer.println("data: " + msg + "\n");
         writer.flush();

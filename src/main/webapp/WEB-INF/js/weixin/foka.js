@@ -28,14 +28,14 @@ function getWinInfo() {
 				winData = data;
 			} else if (data.resultCode == 301) {
 				reLogin();
-			} else if (data.resultCode == 303) {
-				var nextTime = new Date(data.nextRandomTime).format("hh:mm");
-				$(".lottery_start_info").html(nextTime + "再次抽奖");
-				showToast('抽奖时间未到,下次抽奖时间为' + nextTime, 3000);
-			} else if (data.resultCode == 305) {
-				showToast('活动已结束', 1000);
-				$(".lottery_start_info").html("活动已结束");
-			}
+			}/*
+				 * else if (data.resultCode == 303) { var nextTime = new
+				 * Date(data.nextRandomTime).format("hh:mm");
+				 * $(".lottery_start_info").html(nextTime + "再次抽奖");
+				 * showToast('抽奖时间未到,下次抽奖时间为' + nextTime, 3000); } else if
+				 * (data.resultCode == 305) { showToast('活动已结束', 1000);
+				 * $(".lottery_start_info").html("活动已结束"); }
+				 */
 		}
 	});
 }
@@ -95,7 +95,12 @@ $(".front img").click(function() {
 			$("#flop_tag").show();
 			rotation();
 			// 更新卡片数量
-			nextRandomTime = new Date(winData.nextRandomTime);
+			if (winData.nextRandomTime != null) {
+				nextRandomTime = new Date(winData.nextRandomTime);
+			} else {
+				nextRandomTime = null;
+			}
+
 		}, 800);
 	}
 })
@@ -108,9 +113,9 @@ var rotation = function() {
 }
 
 // 点击开始抽奖按钮
-$(".start_lottery").click(function() {
-	getWinInfo();
-})
+// $(".start_lottery").click(function() {
+// getWinInfo();
+// })
 // $(".lottery_start_info").click(function() {
 // // getWinInfo();
 // })
@@ -234,6 +239,7 @@ function subMove() {
 };
 
 // 初始化数据
+var lastFu5;
 function dataInit() {
 	if (account != null) {
 		winData = new Object();
@@ -242,13 +248,18 @@ function dataInit() {
 		winData.fu3 = account.fu3;
 		winData.fu4 = account.fu4;
 		winData.fu5 = account.fu5;
+		lastFu5 = winData.fu5;
 		winData.nextRandomTime = account.nextRandomTime;
 		winData.remainRandomCount = account.remainRandomCount;
-		console.log(winData.nextRandomTime.time);
-		if (winData.nextRandomTime.time) {
-			nextRandomTime = new Date(winData.nextRandomTime.time);
+		// console.log(winData.nextRandomTime.time);
+		if (winData.nextRandomTime != null) {
+			if (winData.nextRandomTime.time) {
+				nextRandomTime = new Date(winData.nextRandomTime.time);
+			} else {
+				nextRandomTime = new Date(winData.nextRandomTime);
+			}
 		} else {
-			nextRandomTime = new Date(winData.nextRandomTime);
+			nextRandomTime = null;
 		}
 		setViewData();
 	}
@@ -256,8 +267,9 @@ function dataInit() {
 // 设置界面数据
 function setViewData() {
 	var fu5 = winData.fu5;
-	if (fu5 == 1 ) {
+	if (fu5 == 1 && lastFu5 == 1) {
 		$("#flop_complete_tag").show();
+		lastFu5 = 2;
 	}
 
 	var fu1 = winData.fu1;
@@ -270,20 +282,23 @@ function setViewData() {
 	$(".qing").html(fu2);
 	$(".xiao").html(fu3);
 	$(".zhan").html(fu4);
-
-	console.log(nextRandomTime);
-	// $(".lottery_time_info").html(nextRandomTime.format('hh:mm') + "开始抽奖");
-	$(".lottery_time_info").html("剩余抽奖次数:" + winData.remainRandomCount);
-	console.log(winData);
-
-	if (nextRandomTime > new Date()) {
-		var nextTime = new Date(nextRandomTime).format("hh:mm");
-		$(".lottery_start_info").html(nextTime + "再次抽奖");
-	}/* else if (nextRandomTime <= new Date()) {
-		$(".lottery_start_info").html("活动已结束");
-	}*/ else {
-		$(".lottery_start_info").html("开始抽奖");
-	}
+	//
+	// console.log(nextRandomTime);
+	// // $(".lottery_time_info").html(nextRandomTime.format('hh:mm') + "开始抽奖");
+	// $(".lottery_time_info").html("剩余抽奖次数:" + winData.remainRandomCount);
+	// console.log(winData);
+	//
+	// if (nextRandomTime == null) {
+	// $(".lottery_start_info").html("活动已结束");
+	// return;
+	// }
+	//
+	// if (nextRandomTime > new Date()) {
+	// var nextTime = new Date(nextRandomTime).format("hh:mm");
+	// $(".lottery_start_info").html(nextTime + "再次抽奖");
+	// } else {
+	// $(".lottery_start_info").html("开始抽奖");
+	// }
 
 };
 
@@ -291,7 +306,7 @@ function init() {
 	// 页面高度
 	var h = window.innerHeight;
 	var w = window.innerWidth;
-	
+
 	// 最上层图片高度
 	var imgh = $(".bg-header img").height();
 	// 设置下面布局高度
@@ -323,6 +338,7 @@ function startInit() {
 		$("#container").show();
 		init();
 	}, 150);
+	fukaSse(myopenid);
 };
 
 function notloginInit() {
@@ -330,4 +346,51 @@ function notloginInit() {
 
 function loginInit() {
 	dataInit();
+};
+
+var clickAble=true;
+function fukaSse(openid) {
+	if (typeof (EventSource) !== "undefined") {
+		$('.start_lottery').bind('click', function() {
+			getWinInfo();
+		});
+		eventSource = new EventSource("../weixin/fukaSse?openid=" + openid);
+		eventSource.onmessage = function(event) {
+			console.log(event.data);
+			var key = parseFloat(event.data);
+			if (key > 0) {
+
+				$(".lottery_time_info").html("剩余抽奖次数:" + parseInt(key));
+				if (!clickAble) {
+					clickAble = true;
+					$(".start_lottery").css("backgroundImage",
+							"url('../images/44.png')");
+					$('.start_lottery').bind('click', function() {
+						getWinInfo();
+					});
+				}
+
+			} else if (key == -2) {
+				if (clickAble) {
+					clickAble = false;
+					$(".lottery_time_info").html("活动已结束");
+					$(".start_lottery").css("backgroundImage",
+							"url('../images/67.png')");
+					$('.start_lottery').unbind('click');
+				}
+			} else {
+
+				if (clickAble) {
+					clickAble = false;
+					var nextTime = new Date(-key).format("hh:mm");
+					$(".lottery_time_info").html("下次抽奖时间:" + nextTime);
+					$(".start_lottery").css("backgroundImage",
+							"url('../images/67.png')");
+					$('.start_lottery').unbind('click');
+				}
+			}
+		};
+	} else {
+		alert("您的浏览器版本过低，不支持SSE！");
+	}
 };

@@ -85,6 +85,10 @@ public class WeixinService {
         // if (accountModel != null) {
         // weixinDao.updateHeart(accountModel.getUsername(), new Date());
         // }
+        if (accountModel != null
+                && !new Date().before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))) {
+            accountModel.setNextRandomTime(null);
+        }
         return accountModel;
     }
 
@@ -95,6 +99,24 @@ public class WeixinService {
         } else {
             return false;
         }
+    }
+
+    public long getRestCountByOpenid(String openid) {
+        long code = -ConvertUtil.dateFormatStringtoLong(fuStarttime, Params.YYYYMMDDHHMMSS); // 默认为未登陆状态
+        Date nowDate = new Date();
+        if (!nowDate.before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))) {
+            code = -2; // 活动已结束
+            return code;
+        }
+        Date nextDate = weixinDao.getNextRandomTime(openid);
+        if (nextDate != null) {
+               if(nowDate.before(nextDate)){
+                   code=-nextDate.getTime(); //返回当前时间戳的负值
+               }else{
+                   code=1+(int)((nowDate.getTime()-nextDate.getTime())/(interminute*60*1000)); //返回剩余抽奖次数
+               }
+        }
+        return code;
     }
 
     /**
@@ -112,6 +134,9 @@ public class WeixinService {
             accountModel.setLastHeartbeat(nowDate);
             accountModel.setOpenid(openid);
             int code = weixinDao.login(accountModel);
+            if (!nowDate.before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))) {
+                accountModel.setNextRandomTime(null);
+            }
             if (code > 0) {
                 if (StringUtils.isNotEmpty(oldOpenid)) {
                     // 不为空则推送
@@ -462,7 +487,7 @@ public class WeixinService {
                 }
             }
             String toUserOpenid = toUser.getOpenid();
-            System.out.println("赠送openid:"+toUserOpenid+",内容："+pushText);
+            System.out.println("赠送openid:" + toUserOpenid + ",内容：" + pushText);
             // 获赠方openid不为空则推送到微信
             if (StringUtils.isNotEmpty(toUserOpenid)) {
                 WeixinUtil.pushText(toUserOpenid, pushText);

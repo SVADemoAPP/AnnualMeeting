@@ -116,17 +116,8 @@ public class WeixinController {
         switch (msgType) {
         case MessageUtil.MESSAGE_TEXT:
 //            if ("1".equals(content)) {
-//                msg = MessageUtil.setTextMsg(fromUserName, toUserName, "内容1");
-//                // WeixinUtil.pushText(fromUserName, "内容1 ");
-//            } else if ("2".equals(content)) {
-//                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
-//            } else if ("?".equals(content) || "？".equals(content)) {
-//                msg = MessageUtil.setTextMsg(fromUserName, toUserName, MessageUtil.menuMsg());
-//            } else {
-//                // 其他字符回复主菜单
-//                // msg = MessageUtil.setTextMsg(fromUserName, toUserName,
-//                // MessageUtil.menuMsg());
-//            }
+                WeixinUtil.pushText(fromUserName, "我不知道你在说什么！");
+//            } 
             break;
         case MessageUtil.MESSAGE_EVENT:
             String event = map.get("Event");
@@ -135,10 +126,6 @@ public class WeixinController {
 //                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
                 // WeixinUtil.pushText(fromUserName, "欢迎关注！");
                 WeixinUtil.pushNews(fromUserName, "SVA简介", "这是一段详情介绍", "http://"+serverUrl+"/sva/weixin/skipPrize?openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
-//                news.setDescription("这是一段详情介绍");
-//                news.setTitle("SVA简介");
-//                news.setPicUrl("http://zrwb.mynatapp.cc/sva/images/focus.png");
-//                news.setUrl("http://zrwb.mynatapp.cc/sva/weixin/skipPrize");
             } else {
                 // req.getSession().setAttribute("fromUserName", fromUserName);
             }
@@ -367,6 +354,7 @@ public class WeixinController {
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
         String openid = req.getParameter("openid");
+//        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -376,21 +364,22 @@ public class WeixinController {
 
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
-        String openid = req.getParameter("openid");
+        String openid = "op0fg0-D30ZCKp_YBJXoCYBH5jvU";
+//        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
+//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/fuka";
     }
 
     @RequestMapping(value = "/mine", method = { RequestMethod.GET })
     public String mine(HttpServletRequest req) {
-        String openid = req.getParameter("openid");
+        String openid = "op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
+//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/mine";
     }
 
@@ -400,7 +389,7 @@ public class WeixinController {
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
+//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/changepwd";
     }
 
@@ -463,13 +452,13 @@ public class WeixinController {
         // writer.print("retry: 10000\n"); //设置请求间隔时间
         // writer.print("data: " + System.currentTimeMillis()+"\n\n");
         // writer.println("event:pushMessage"); // 设置请求自定义事件
-        writer.println("retry: 1000"); // 设置请求间隔时间
+        writer.println("retry: 1000\n"); // 设置请求间隔时间
         String msg = "";
         if (!weixinService.isLoginByOpenid(openid)) {
             msg = "notlogin";
         } else if (WeixinUtil.winnerId.equals(id)) {
             // id匹配上才算中奖
-            long winnerTime = WeixinUtil.winnerTime;
+            long winnerTime = WeixinUtil.winnerTime*1000;
             if (winnerTime > 0) {
                 int restTime = 60 + (int) ((winnerTime - System.currentTimeMillis()) / 1000);
                 if (restTime < 0) {
@@ -478,9 +467,30 @@ public class WeixinController {
                     WeixinUtil.winnerId = "";
                 } else if (StringUtils.isNotEmpty(WeixinUtil.winningCode)) {
                     msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
+                }else{
+                    msg = "winner_" + 4 + "_" + 2;
                 }
             }
         }
+        writer.println("data: " + msg + "\n");
+        writer.flush();
+    }
+    
+    @RequestMapping(value = "/fukaSse", method = { RequestMethod.GET })
+    public void fukaSse (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String openid = req.getParameter("openid");
+        resp.setContentType("text/event-stream");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Cache-Control", "no-cache");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
+        PrintWriter writer = resp.getWriter();
+        // writer.print("retry: 10000\n"); //设置请求间隔时间
+        // writer.print("data: " + System.currentTimeMillis()+"\n\n");
+        // writer.println("event:pushMessage"); // 设置请求自定义事件
+        writer.println("retry: 1000\n"); // 设置请求间隔时间
+        long msg = weixinService.getRestCountByOpenid(openid);
         writer.println("data: " + msg + "\n");
         writer.flush();
     }
