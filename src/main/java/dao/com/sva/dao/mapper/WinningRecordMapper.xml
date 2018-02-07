@@ -40,6 +40,12 @@
         WHERE code = #{value}
     </select>
     
+    <update id="updatePrizeDetail">
+        UPDATE winning_record 
+        SET confirm = #{confirm}
+        WHERE id = #{id}
+    </update>
+    
     <insert id="saveWinningRecord">
         INSERT INTO 
             winning_record(accountId,prizeCode,received,time) 
@@ -49,6 +55,7 @@
     <select id="getAllPrizeDetail" resultType="PrizeModel">
         SELECT *
         FROM prize
+        WHERE received = 1
         ORDER BY code
     </select>
     

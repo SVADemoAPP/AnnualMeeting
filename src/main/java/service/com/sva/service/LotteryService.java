@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -106,6 +108,15 @@ public class LotteryService
         return daoWinning.getPrizeDetail(prizeCode);
     }
     
+    /**
+     * @Title: updatePrizeDetail 
+     * @Description: 更新领取信息 
+     * @return 
+     */
+    public void updatePrizeDetail(String id,int confirm){
+    	daoWinning.updatePrizeDetail(id,confirm);
+    }
+    
     /** 
      * @Title: getAllPrizeDetail 
      * @Description: 获取所有的奖品详情
@@ -114,6 +125,8 @@ public class LotteryService
     public List<PrizeModel> getAllPrizeDetail(){
         return daoWinning.getAllPrizeDetail();
     }
+    
+    
     
     /** 
      * @Title: saveWinningRecord 

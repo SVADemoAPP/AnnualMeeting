@@ -92,6 +92,13 @@ public interface WinningRecordDao
      */
     public List<WinningRecordModel> getAllWinRecord();
     
+    /**
+     * @Title: updatePrizeDetail 
+     * @Description: 更新领取信息 
+     * @return 
+     */
+    public void updatePrizeDetail(@Param("id")String id,@Param("confirm")int confirm);
+    
     /** 
      * @Title: getWinInfoByAccount 
      * @Description: 获取指定账户的中奖信息 

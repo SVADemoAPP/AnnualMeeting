@@ -10,6 +10,8 @@ package com.sva.web.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +67,26 @@ public class MainPageController
         model.put("data", service.getAllWinRecord());
         return model;
     }
+    
+    /** 
+     * @Title: updateFuInfo 
+     * @Description: 更新奖品领取状态 
+     * @param accountId
+     * @return 
+     */
+    @RequestMapping(value="/updatePrizeConfrim", method = { RequestMethod.POST })
+    @ResponseBody
+    public Map<String, Object> updatePrizeConfrim(String accountId){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if(StringUtils.isEmpty(accountId)){
+            modelMap.put("error", "userId is empty");
+            return modelMap;
+        }
+        service.updatePrizeDetail(accountId, 1);
+        modelMap.put("data", "ok");
+        return modelMap;
+    }
+    
     
     /** 
      * @Title: refresh 

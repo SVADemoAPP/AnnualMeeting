@@ -35,7 +35,7 @@ public class WinningRecordModel
     private int prizeCode;
     
     /** 
-     * @Fields received : 是否领取(0:未领取;1:领取) 
+     * @Fields received : 是否确认(0:未确认;1:确认) 
      */ 
     private int received;
     
@@ -68,6 +68,11 @@ public class WinningRecordModel
      * @Fields desc : 奖品描述 
      */ 
     private String desc;
+    
+    /**
+     * @Fields confirm : 是否领取(0:未领取;1:领取) 
+     */
+    private int confirm;
 
     /**
      * @return the id
@@ -228,5 +233,13 @@ public class WinningRecordModel
     {
         this.desc = desc;
     }
+
+	public int getConfirm() {
+		return confirm;
+	}
+
+	public void setConfirm(int confirm) {
+		this.confirm = confirm;
+	}
     
 }

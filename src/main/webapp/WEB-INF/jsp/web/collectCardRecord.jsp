@@ -21,8 +21,8 @@
                     <th></th>
                     <th>姓名</th>
                     <th>工号</th>
-                    <th>部门</th>
-                    <th>是否兑换</th>
+                    <th>奖品级别</th>
+                    <th>是否领取</th>
                     <th>操作</th>
                 </tr>
             </thead>

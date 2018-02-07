@@ -48,7 +48,7 @@ public class HomeController
     public String showLottery(@PathVariable("prizeCode")String prizeCode, Model model){
         PrizeModel p = lottery.getPrizeDetail(prizeCode);
         model.addAttribute("prizeCode", prizeCode);
-        model.addAttribute("prize", p.getDesc());
+        model.addAttribute("prize", p.getName());
         String linkUrl = "";
         if("6".equals(prizeCode)){
             linkUrl = "web/luckyLottery";

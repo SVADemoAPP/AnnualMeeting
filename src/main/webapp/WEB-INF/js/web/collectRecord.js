@@ -5,8 +5,8 @@
 	var oTable;
 	
 	function initTable(){
-		$.post("/sva/stat/getFullFuInfo",function(data){
-			if(!data.error){
+		$.post("/sva/mainPage/getRecord",function(data){
+			if(data.data){
 				if(oTable){oTable.fnDestroy();};
 				oTable = $('#table').dataTable({
 					"bProcessing": true,
@@ -30,15 +30,15 @@
 						},
 						{ 
 							"aTargets": [3],
-							"mData": "dept"
+							"mData": "name"
 						},
 						{ 
 							"aTargets": [4],
-							"mData": "gotFu",
+							"mData": "confirm",
 							"mRender": function ( data, type, full ) {
-								var html = "未兑换";
+								var html = "未领取";
 								if(data){
-									html = "已兑换";
+									html = "已领取";
 								}
 								return html;
 							}
@@ -58,7 +58,7 @@
 								}
 								var html = "" +
 									'<input type="button" data-type="confirm" '
-									+diabled+' style="'+cssString+'" data-id="'+full.username+'" value="兑换">';
+									+diabled+' style="'+cssString+'" data-id="'+full.id+'" value="领取">';
 								
 								return html;
 							}
@@ -71,11 +71,11 @@
 	
 	function bindEvent(){
 		$("input[data-type='confirm']").live("click",function(e){
-			if(confirm("是否确认兑换")){
+			if(confirm("是否确认领取")){
             	var id = $(this).data("id");
-        		$.post("/sva/stat/updateFuInfo",{accountId:id},function(data){
+        		$.post("/sva/mainPage/updatePrizeConfrim",{accountId:id},function(data){
         			if(data.error){
-        				alert("兑换失败");
+        				alert("领取失败");
 	           		}else{
 	           			initTable();
 	           		}
