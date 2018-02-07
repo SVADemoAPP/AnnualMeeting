@@ -70,7 +70,7 @@
 		});
 	}
 	
-	function recordAtServer(accountId){
+	function recordAtServer(accountId, callback){
 		$.ajax({
 			url:"/sva/lottery/recordAtServer?accountId="+accountId+"&code="+$("#typeHidden").val(),
     		type:"post",
@@ -81,6 +81,9 @@
     			if(data.returnCode != 1){
     				alert("server error!");
         		}
+    			if(callback){
+    				callback();
+    			}
     		}
 		});
 	}
@@ -91,8 +94,9 @@
 		$("#phone").html(detail.phoneNo);
 		$("#district").html(detail.district);
 		startCount();
-		recordAtServer(accountInfo.id);
-		startSse(accountInfo.id);
+		recordAtServer(accountInfo.id, function(){
+			startSse(accountInfo.id);
+		});
 	}
 	
 	function startShowResult(detail, callback){
