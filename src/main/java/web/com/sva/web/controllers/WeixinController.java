@@ -369,17 +369,17 @@ public class WeixinController {
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
+//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/fuka";
     }
 
     @RequestMapping(value = "/mine", method = { RequestMethod.GET })
     public String mine(HttpServletRequest req) {
-        String openid = req.getParameter("openid");
+        String openid = "op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
+//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/mine";
     }
 
@@ -389,7 +389,7 @@ public class WeixinController {
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-        req.getSession().setAttribute("fromNews", "yes");
+//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/changepwd";
     }
 
@@ -468,7 +468,7 @@ public class WeixinController {
                 } else if (StringUtils.isNotEmpty(WeixinUtil.winningCode)) {
                     msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
                 }else{
-                    msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
+                    msg = "winner_" + 4 + "_" + 2;
                 }
             }
         }
