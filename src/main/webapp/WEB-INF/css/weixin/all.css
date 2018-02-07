@@ -64,7 +64,7 @@ body {
 #div_confirm {
 	position: absolute;
 	bottom: 0;
-	height: 30%;
+	height: 40%;
 	width: 100%;
 	background-color: #fc335a;
 	text-align: center;
@@ -80,18 +80,18 @@ body {
 	color: #ffffff;
 	font-size: 25px;
 	margin-top: 0%;
+	margin-bottom: 0px;
 }
 
 #img_prizecode {
 	width: 55%;
-	margin-top: -7%;
 }
 
 #bt_confirm {
 	background-image: url('../../images/bt_confirm.png');
-	width: 45%;
+	width: 55%;
 	height: 25%;
 	color: #e6284a;
 	font-size: 16px;
-	margin-top: 60%;
+	margin-top: 1em;
 }

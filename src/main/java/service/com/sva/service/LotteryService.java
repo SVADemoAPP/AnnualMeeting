@@ -66,10 +66,15 @@ public class LotteryService
     public AccountModel getWinningEmployee(String prizeLevel){
         // 各部门当前获奖概率
         List<DeptRateModel> deptRate = daoWinning.getDeptRate(prizeLevel);
-        // 根据各部门获奖概率，抽取获奖部门
-        String dept = getWinningDept(deptRate);
-        // 抽取获奖部门的幸运工号
-        AccountModel winningPerson = getWinningPerson(prizeLevel, dept);
+        String dept;
+        AccountModel winningPerson;
+        //防止出现某个部门已经没有符合条件的中奖者候选人的情况出现
+        do {
+        	// 根据各部门获奖概率，抽取获奖部门
+        	dept = getWinningDept(deptRate);
+            // 抽取获奖部门的幸运工号
+        	winningPerson = getWinningPerson(prizeLevel, dept);
+		} while (winningPerson == null);
         // 计算各部门新的获奖概率
         calcNewDeptRate(deptRate, dept);
         // 返回工号
@@ -239,11 +244,24 @@ public class LotteryService
     private AccountModel getWinningPerson(String prizeLevel, String winningDept){
         // 抽奖候选人名单
         List<Integer> personList = daoAccount.getCandidate(winningDept, prizeLevel);
+        if(personList.isEmpty()){
+        	return null;
+        }
+        // 从符合条件的候选人名单中筛选出集齐卡片的人员名单
+        List<Integer> personCardList = daoAccount.getCandidateByCard(winningDept, prizeLevel);
+        List<Integer> pondList = new ArrayList<>(personList.size() * 11);
+        // 将符合中奖条件的候选人重复放入中奖池子十次
+        for(int i = 1; i <= 10; i++){
+        	pondList.addAll(personList);
+        }
+        // 将集齐卡片的中奖候选人额外多放入池子一次
+        pondList.addAll(personCardList);
+        System.out.println(pondList.toString());
         // 获取随机数
         Random random = new Random();
-        int ranNumber = random.nextInt(personList.size());
+        int ranNumber = random.nextInt(pondList.size());
         // 返回获奖者
-        return daoAccount.getPersionById(personList.get(ranNumber));
+        return daoAccount.getPersionById(pondList.get(ranNumber));
     }
     
     /** 

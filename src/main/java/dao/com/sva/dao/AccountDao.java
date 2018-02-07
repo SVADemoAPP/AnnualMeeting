@@ -55,6 +55,15 @@ public interface AccountDao
     public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
     
     /** 
+     * @Title: getCandidate 
+     * @Description: 查找符合抽奖条件并已集齐卡片的候选人
+     * @param dept
+     * @param prizeCode
+     * @return 
+     */
+    public List<Integer> getCandidateByCard(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
+    
+    /** 
      * @Title: getLuckyCandidate 
      * @Description: 获取幸运奖的中奖候选者姓名列表
      * @return 

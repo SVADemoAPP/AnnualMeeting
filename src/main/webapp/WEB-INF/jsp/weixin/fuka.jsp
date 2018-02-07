@@ -143,14 +143,23 @@
 			</div>
 
 		</div>
+		<div id="div_confirm" style="display: none;">
+			<div>
+				<img id="img_confirm" src="../images/img_confirm.png" />
+			</div>
+			<div>
+				<p>恭喜您获得</p>
+			</div>
+			<div >
+				<img id="img_prizecode" src="../images/prize_code2.png" />
+			</div>
+			<div>
+				<button id="bt_confirm" type="button">确认领奖（60s）</button>
+			</div>
+		</div>
 	</div>
 	
-	<div id="div_confirm" style="display: none;">
-		<img id="img_confirm" src="../images/img_confirm.png" />
-		<p>恭喜您获得</p>
-		<img id="img_prizecode" src="../images/prize_code2.png" />
-		<button id="bt_confirm" type="button">确认领奖（60s）</button>
-	</div>
+	
 	<script type="text/javascript" src="../js/weixin/all.js"></script>
 	<script type="text/javascript" src="../js/weixin/foka.js"></script>
 	<script type="text/javascript">
