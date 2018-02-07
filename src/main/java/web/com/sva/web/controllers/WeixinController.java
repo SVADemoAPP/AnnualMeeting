@@ -364,7 +364,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
-        String openid = req.getParameter("openid");
+        String openid = "op0fg0-D30ZCKp_YBJXoCYBH5jvU";
 //        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
@@ -452,7 +452,7 @@ public class WeixinController {
         // writer.print("retry: 10000\n"); //设置请求间隔时间
         // writer.print("data: " + System.currentTimeMillis()+"\n\n");
         // writer.println("event:pushMessage"); // 设置请求自定义事件
-        writer.println("retry: 1000"); // 设置请求间隔时间
+        writer.println("retry: 1000\n"); // 设置请求间隔时间
         String msg = "";
         if (!weixinService.isLoginByOpenid(openid)) {
             msg = "notlogin";
@@ -472,6 +472,25 @@ public class WeixinController {
                 }
             }
         }
+        writer.println("data: " + msg + "\n");
+        writer.flush();
+    }
+    
+    @RequestMapping(value = "/fukaSse", method = { RequestMethod.GET })
+    public void fukaSse (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String openid = req.getParameter("openid");
+        resp.setContentType("text/event-stream");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Cache-Control", "no-cache");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
+        PrintWriter writer = resp.getWriter();
+        // writer.print("retry: 10000\n"); //设置请求间隔时间
+        // writer.print("data: " + System.currentTimeMillis()+"\n\n");
+        // writer.println("event:pushMessage"); // 设置请求自定义事件
+        writer.println("retry: 1000\n"); // 设置请求间隔时间
+        long msg = weixinService.getRestCountByOpenid(openid);
         writer.println("data: " + msg + "\n");
         writer.flush();
     }
