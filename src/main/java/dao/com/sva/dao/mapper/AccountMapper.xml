@@ -34,6 +34,19 @@
             )
     </select>
     
+    <select id="getCandidateByCard" resultType="Integer">
+        SELECT id
+        FROM sys_account s 
+        WHERE s.dept = #{dept} 
+            and s.dept != ""
+            and s.gotFu = 1
+            and s.level &lt; #{prizeCode}
+            and s.id not in (
+                SELECT distinct(accountId) 
+                FROM winning_record
+            )
+    </select>
+    
     <update id="updateOnlineTime">
         UPDATE sys_account
         SET lastHeartbeat = #{lastHeartbeat}, onLineTime = #{onLineTime}
@@ -56,7 +69,8 @@
     <select id="getLuckyCandidate" resultType="String">
         SELECT realname
         FROM sys_account s 
-        WHERE s.id not in (
+        WHERE s.dept != ""
+              and s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record
             )
@@ -65,7 +79,8 @@
     <select id="getLuckyCandidateDetail" resultType="AccountModel">
         SELECT *
         FROM sys_account s 
-        WHERE s.id not in (
+        WHERE s.dept != ""
+              and s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record
             )
