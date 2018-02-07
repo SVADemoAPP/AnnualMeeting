@@ -256,7 +256,6 @@ public class LotteryService
         }
         // 将集齐卡片的中奖候选人额外多放入池子一次
         pondList.addAll(personCardList);
-        System.out.println(pondList.toString());
         // 获取随机数
         Random random = new Random();
         int ranNumber = random.nextInt(pondList.size());
