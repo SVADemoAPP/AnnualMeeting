@@ -76,6 +76,7 @@ public class LotteryService
         	winningPerson = getWinningPerson(prizeLevel, dept);
 		} while (winningPerson == null);
         // 计算各部门新的获奖概率
+        WeixinUtil.pushText(openid, content);
         calcNewDeptRate(deptRate, dept);
         // 返回工号
         return winningPerson;
