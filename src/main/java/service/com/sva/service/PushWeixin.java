@@ -8,6 +8,7 @@
  */
 package com.sva.service;
 
+import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.model.AccountModel;
@@ -26,6 +27,11 @@ public class PushWeixin implements Runnable
      * @Fields model : 中奖用户信息 
      */ 
     private AccountModel model;
+    
+    /** 
+     * @Fields models : 幸运奖中奖用户信息 
+     */ 
+    private List<AccountModel> models;
     
     /** 
      * @Fields url : 跳转链接url
@@ -48,6 +54,14 @@ public class PushWeixin implements Runnable
     public void setModel(AccountModel model)
     {
         this.model = model;
+    }
+
+    /**
+     * @param models the models to set
+     */
+    public void setModels(List<AccountModel> models)
+    {
+        this.models = models;
     }
 
     /**
@@ -78,22 +92,44 @@ public class PushWeixin implements Runnable
     // 恭喜您中了"+prize.getName()+"!","http://"+url+"/sva/images/prize_"+code+".png"
     public void run()
     {
-        if(!StringUtils.isEmpty(model.getOpenid())){
+        if(model != null){
+            if(!StringUtils.isEmpty(model.getOpenid())){
+                try
+                {
+                    Thread.sleep(23000);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                WeixinUtil.pushNews(
+                        model.getOpenid(), 
+                        "中奖信息", 
+                        message, 
+                        urlLink, 
+                        urlImage
+                );
+            }
+        }else{
             try
             {
-                Thread.sleep(23000);
+                Thread.sleep(15000);
             }
             catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
-            WeixinUtil.pushNews(
-                    model.getOpenid(), 
-                    "中奖信息", 
-                    message, 
-                    urlLink, 
-                    urlImage
-            );
+            for(AccountModel am : models){
+                if(!StringUtils.isEmpty(am.getOpenid())){
+                    WeixinUtil.pushNews(
+                            am.getOpenid(), 
+                            "中奖信息", 
+                            message, 
+                            urlLink+am.getOpenid(), 
+                            urlImage
+                    );
+                }
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ package com.sva.web.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -174,5 +175,50 @@ public class LotteryController
         }
         writer.println("data: " + msg + "\n");
         writer.flush();
+    }
+    
+    /** 
+     * @Title: getCandidate 
+     * @Description: 幸运奖的中奖候选者 
+     * @return 
+     */
+    @RequestMapping(value = "/getCandidate", method = {RequestMethod.POST})
+    @ResponseBody
+    public Map<String, Object> getCandidate(){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        // 具体中奖逻辑
+        List<String> candidates = service.getLuckyCandidate();
+        
+        modelMap.put("returnCode", "1");
+        modelMap.put("data", candidates);
+        
+        return modelMap;
+    }
+    
+    /** 
+     * @Title: getLuckyWinners 
+     * @Description: 获取幸运奖中奖者
+     * @return 
+     */
+    @RequestMapping(value = "/getLuckyWinners", method = {RequestMethod.POST})
+    @ResponseBody
+    public Map<String, Object> getLuckyWinners(){
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        // 具体中奖逻辑
+        List<AccountModel> winners = service.getLuckyWinners();
+        if(!winners.isEmpty()){
+         // 推送微信
+            PushWeixin thread = new PushWeixin();
+            thread.setModels(winners);
+            thread.setMessage("恭喜您中了幸运奖！详细信息请在 获奖页面查看");
+            thread.setUrlLink("http://"+serverUrl+"/sva/weixin/skipPrize?openid=");
+            thread.setUrlImage("http://"+serverUrl+"/sva/images/prize_6.png");
+            new Thread(thread).start();
+        }
+        
+        modelMap.put("returnCode", "1");
+        modelMap.put("data", winners);
+        
+        return modelMap;
     }
 }

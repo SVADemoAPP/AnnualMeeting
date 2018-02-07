@@ -9,6 +9,7 @@
 package com.sva.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,6 +153,47 @@ public class LotteryService
      */
     public List<WinningRecordModel> getWinInfoByAccount(String openid){
         return daoWinning.getWinInfoByAccount(openid);
+    }
+    
+    /** 
+     * @Title: getLuckyCandidate 
+     * @Description: 获取幸运奖的中奖候选者 
+     * @return 
+     */
+    public List<String> getLuckyCandidate(){
+        return daoAccount.getLuckyCandidate();
+    }
+    
+    /** 
+     * @Title: getLuckyWinners 
+     * @Description: 抽取20个幸运奖中奖者 
+     * @return 
+     */
+    public List<AccountModel> getLuckyWinners(){
+        // 中奖名单
+        List<AccountModel> list = new ArrayList<AccountModel>();
+        // 候选名单
+        List<AccountModel> candidates = daoAccount.getLuckyCandidateDetail();
+        // 抽20个中奖者
+        for(int i=0; i<20; i++){
+            // 若未到20个，候选者已抽完，则停止
+            if(candidates.isEmpty()) break;
+            // 获取随机数
+            Random random = new Random();
+            int ranNumber = random.nextInt(candidates.size());
+            list.add(candidates.get(ranNumber));
+            candidates.remove(ranNumber);
+        }
+        // 中奖名单入库
+        for(AccountModel am:list){
+            WinningRecordModel wrm = new WinningRecordModel();
+            wrm.setAccountId(Integer.parseInt(am.getId()));
+            wrm.setPrizeCode(6);
+            wrm.setTime(new Date());
+            wrm.setReceived(1);
+            daoWinning.saveWinningRecord(wrm);
+        }
+        return list;
     }
     
     /** 

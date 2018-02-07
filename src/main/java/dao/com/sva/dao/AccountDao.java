@@ -55,6 +55,20 @@ public interface AccountDao
     public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
     
     /** 
+     * @Title: getLuckyCandidate 
+     * @Description: 获取幸运奖的中奖候选者姓名列表
+     * @return 
+     */
+    public List<String> getLuckyCandidate();
+    
+    /** 
+     * @Title: getLuckyCandidateDetail 
+     * @Description: 获取幸运奖的中奖候选者详细 
+     * @return 
+     */
+    public List<AccountModel> getLuckyCandidateDetail();
+    
+    /** 
      * @Title: updateOnlineTime 
      * @Description: 更新在线时长 
      * @param model 

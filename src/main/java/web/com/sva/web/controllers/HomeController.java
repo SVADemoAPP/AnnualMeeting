@@ -49,7 +49,13 @@ public class HomeController
         PrizeModel p = lottery.getPrizeDetail(prizeCode);
         model.addAttribute("prizeCode", prizeCode);
         model.addAttribute("prize", p.getDesc());
-        return "web/lottery";
+        String linkUrl = "";
+        if("6".equals(prizeCode)){
+            linkUrl = "web/luckyLottery";
+        }else{
+            linkUrl = "web/lottery";
+        }
+        return linkUrl;
     }
     
     /** 
