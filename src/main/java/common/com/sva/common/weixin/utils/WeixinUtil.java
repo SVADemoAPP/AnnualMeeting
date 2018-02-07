@@ -150,14 +150,14 @@ public class WeixinUtil {
     public static String getTokenString() {
         String token = "";
         long nowTime = System.currentTimeMillis();
-        System.out.println("相差时间:"+(nowTime - tokenTime)+",上个token:"+lastToken);
+//        System.out.println("相差时间:"+(nowTime - tokenTime)+",上个token:"+lastToken);
         // 相差小于100分钟并且token不为空则直接取，否则重新获取
         if (nowTime - tokenTime < 1000 * 60 * 100 && StringUtils.isNotEmpty(lastToken)) {
             token = lastToken;
         } else {
             String url = ACCESS_TOKEN_URL.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
             JSONObject jsonObject = doGetStr(url);
-            System.out.println("jsonObject:"+jsonObject.toString());
+//            System.out.println("jsonObject:"+jsonObject.toString());
             if (jsonObject != null) {
                 token = jsonObject.getString("access_token");
             }
@@ -338,7 +338,7 @@ public class WeixinUtil {
                 msgBody.put("articles", articles);
                 params.put("news", msgBody);
                 JSONObject jsonObj = WeixinUtil.doPostStr(wxUrl, params.toString());
-                System.out.println(jsonObj);
+//                System.out.println(jsonObj);
             }
         }).start();
        
