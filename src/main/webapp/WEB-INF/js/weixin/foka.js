@@ -1,4 +1,4 @@
-var a, b, right, bottom, nextRandomTime, lastFu5;
+var a, b, right, bottom, nextRandomTime;
 var sendAble = true;// 可送福卡状态
 var timer;
 var card;
@@ -242,7 +242,6 @@ function dataInit() {
 		winData.fu3 = account.fu3;
 		winData.fu4 = account.fu4;
 		winData.fu5 = account.fu5;
-		lastFu5 = account.fu5;
 		winData.nextRandomTime = account.nextRandomTime;
 		winData.remainRandomCount = account.remainRandomCount;
 		console.log(winData.nextRandomTime.time);
@@ -257,9 +256,8 @@ function dataInit() {
 // 设置界面数据
 function setViewData() {
 	var fu5 = winData.fu5;
-	if (fu5 == 1 && lastFu5 != 1) {
+	if (fu5 == 1 ) {
 		$("#flop_complete_tag").show();
-		lastFu5 = 1;
 	}
 
 	var fu1 = winData.fu1;
@@ -281,9 +279,9 @@ function setViewData() {
 	if (nextRandomTime > new Date()) {
 		var nextTime = new Date(nextRandomTime).format("hh:mm");
 		$(".lottery_start_info").html(nextTime + "再次抽奖");
-	} else if (nextRandomTime < new Date()) {
+	}/* else if (nextRandomTime <= new Date()) {
 		$(".lottery_start_info").html("活动已结束");
-	} else {
+	}*/ else {
 		$(".lottery_start_info").html("开始抽奖");
 	}
 
@@ -293,9 +291,6 @@ function init() {
 	// 页面高度
 	var h = window.innerHeight;
 	var w = window.innerWidth;
-//	$("#img_login").css("height",$("#img_login").height());
-//	$(".login_input").css("height",$("#img_login").height()/8);
-//	$("#login_submit").css("height",$("#img_login").height()/10);
 	
 	// 最上层图片高度
 	var imgh = $(".bg-header img").height();

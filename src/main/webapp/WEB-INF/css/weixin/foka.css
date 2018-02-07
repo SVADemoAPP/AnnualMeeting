@@ -241,7 +241,7 @@ html {
 	height: 100%;
 	font-size: 20px;
 	display: -webkit-flex;
-	padding-bottom: 0.6rem; display : flex;
+	padding-bottom: 0.3rem; display : flex;
 	-webkit-align-items: center;
 	align-items: center;
 	-webkit-justify-content: center;

@@ -53,8 +53,8 @@ public class WeixinUtil {
     // private final static String secret = "246883272034517bdfbef75a74a991f5";
     // test
     // public final static String SERVER_URL = "zrwb.mynatapp.cc";
-    public final static String APPID = "wx216621f9da064342";
-    public final static String APPSECRET = "3de7691660915cbdcf9757825bb2e242";
+    public final static String APPID = "wx171dc71d88509bec";
+    public final static String APPSECRET = "d1b76a48240967a419af0f01619add36";
 
     // 获取token地址
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
@@ -135,6 +135,7 @@ public class WeixinUtil {
             token.setAccess_token(jsonObject.getString("access_token"));
             token.setExpires_in(jsonObject.getInt("expires_in"));
         }
+        System.out.println(token.getAccess_token());
         return token;
     }
 

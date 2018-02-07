@@ -6,9 +6,6 @@ body {
 	height: 100%;
 }
 
-
-
-
 .div_login_layer {
 	background-color: #000000;
 	width: 100%;
@@ -35,8 +32,6 @@ body {
 	bottom: 0;
 }
 
-
-
 #img_login {
 	position: relative;
 	width: 97%;
@@ -55,50 +50,48 @@ body {
 	margin: auto;
 	left: 0;
 	right: 0;
-	top:-4%;
-	font-size:16px;
+	top: -4%;
+	font-size: 16px;
 }
 
 #login_submit {
-	position: absolute;
-	margin: auto;
+	position: relative;
 	height: 10%;
-	left: 0;
-	right: 0;
-	top:60%;
+	margin-left:32%;
+	margin-top:-26%;
 }
 
 #div_confirm {
 	position: absolute;
-	bottom:0;
+	bottom: 0;
 	height: 30%;
-	width:100%;
+	width: 100%;
 	background-color: #fc335a;
-	 text-align:center;
-	 margin-bottom:-60%;
+	text-align: center;
+	margin-bottom: -60%;
 }
 
 #img_confirm {
 	width: 80%;
-	margin-top:-7%;
+	margin-top: -7%;
 }
 
 #div_confirm p {
 	color: #ffffff;
 	font-size: 25px;
-	margin-top:0%;
+	margin-top: 0%;
 }
 
 #img_prizecode {
 	width: 55%;
-	margin-top:-7%;
+	margin-top: -7%;
 }
 
 #bt_confirm {
-	background-image:url('../../images/bt_confirm.png');
+	background-image: url('../../images/bt_confirm.png');
 	width: 45%;
-	height:25%;
+	height: 25%;
 	color: #e6284a;
 	font-size: 16px;
-	margin-top:2%;
+	margin-top: 60%;
 }

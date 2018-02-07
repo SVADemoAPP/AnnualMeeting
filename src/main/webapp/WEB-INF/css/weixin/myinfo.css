@@ -37,11 +37,13 @@ html {
 	width: 100%;
 	height: 50%;
 	position: relative;
-	display: flex;
 	align-items: Center;
-	-webkit-display:flex;
-	-webkit-align-items: Center;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
 }
+
 #item_baseinfo1 {
 	width: 100%;
 	height: 33.33%;
@@ -56,9 +58,6 @@ html {
 	bottom: 10%;
 	display: flex;
 	align-items: Center;
-	-webkit-display:flex;
-	-webkit-align-items: Center;
-	
 }
 
 #change_pwd {
@@ -67,18 +66,17 @@ html {
 	align-items: Center;
 	display: flex;
 	position: relative;
-	-webkit-display:flex;
-	-webkit-align-items: Center;
 }
 
 #item_advance_pw, #item_advance_prz {
 	width: 100%;
 	height: 50%;
 	position: relative;
-	display: flex;
 	align-items: Center;
-	-webkit-display:flex;
-	-webkit-align-items: Center;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
 }
 
 p {
@@ -101,7 +99,7 @@ p {
 	color: #ff1616;
 	background-color: #fce76b;
 	width: 100%;
-	padding:10px;
+	padding: 10px;
 	display: flex;
 	align-items: Center;
 }
@@ -154,4 +152,3 @@ p {
 	width: 50%;
 	color: #ff1616;
 }
-

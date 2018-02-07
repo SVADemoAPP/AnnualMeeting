@@ -115,25 +115,30 @@ public class WeixinController {
 
         switch (msgType) {
         case MessageUtil.MESSAGE_TEXT:
-            if ("1".equals(content)) {
-                msg = MessageUtil.setTextMsg(fromUserName, toUserName, "内容1");
-                // WeixinUtil.pushText(fromUserName, "内容1 ");
-            } else if ("2".equals(content)) {
-                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
-            } else if ("?".equals(content) || "？".equals(content)) {
-                msg = MessageUtil.setTextMsg(fromUserName, toUserName, MessageUtil.menuMsg());
-            } else {
-                // 其他字符回复主菜单
-                // msg = MessageUtil.setTextMsg(fromUserName, toUserName,
-                // MessageUtil.menuMsg());
-            }
+//            if ("1".equals(content)) {
+//                msg = MessageUtil.setTextMsg(fromUserName, toUserName, "内容1");
+//                // WeixinUtil.pushText(fromUserName, "内容1 ");
+//            } else if ("2".equals(content)) {
+//                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
+//            } else if ("?".equals(content) || "？".equals(content)) {
+//                msg = MessageUtil.setTextMsg(fromUserName, toUserName, MessageUtil.menuMsg());
+//            } else {
+//                // 其他字符回复主菜单
+//                // msg = MessageUtil.setTextMsg(fromUserName, toUserName,
+//                // MessageUtil.menuMsg());
+//            }
             break;
         case MessageUtil.MESSAGE_EVENT:
             String event = map.get("Event");
             // System.out.println("event事件类型："+event);
             if (MessageUtil.MESSAGE_SUBSCRIBE.equals(event)) {
-                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
+//                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
                 // WeixinUtil.pushText(fromUserName, "欢迎关注！");
+                WeixinUtil.pushNews(fromUserName, "SVA简介", "这是一段详情介绍", "http://"+serverUrl+"/sva/weixin/skipPrize?openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
+//                news.setDescription("这是一段详情介绍");
+//                news.setTitle("SVA简介");
+//                news.setPicUrl("http://zrwb.mynatapp.cc/sva/images/focus.png");
+//                news.setUrl("http://zrwb.mynatapp.cc/sva/weixin/skipPrize");
             } else {
                 // req.getSession().setAttribute("fromUserName", fromUserName);
             }
@@ -143,10 +148,10 @@ public class WeixinController {
             break;
         }
         // System.out.println(msgType + " " + fromUserName + " " + msg);
-        if (StringUtils.isNotEmpty(msg)) {
-            msg = new String(msg.getBytes(), "iso8859-1");
-        }
-        System.out.println("看看消息：" + msg);
+//        if (StringUtils.isNotEmpty(msg)) {
+//            msg = new String(msg.getBytes(), "iso8859-1");
+//        }
+//        System.out.println("看看消息：" + msg);
         return msg;
     }
 
@@ -361,7 +366,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
-        String openid = "3";
+        String openid = req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -371,7 +376,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
-        String openid = "3";
+        String openid = req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -381,7 +386,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/mine", method = { RequestMethod.GET })
     public String mine(HttpServletRequest req) {
-        String openid = "odLWc0m4KQmZi-7QHOCqFEOwfRqY";
+        String openid = req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);

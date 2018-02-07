@@ -1,4 +1,4 @@
-var timer, eventSource,winnerCode;
+var timer, eventSource, winnerCode;
 
 $(document).ready(function() {
 
@@ -32,10 +32,12 @@ function startSse(id, openid) {
 						temp.hide();
 						$('#div_login_all').hide();
 					}
-					if($('#div_login_all').is(':hidden')){
-						winnerCode=strArr[2];
-						$('#img_prizecode').attr("src","../images/prize_code"+winnerCode+".png");
+					if ($('#div_login_all').is(':hidden')) {
+						winnerCode = strArr[2];
+						$('#img_prizecode').attr("src",
+								"../images/prize_code" + winnerCode + ".png");
 						$('#div_login_all').show();
+						$('#div_confirm').show();
 						$("#div_confirm").animate({
 							marginBottom : "0%"
 						});
@@ -47,7 +49,7 @@ function startSse(id, openid) {
 									accountId : account.id,
 									prizeCode : winnerCode,
 									received : '1',
-									time:new Date()
+									time : new Date()
 								},
 								success : function(data) {
 									showToast('领奖成功', 1000);
@@ -59,9 +61,8 @@ function startSse(id, openid) {
 							});
 						})
 					}
-					$('#bt_confirm').html("确认领奖（"+strArr[1]+"s）");
-					
-					
+					$('#bt_confirm').html("确认领奖（" + strArr[1] + "s）");
+
 				}
 			}
 		};
@@ -99,8 +100,6 @@ $("#login_submit").click(function() {
 	});
 });
 
-
-
 /**
  * 心跳以记录在线时长
  */
@@ -113,7 +112,7 @@ function heartbeat() {
 			accountId : account.username
 		},
 		success : function(data) {
-			 console.log(data);
+			console.log(data);
 		}
 	});
 };
@@ -128,12 +127,12 @@ function showLogin() {
 		showLoginDialog();
 	} else {
 		startSse(account.id, account.openid);
-// loginInit();
-// if (fromNews == 'yes') {
-// $("#bt_myprize").trigger("click");
-// }
-// timer = setInterval(heartbeat, 3000);
-// $('#div_login_all').show();
+		loginInit();
+		// if (fromNews == 'yes') {
+		// $("#bt_myprize").trigger("click");
+		// }
+		// timer = setInterval(heartbeat, 3000);
+		// $('#div_login_all').show();
 	}
 };
 
@@ -161,7 +160,7 @@ function showLoginDialog() {
 		$("#img_login").css("height", $("#img_login").height());
 		$(".login_input").css("height", $("#img_login").height() / 8);
 		$("#login_submit").css("height", $("#img_login").height() / 10);
-	}, 200);
+	}, 300);
 }
 
 function showToast(msg, duration) {
