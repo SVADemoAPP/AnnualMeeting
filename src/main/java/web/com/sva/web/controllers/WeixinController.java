@@ -354,7 +354,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
-        String openid = "op0fg0-D30ZCKp_YBJXoCYBH5jvU";
+        String openid =  req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
