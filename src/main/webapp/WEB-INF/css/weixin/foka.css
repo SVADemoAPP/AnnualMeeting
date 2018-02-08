@@ -230,7 +230,7 @@ html {
 	position: absolute;
 	top: 8%;
 	left: 35%;
-	font-size: 22px;
+	font-size: 20px;
 	font-family: sans-serif;
 	color: red;
 }
@@ -254,19 +254,23 @@ html {
 .start_lottery {
 	position: absolute;
 	bottom: 2%;
-	height: 5rem;
-	width: 46%;
+	height: 28%;
+	width: 50%;
 	margin: auto;
-	left: 27%;
+	left: 25%;
 	background: url("../../images/44.png");
-	background-size: 100%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position:center bottom;
 }
 
 .start_lottery:active {
 	background: url("../../images/67.png");
-	background-size: 100%;
 	-webkit-background: url("../../images/67.png");
 	-moz-background: url("../../images/67.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position:center bottom;
 }
 
 
