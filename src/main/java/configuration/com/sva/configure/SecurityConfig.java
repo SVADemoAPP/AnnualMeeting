@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http
-        	.sessionManagement().maximumSessions(2).and()
+        	.sessionManagement().maximumSessions(5).and()
         		.and().authorizeRequests()
 	                .antMatchers("/home/**","/lottery/**").hasRole("ADMIN")
 	                .antMatchers("/app/**").hasRole("CUSTOMER")
