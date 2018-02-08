@@ -72,7 +72,7 @@
         FROM winning_record a 
             left join sys_account b on a.accountId=b.id 
             left join prize c on a.prizeCode= c.code 
-        WHERE b.openid=#{openid} 
+        WHERE b.openid=#{openid} and received = 1
         ORDER BY a.prizeCode
     </select>
     
