@@ -27,7 +27,7 @@
                 <input id="clear" type="button" value="清空"/>
             </div>
         </form>
-        <div id="console" style="margin-top: 30px;color: red;"></div>
+        <div id="console" style="margin-top: 30px;color: red;">${info}</div>
     </div>
 <script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/js/util.js'/>" type="text/javascript"></script>

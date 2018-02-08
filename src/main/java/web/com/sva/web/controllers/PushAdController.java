@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sva.common.ConvertUtil;
 import com.sva.service.SystemService;
 
@@ -51,7 +52,7 @@ public class PushAdController
     @RequestMapping(value = "/uploadAndPush", method = {RequestMethod.POST})
     public String uploadAndPush(
             @RequestParam(value = "image", required = false) MultipartFile image,String txt,
-            HttpServletRequest request, Model model) throws SQLException{
+            HttpServletRequest request, RedirectAttributes model) throws SQLException{
         String result = "";
         String fileName = "";
         if (image != null && StringUtils.isNotEmpty(image.getOriginalFilename())){
@@ -85,7 +86,7 @@ public class PushAdController
             result = "消息已推送";
         }
         
-        model.addAttribute("info", result);
-        return "web/pushAd";
+        model.addFlashAttribute("info", result);
+        return "redirect:/home/showPushAd";
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,7 +65,8 @@ public class HomeController
      * @return 
      */
     @RequestMapping(value = "/showPushAd", method = {RequestMethod.GET})
-    public String showPushAd(){
+    public String showPushAd(@ModelAttribute("info") String info, Model model){
+        model.addAttribute("info", info);
         return "web/pushAd";
     }
     
