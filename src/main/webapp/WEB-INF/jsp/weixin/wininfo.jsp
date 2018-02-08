@@ -19,7 +19,6 @@
 <title>我的中奖信息</title>
 </head>
 <body>
-	<h3 class="wintitle">中奖详情</h3>
 	<p id="all_win_info">暂无中奖信息</p>
 
 

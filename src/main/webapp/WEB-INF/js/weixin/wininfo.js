@@ -24,13 +24,13 @@ function loginInit() {
 					return;
 				}
 				for (i = 0; i < prizeArr.length; i++) {
+//					$('#all_win_info')
+//							.append(
+//									'<p class="prizename">' + prizeArr[i].name
+//											+ '</p>');
 					$('#all_win_info')
 							.append(
-									'<p class="prizename">' + prizeArr[i].name
-											+ '</p>');
-					$('#all_win_info')
-							.append(
-									'<p class="prizedesc">' + prizeArr[i].desc
+									'<p class="prizedesc">' + prizeArr[i].name
 											+ '</p>');
 				}
 

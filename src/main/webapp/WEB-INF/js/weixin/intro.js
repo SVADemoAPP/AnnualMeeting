@@ -1,5 +1,5 @@
-$("#bt_myprize").click(
-		function() {
+
+function showPrizeDialog() {
 			$.ajax({
 				type : "post",
 				url : "../weixin/getWinInfoByAccount",
@@ -15,12 +15,12 @@ $("#bt_myprize").click(
 						if (prizeArr.length > 0) {
 
 							for (i = 0; i < prizeArr.length; i++) {
-								$('#div_wininfo').append(
-										'<p class="prizename">'
-												+ prizeArr[i].name + '</p>');
+//								$('#div_wininfo').append(
+//										'<p class="prizename">'
+//												+ prizeArr[i].name + '</p>');
 								$('#div_wininfo').append(
 										'<p class="prizedesc">'
-												+ prizeArr[i].desc + '</p>');
+												+ prizeArr[i].name + '</p>');
 							}
 						} else {
 							$('#div_wininfo').append("暂无中奖信息");
@@ -48,8 +48,7 @@ $("#bt_myprize").click(
 					}
 				}
 			});
-
-		});
+}
 
 function startInit() {
 };

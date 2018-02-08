@@ -24,6 +24,7 @@ import com.sva.common.weixin.utils.CheckUtil;
 import com.sva.common.weixin.utils.MessageUtil;
 import com.sva.common.weixin.utils.WeixinUtil;
 import com.sva.model.AccountModel;
+import com.sva.model.PrizeModel;
 import com.sva.model.WinningRecordModel;
 import com.sva.service.LotteryService;
 import com.sva.service.StatisticService;
@@ -353,8 +354,7 @@ public class WeixinController {
 
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
-        String openid = req.getParameter("openid");
-//        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
+        String openid = "op0fg0-D30ZCKp_YBJXoCYBH5jvU";
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
@@ -364,22 +364,19 @@ public class WeixinController {
 
     @RequestMapping(value = "/fuka1", method = { RequestMethod.GET })
     public String fuka1(HttpServletRequest req) {
-        String openid = "op0fg0-D30ZCKp_YBJXoCYBH5jvU";
-//        String openid="op0fg0_HlwvpMSv7xBhc-zteFqzY";
+        String openid = req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/fuka";
     }
 
     @RequestMapping(value = "/mine", method = { RequestMethod.GET })
     public String mine(HttpServletRequest req) {
-        String openid = "op0fg0_HlwvpMSv7xBhc-zteFqzY";
+        String openid =req.getParameter("openid");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/mine";
     }
 
@@ -389,7 +386,6 @@ public class WeixinController {
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
-//        req.getSession().setAttribute("fromNews", "yes");
         return "weixin/changepwd";
     }
 
@@ -433,6 +429,8 @@ public class WeixinController {
     @ResponseBody
     public Map<String, Object> saveWinningRecord(WinningRecordModel model) {
         Map<String, Object> resultMap = new HashMap<>();
+        PrizeModel prizeModel=lotteryService.getPrizeDetail(model.getPrizeCode()+"");
+        model.setName(prizeModel.getName());
         lotteryService.saveWinningRecord(model);
         resultMap.put("resultCode", CODE_SUCCESS);
         return resultMap;
@@ -468,9 +466,11 @@ public class WeixinController {
                 } else if (StringUtils.isNotEmpty(WeixinUtil.winningCode)) {
                     msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
                 }else{
-                    msg = "winner_" + 4 + "_" + 2;
+                    msg = "winner_" + restTime + "_" + WeixinUtil.winningCode;
                 }
             }
+        }else {
+            msg="notshow";
         }
         writer.println("data: " + msg + "\n");
         writer.flush();

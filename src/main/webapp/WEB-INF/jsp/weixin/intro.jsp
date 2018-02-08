@@ -21,9 +21,12 @@
 <title>活动介绍</title>
 </head>
 <body>
+<div style="width:100%;height:100%; overflow: scroll;">
 	<img src="../images/top_bg.png" width="100%" />
-	<div id="prize">
-		<img src="../images/prize.png" width="100%" /> <img
+	</div>
+	<!-- <div id="prize">
+		<img src="../images/prize.png" width="100%" /> 
+		<img
 			src="../images/prize_set.png"
 			style="margin-left: 2%; margin-top: 5%; width: 30%;" /> <img
 			id="bt_myprize" src="../images/my_prize_info.png"
@@ -31,7 +34,7 @@
 		<p>一等奖：iphone X 一名</p>
 		<p>二等奖：ipad mini4 三名</p>
 		<p>三等奖：iwatch3 五名</p>
-	</div>
+	</div> -->
 	<div id="div_login_all" style="display: none;">
 		<div class="div_login_layer"></div>
 		<div class="div_login_bg">

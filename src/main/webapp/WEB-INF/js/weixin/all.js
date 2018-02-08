@@ -1,4 +1,4 @@
-var timer, eventSource, winnerCode;
+var timer, eventSource, winnerCode,showConfirm;
 
 $(document).ready(function() {
 
@@ -12,6 +12,7 @@ $(document).ready(function() {
  * @param openid
  */
 function startSse(id, openid) {
+	showConfirm=false;
 	if (typeof (EventSource) !== "undefined") {
 		eventSource = new EventSource("../weixin/pushSse?id=" + id + "&openid="
 				+ openid);
@@ -21,6 +22,14 @@ function startSse(id, openid) {
 			if ("notlogin" == key) {
 				reLogin();
 				showToast('账号在其他设备登录', 1000);
+			}else if("notshow"==key){
+				if (showConfirm) {
+					showConfirm=false;
+					$("#div_confirm").animate({
+						marginBottom : "-60%"
+					});
+					$('#div_login_all').hide();
+				}
 			} else if ("overtime" == key) {
 				showToast('确认领奖超时', 1000);
 			} else {
@@ -32,7 +41,8 @@ function startSse(id, openid) {
 						temp.hide();
 						$('#div_login_all').hide();
 					}
-					if ($('#div_login_all').is(':hidden')) {
+					if (!showConfirm) {
+						showConfirm=true;
 						winnerCode = strArr[2];
 						$('#img_prizecode').attr("src",
 								"../images/prize_code" + winnerCode + ".png");
@@ -128,11 +138,10 @@ function showLogin() {
 	} else {
 		startSse(account.id, account.openid);
 		loginInit();
-		// if (fromNews == 'yes') {
-		// $("#bt_myprize").trigger("click");
-		// }
-		// timer = setInterval(heartbeat, 3000);
-		// $('#div_login_all').show();
+		 if (fromNews == 'yes') {
+			 showPrizeDialog();
+		 }
+		 timer = setInterval(heartbeat, 3000);
 	}
 };
 

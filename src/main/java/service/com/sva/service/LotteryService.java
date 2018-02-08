@@ -145,12 +145,13 @@ public class LotteryService
          // 具体中奖逻辑
             AccountModel winner = daoAccount.getPersionById(model.getAccountId());
             // 推送微信
-            PushWeixin thread = new PushWeixin();
-            thread.setModel(winner);
-            thread.setUrlLink("http://"+serverUrl+"/sva/weixin/skipPrize?openid="+winner.getOpenid());
-            thread.setUrlImage("http://"+serverUrl+"/sva/images/prize_"+model.getPrizeCode()+".png");
-            thread.setMessage("恭喜您中了"+model.getName()+"!");
-            new Thread(thread).start();
+            WeixinUtil.pushNews(
+                    winner.getOpenid(), 
+                    "中奖信息", 
+                    "恭喜您中了"+model.getName()+"!", 
+                    "http://"+serverUrl+"/sva/weixin/skipPrize?openid="+winner.getOpenid(), 
+                    "http://"+serverUrl+"/sva/images/prize_"+model.getPrizeCode()+".png"
+            );
         }
     }
     
