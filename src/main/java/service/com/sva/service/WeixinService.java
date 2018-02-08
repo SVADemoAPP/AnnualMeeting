@@ -107,14 +107,17 @@ public class WeixinService {
         if (!nowDate.before(ConvertUtil.dateStringFormat(fuEndtime, Params.YYYYMMDDHHMMSS))) {
             code = -2; // 活动已结束
             return code;
+        } else if (nowDate.before(ConvertUtil.dateStringFormat(fuStarttime, Params.YYYYMMDDHHMMSS))) {
+            code = -1; // 活动未开始
+            return code;
         }
         Date nextDate = weixinDao.getNextRandomTime(openid);
         if (nextDate != null) {
-               if(nowDate.before(nextDate)){
-                   code=-nextDate.getTime(); //返回当前时间戳的负值
-               }else{
-                   code=1+(int)((nowDate.getTime()-nextDate.getTime())/(interminute*60*1000)); //返回剩余抽奖次数
-               }
+            if (nowDate.before(nextDate)) {
+                code = -nextDate.getTime(); // 返回当前时间戳的负值
+            } else {
+                code = 1 + (int) ((nowDate.getTime() - nextDate.getTime()) / (interminute * 60 * 1000)); // 返回剩余抽奖次数
+            }
         }
         return code;
     }

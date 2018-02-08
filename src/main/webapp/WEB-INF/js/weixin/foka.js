@@ -348,12 +348,13 @@ function loginInit() {
 	dataInit();
 };
 
-var clickAble=true;
+var clickAble = true;
 function fukaSse(openid) {
 	if (typeof (EventSource) !== "undefined") {
 		$('.start_lottery').bind('click', function() {
 			getWinInfo();
 		});
+		$('.lottery_start_info').html('开始抽奖');
 		eventSource = new EventSource("../weixin/fukaSse?openid=" + openid);
 		eventSource.onmessage = function(event) {
 			console.log(event.data);
@@ -368,8 +369,19 @@ function fukaSse(openid) {
 					$('.start_lottery').bind('click', function() {
 						getWinInfo();
 					});
+					$('.lottery_start_info').html('开始抽奖');
 				}
 
+			} else if (key == -1) {
+				if (clickAble) {
+					clickAble = false;
+					var nextTime = new Date(-key).format("hh:mm");
+					$(".lottery_time_info").html("活动开始时间:" + nextTime);
+					$(".start_lottery").css("backgroundImage",
+							"url('../images/67.png')");
+					$('.start_lottery').unbind('click');
+					$('.lottery_start_info').html('请等待');
+				}
 			} else if (key == -2) {
 				if (clickAble) {
 					clickAble = false;
@@ -377,6 +389,7 @@ function fukaSse(openid) {
 					$(".start_lottery").css("backgroundImage",
 							"url('../images/67.png')");
 					$('.start_lottery').unbind('click');
+					$('.lottery_start_info').html('请等待');
 				}
 			} else {
 
@@ -387,6 +400,7 @@ function fukaSse(openid) {
 					$(".start_lottery").css("backgroundImage",
 							"url('../images/67.png')");
 					$('.start_lottery').unbind('click');
+					$('.lottery_start_info').html('请等待');
 				}
 			}
 		};
