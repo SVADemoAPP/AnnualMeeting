@@ -126,7 +126,7 @@ public class WeixinController {
             if (MessageUtil.MESSAGE_SUBSCRIBE.equals(event)) {
 //                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
                 // WeixinUtil.pushText(fromUserName, "欢迎关注！");
-                WeixinUtil.pushNews(fromUserName, "Small Cell 2018年味活动", "这是一段详情介绍", "http://"+serverUrl+"/sva/weixin/skipPrize?sub=yes&openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
+                WeixinUtil.pushNews(fromUserName, "Small Cell 2018年味活动", "本活动由Small Cell DU&成研第二OEC赞助举办", "http://"+serverUrl+"/sva/weixin/skipPrize?sub=yes&openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
             } else {
                 // req.getSession().setAttribute("fromUserName", fromUserName);
             }
