@@ -193,12 +193,8 @@
         content:"中奖人：";
     }
     
-    .detail-2:before{
-        content:"电话：";
-    }
-    
     .detail-3:before{
-        content:"地域：";
+        content:"部门：";
     }
     
     .confirm{
@@ -239,7 +235,6 @@
                 <div class="countNo countNo-2">6</div>
                 <div class="prizeType" id="prize">${prize}</div>
                 <div class="detail detail-1" id="people"></div>
-                <div class="detail detail-2" id="phone"></div>
                 <div class="detail detail-3" id="district"></div>
                 <div class="confirm"></div>
             </div>

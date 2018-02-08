@@ -50,7 +50,7 @@ public class HomeController
         model.addAttribute("prizeCode", prizeCode);
         model.addAttribute("prize", p.getName());
         String linkUrl = "";
-        if("6".equals(prizeCode)){
+        if("3".equals(prizeCode)){
             linkUrl = "web/luckyLottery";
         }else{
             linkUrl = "web/lottery";

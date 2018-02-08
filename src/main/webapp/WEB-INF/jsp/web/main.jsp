@@ -305,13 +305,7 @@ html,body{
     float: left;
     width: 160px;
 }
-.record-detail-3{
-    float: left;
-    width: 180px;
-}
-.record-detail-3:before{
-    content: "尾号";
-}
+
 #winDetail::-webkit-scrollbar {/*滚动条整体样式*/
     width: 20px;     /*高宽分别对应横竖滚动条的尺寸*/
     height: 1px;
@@ -474,7 +468,6 @@ rotateCubeBottomIn {
 		</style>
 	</head>
 	<body>
-	<div id="cubeTransition">
 	<div style="background-color:rgb(230,41,74);">
 	   <div class="main_bg">
          <div class="leftPart">
@@ -543,15 +536,6 @@ rotateCubeBottomIn {
                 <div class="detail-mask"></div>
            </div>
        </div>
-    </div>
-    <div>
-        <iframe src="http://10.183.91.30:8088/sva/jsp/heatMap" width="100%" height="1080px" style="overflow:hidden;border: none;"></iframe>
-        <div style="position:absolute;top:0;left:0;width:1920px;height:1080px;overflow:hidden;"></div>
-    </div>
-    <div style="background-color:#fff6d9;">
-        <div id="onlineChart" style="width:1500px; height:800px;margin:50px auto;border: 20px solid rgb(230,41,74);border-radius: 20px;">
-        </div>
-    </div>
     </div>
 	<script src="<c:url value='/plugins/jquery.js'/>" type="text/javascript"></script>
     <script src="<c:url value='/plugins/cubeTransition/js/mousewheel.js'/>"></script>

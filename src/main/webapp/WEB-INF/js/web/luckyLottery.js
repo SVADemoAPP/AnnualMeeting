@@ -60,7 +60,7 @@
 				_name.html(candidates[name]);
 			});
 		},0);
-		timerLuckeName2 = setInterval(function(){
+	/*	timerLuckeName2 = setInterval(function(){
 			$(".col-2").each(function(index){
 				var _name = $(this);
 				var pcount = candidates.length;
@@ -91,7 +91,7 @@
 				var name = Math.floor(Math.random() * pcount);
 				_name.html(candidates[name]);
 			});
-		},0);
+		},0);*/
 	}
 	
 	function showResult(detail){
@@ -104,7 +104,6 @@
 					+ '<div class="record-detail">'
 					+ '<div class="record-detail-1">' + item.username + '</div>'
 					+ '<div class="record-detail-2">' + item.realname + '</div>'
-					+ '<div class="record-detail-3">' + item.phoneNo.substring(item.phoneNo.length-4) + '</div>'
 					+ '</div>';
 		}
 		html += "<br/>";

@@ -70,14 +70,9 @@ public class LotteryController
             return modelMap;
         }
         // 具体中奖逻辑
-        AccountModel winner = service.getWinningEmployee(model.getPrizeCode());
-        // 推送微信
-        PushWeixin thread = new PushWeixin();
-        thread.setModel(winner);
-        thread.setUrlLink("http://"+serverUrl+"/sva/weixin/mine?openid="+winner.getOpenid());
-        thread.setMessage("恭喜您中奖了，请在规定时间内取领奖页面确认");
-        new Thread(thread).start();
+        //int prizeCode = Integer.parseInt(model.getPrizeCode());
         
+        AccountModel winner = service.getWinningEmployee();
         modelMap.put("returnCode", "1");
         modelMap.put("data", winner);
         

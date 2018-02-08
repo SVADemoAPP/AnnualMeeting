@@ -64,22 +64,8 @@ public class LotteryService
      * @param prizeLevel
      * @return 
      */
-    public AccountModel getWinningEmployee(String prizeLevel){
-        // 各部门当前获奖概率
-        List<DeptRateModel> deptRate = daoWinning.getDeptRate(prizeLevel);
-        String dept;
-        AccountModel winningPerson;
-        //防止出现某个部门已经没有符合条件的中奖者候选人的情况出现
-        do {
-        	// 根据各部门获奖概率，抽取获奖部门
-        	dept = getWinningDept(deptRate);
-            // 抽取获奖部门的幸运工号
-        	winningPerson = getWinningPerson(prizeLevel, dept);
-		} while (winningPerson == null);
-        // 计算各部门新的获奖概率
-        calcNewDeptRate(deptRate, dept);
-        // 返回工号
-        return winningPerson;
+    public AccountModel getWinningEmployee(){
+        return getWinningPerson();
     }
     
     /** 
@@ -187,7 +173,7 @@ public class LotteryService
     
     /** 
      * @Title: getLuckyWinners 
-     * @Description: 抽取20个幸运奖中奖者 
+     * @Description: 抽取4个三等奖中奖者 
      * @return 
      */
     public List<AccountModel> getLuckyWinners(){
@@ -196,8 +182,8 @@ public class LotteryService
         // 候选名单
         List<AccountModel> candidates = daoAccount.getLuckyCandidateDetail();
         // 抽20个中奖者
-        for(int i=0; i<20; i++){
-            // 若未到20个，候选者已抽完，则停止
+        for(int i=0; i<4; i++){
+            // 若未到4个，候选者已抽完，则停止
             if(candidates.isEmpty()) break;
             // 获取随机数
             Random random = new Random();
@@ -209,7 +195,7 @@ public class LotteryService
         for(AccountModel am:list){
             WinningRecordModel wrm = new WinningRecordModel();
             wrm.setAccountId(Integer.parseInt(am.getId()));
-            wrm.setPrizeCode(6);
+            wrm.setPrizeCode(3);
             wrm.setTime(new Date());
             wrm.setReceived(1);
             daoWinning.saveWinningRecord(wrm);
@@ -257,26 +243,14 @@ public class LotteryService
      * @param winningDept
      * @return 
      */
-    private AccountModel getWinningPerson(String prizeLevel, String winningDept){
-        // 抽奖候选人名单
-        List<Integer> personList = daoAccount.getCandidate(winningDept, prizeLevel);
-        if(personList.isEmpty()){
-        	return null;
-        }
+    private AccountModel getWinningPerson(){
         // 从符合条件的候选人名单中筛选出集齐卡片的人员名单
-        List<Integer> personCardList = daoAccount.getCandidateByCard(winningDept, prizeLevel);
-        List<Integer> pondList = new ArrayList<>(personList.size() * 11);
-        // 将符合中奖条件的候选人重复放入中奖池子十次
-        for(int i = 1; i <= 10; i++){
-        	pondList.addAll(personList);
-        }
-        // 将集齐卡片的中奖候选人额外多放入池子一次
-        pondList.addAll(personCardList);
+        List<Integer> personCardList = daoAccount.getCandidateByCard();
         // 获取随机数
         Random random = new Random();
-        int ranNumber = random.nextInt(pondList.size());
+        int ranNumber = random.nextInt(personCardList.size());
         // 返回获奖者
-        return daoAccount.getPersionById(pondList.get(ranNumber));
+        return daoAccount.getPersionById(personCardList.get(ranNumber));
     }
     
     /** 

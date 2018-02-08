@@ -25,10 +25,7 @@
     <select id="getCandidate" resultType="Integer">
         SELECT id
         FROM sys_account s 
-        WHERE s.dept = #{dept} 
-            and s.dept != ""
-            and s.level &lt; #{prizeCode}
-            and s.id not in (
+        WHERE s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record
             )
@@ -37,10 +34,7 @@
     <select id="getCandidateByCard" resultType="Integer">
         SELECT id
         FROM sys_account s 
-        WHERE s.dept = #{dept} 
-            and s.dept != ""
-            and s.gotFu = 1
-            and s.level &lt; #{prizeCode}
+        WHERE  s.dept != ""
             and s.id not in (
                 SELECT distinct(accountId) 
                 FROM winning_record

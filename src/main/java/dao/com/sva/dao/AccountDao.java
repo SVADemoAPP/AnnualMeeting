@@ -52,7 +52,7 @@ public interface AccountDao
      * @param prizeCode
      * @return 
      */
-    public List<Integer> getCandidate(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
+    public List<Integer> getCandidate();
     
     /** 
      * @Title: getCandidate 
@@ -61,7 +61,7 @@ public interface AccountDao
      * @param prizeCode
      * @return 
      */
-    public List<Integer> getCandidateByCard(@Param("dept")String dept, @Param("prizeCode")String prizeCode);
+    public List<Integer> getCandidateByCard();
     
     /** 
      * @Title: getLuckyCandidate 

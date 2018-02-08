@@ -91,7 +91,6 @@
 	function waitForNotice(detail){
 		$(".popup").show();
 		$("#people").html(detail.realname+" "+detail.username);
-		$("#phone").html(detail.phoneNo);
 		$("#district").html(detail.district);
 		startCount();
 		recordAtServer(accountInfo.id, function(){

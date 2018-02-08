@@ -40,13 +40,6 @@ public class SystemService
     private String initRate;
     
     public void refresh(){
-        // 员工在线时长归零
-        daoAccount.refreshAccount();
-        // 部门获奖概率恢复初始值
-        String[] initRateArry = initRate.split(",");
-        for(int i = 0; i < initRateArry.length; i++){
-        	daoRecord.refreshDeptRate((i + 1) + "",Integer.parseInt(initRateArry[i]));
-        }
         // 员工获奖记录清空
         daoRecord.refreshRecord();
     }
