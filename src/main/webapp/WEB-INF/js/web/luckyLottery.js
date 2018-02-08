@@ -148,6 +148,8 @@
 				if(tempList.length){
 					$(_names[index]).html(tempList[0].realname);
 					tempList.shift();
+				}else{
+					$(_names[index]).html("");
 				}
 			}
 			if(i==5){

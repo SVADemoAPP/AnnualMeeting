@@ -429,8 +429,6 @@ public class WeixinController {
     @ResponseBody
     public Map<String, Object> saveWinningRecord(WinningRecordModel model) {
         Map<String, Object> resultMap = new HashMap<>();
-        PrizeModel prizeModel=lotteryService.getPrizeDetail(model.getPrizeCode()+"");
-        model.setName(prizeModel.getName());
         lotteryService.saveWinningRecord(model);
         resultMap.put("resultCode", CODE_SUCCESS);
         return resultMap;

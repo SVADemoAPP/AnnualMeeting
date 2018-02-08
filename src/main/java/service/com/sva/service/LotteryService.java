@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -142,8 +141,11 @@ public class LotteryService
         WeixinUtil.winningCode = "";
         // 领取成功的情况，推送信息
         if(model.getReceived() == 1){
-         // 具体中奖逻辑
+            // 获取中奖人信息
             AccountModel winner = daoAccount.getPersionById(model.getAccountId());
+            // 获取奖品信息
+            PrizeModel pm = daoWinning.getPrizeDetail(model.getPrizeCode()+"");
+            model.setName(pm.getName());
             // 推送微信
             WeixinUtil.pushNews(
                     winner.getOpenid(), 
