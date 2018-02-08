@@ -126,7 +126,7 @@ public class WeixinController {
             if (MessageUtil.MESSAGE_SUBSCRIBE.equals(event)) {
 //                msg = MessageUtil.setNewsMsg(fromUserName, toUserName);
                 // WeixinUtil.pushText(fromUserName, "欢迎关注！");
-                WeixinUtil.pushNews(fromUserName, "SVA简介", "这是一段详情介绍", "http://"+serverUrl+"/sva/weixin/skipPrize?openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
+                WeixinUtil.pushNews(fromUserName, "Small Cell 2018年味活动", "这是一段详情介绍", "http://"+serverUrl+"/sva/weixin/skipPrize?sub=yes&openid="+fromUserName, "http://"+serverUrl+"/sva/images/focus.png");
             } else {
                 // req.getSession().setAttribute("fromUserName", fromUserName);
             }
@@ -355,10 +355,13 @@ public class WeixinController {
     @RequestMapping(value = "/skipPrize", method = { RequestMethod.GET })
     public String skipPrize(HttpServletRequest req) {
         String openid =  req.getParameter("openid");
+        String sub=req.getParameter("sub");
         AccountModel accountModel = weixinService.getAccountByOpenid(openid);
         req.getSession().setAttribute("openid", openid);
         req.getSession().setAttribute("accountModel", accountModel);
+        if(!"yes".equals(sub)){
         req.getSession().setAttribute("fromNews", "yes");
+        }
         return "weixin/intro";
     }
 
