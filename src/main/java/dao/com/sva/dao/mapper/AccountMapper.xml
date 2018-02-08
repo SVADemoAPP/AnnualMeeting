@@ -86,4 +86,11 @@
             )
     </select>
     
+    <select id="getAdReceiver" resultType="AccountModel">
+        SELECT *
+        FROM sys_account
+        WHERE openid != ""
+            and dept != ""
+    </select>
+    
 </mapper>

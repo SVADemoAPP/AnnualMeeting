@@ -96,4 +96,11 @@ public interface AccountDao
      * @Description: 更新账户信息  
      */
     public void refreshAccount();
+    
+    /** 
+     * @Title: getAdReceiver 
+     * @Description: 获取推送对象 
+     * @return 
+     */
+    public List<AccountModel> getAdReceiver();
 }

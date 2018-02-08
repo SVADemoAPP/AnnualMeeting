@@ -59,6 +59,16 @@ public class HomeController
     }
     
     /** 
+     * @Title: showPushAd 
+     * @Description: 广告推送界面 
+     * @return 
+     */
+    @RequestMapping(value = "/showPushAd", method = {RequestMethod.GET})
+    public String showPushAd(){
+        return "web/pushAd";
+    }
+    
+    /** 
      * @Title: showCollectRecord 
      * @Description: 显示集卡兑奖记录
      * @return 
