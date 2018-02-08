@@ -143,7 +143,7 @@ public class LotteryService
         // 领取成功的情况，推送信息
         if(model.getReceived() == 1){
          // 具体中奖逻辑
-            AccountModel winner = getWinningEmployee(Integer.toString(model.getPrizeCode()));
+            AccountModel winner = daoAccount.getPersionById(model.getAccountId());
             // 推送微信
             PushWeixin thread = new PushWeixin();
             thread.setModel(winner);
