@@ -55,7 +55,6 @@
     <select id="getAllPrizeDetail" resultType="PrizeModel">
         SELECT *
         FROM prize
-        WHERE received = 1
         ORDER BY code
     </select>
     
