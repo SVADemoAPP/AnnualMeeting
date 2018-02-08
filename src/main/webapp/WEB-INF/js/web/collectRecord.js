@@ -2,13 +2,15 @@
  * 集卡记录页面
  */
 ;(function($,win){
-	var oTable;
+	var prizeTable;
+	
+	var cardTable
 	
 	function initTable(){
 		$.post("/sva/mainPage/getRecord",function(data){
 			if(data.data){
-				if(oTable){oTable.fnDestroy();};
-				oTable = $('#table').dataTable({
+				if(prizeTable){prizeTable.fnDestroy();};
+				prizeTable = $('#prizeTable').dataTable({
 					"bProcessing": true,
 					"sDom": 'rt<"toolbar"lp<"clearer">>',
 					"sPaginationType": "full_numbers",
@@ -53,7 +55,7 @@
 							"mRender": function ( data, type, full ) {
 								var cssString = "width: 54px;height:30px;font-size: 13px;font-family:inherit;";
 								var diabled = "";
-								if(full.gotFu){
+								if(full.confirm){
 									diabled += "disabled";
 								}
 								var html = "" +
@@ -67,6 +69,63 @@
 				});
 			}
 		});
+		
+
+		$.post("/sva/stat/getFullFuInfo",function(data){
+			if(data.data){
+				if(cardTable){cardTable.fnDestroy();};
+				cardTable = $('#cardTtable').dataTable({
+					"bProcessing": true,
+					"sDom": 'rt<"toolbar"lp<"clearer">>',
+					"sPaginationType": "full_numbers",
+					"aaData":data.data,
+					"bStateSave": true,
+					"aoColumnDefs": [
+						{ 
+							"aTargets": [0],
+							"bVisible": false,
+							"mData": "id" 
+						},
+							{ 
+							"aTargets": [1],
+							"mData": "realname"
+						},
+						{ 
+							"aTargets": [2],
+							"mData": "username"
+						},
+						{ 
+							"aTargets": [3],
+							"mData": "fu1"
+						},
+						{ 
+							"aTargets": [4],
+							"mData": "fu2"
+						},
+						{ 
+							"aTargets": [5],
+							"mData": "fu3"
+						},
+						{ 
+							"aTargets": [6],
+							"mData": "fu4"
+						},
+						{ 
+							"aTargets": [7],
+							"mData": "fu5",
+							"mRender": function ( data, type, full ) {
+								var html = "未合成";
+								if(data){
+									html = "已合成";
+								}
+								return html;
+							}
+						}
+					]
+				});
+			}
+		});
+	
 	}
 	
 	function bindEvent(){
