@@ -141,6 +141,9 @@
         		});
         	}
 		});
+		
+		
+		
 	}
 	
 	var Collect = {
@@ -155,4 +158,12 @@
 
 $(function(){
 	Collect.init();
+	$("#prize").live("click",function(e){
+		$("#c2").hide();
+		$("#c1").show();
+	});
+	$("#card").live("click",function(e){
+		$("#c1").hide();
+		$("#c2").show();
+	});
 });
