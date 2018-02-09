@@ -71,7 +71,7 @@ public class SystemService
      * @param image
      * @param text 
      */
-    public void pushAd(String image, String text){
+    public void pushAd(String image, String title, String text){
         // 获取推送对象
         List<AccountModel> list = daoAccount.getAdReceiver();
         // 推送消息
@@ -83,7 +83,7 @@ public class SystemService
             for(AccountModel am:list){
                 WeixinUtil.pushNews(
                         am.getOpenid(), 
-                        "Small Cell", 
+                        title, 
                         text, 
                         "", 
                         "http://"+serverUrl+"/sva/upload/ad/" + image
