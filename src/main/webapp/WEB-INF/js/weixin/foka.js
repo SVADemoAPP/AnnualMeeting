@@ -42,6 +42,25 @@ function getWinInfo() {
 
 // 送福卡给好友
 function sendCardToFrend(myToUserName, myFuId) {
+	var tem;
+	switch(myFuId){
+	case 1:
+		temp=winData.fu1;
+		break;
+	case 2:
+		temp=winData.fu2;
+		break;
+	case 3:
+		temp=winData.fu3;
+		break;
+	case 4:
+		temp=winData.fu4;
+		break;
+	}
+	if(temp<1){
+		showToast("福卡数量不足", 1000);
+		return;
+	}
 	$.ajax({
 		type : "post",
 		url : "../weixin/giveFu",
@@ -55,26 +74,45 @@ function sendCardToFrend(myToUserName, myFuId) {
 			console.log(data);
 			if (data.resultCode == 200) {
 				// setViewData(account);
-				switch (myFuId) {
-				case 1:
-					winData.fu1--;
-					break;
-				case 2:
-					winData.fu2--;
-					break;
-				case 3:
-					winData.fu3--;
-					break;
-				case 4:
-					winData.fu4--;
-					break;
-				default:
-					break;
-
-				}
-				setViewData();
+//				switch (myFuId) {
+//				case 1:
+//					winData.fu1--;
+//					break;
+//				case 2:
+//					winData.fu2--;
+//					break;
+//				case 3:
+//					winData.fu3--;
+//					break;
+//				case 4:
+//					winData.fu4--;
+//					break;
+//				default:
+//					break;
+//
+//				}
+				$(".flop_send").unbind("click");
 				$("#flop_send_tag").hide();
 				showToast("成功送出");
+				$.ajax({
+					type : "post",
+					url : "../weixin/getUserFus",
+					data : {
+						openid : myopenid
+					},
+					success : function(data) {
+						console.log(data);
+						winData.fu1=data.fu1;
+						winData.fu2=data.fu2;
+						winData.fu3=data.fu3;
+						winData.fu4=data.fu4;
+						winData.fu5=data.fu5;
+						setViewData();
+					}
+				});
+//				setViewData();
+//				$("#flop_send_tag").hide();
+//				showToast("成功送出");
 			} else if (data.resultCode == 301) {
 				$("#flop_send_tag").hide();
 				reLogin();
@@ -130,39 +168,39 @@ $(".flop_layer").click(function() {
 	$("#flop_send_tag").hide();
 })
 // 点击送好友按钮
-$(".flop_send").click(function() {
-	if ($(".frend_input").val() == "") {
-		showToast("工号不能为空", 1000);
-		return;
-	}
-	// 是否送的好友为自己
-	if ($(".frend_input").val() == account.username) {
-		showToast("不能送给自己", 1000);
-		return;
-	}
-	// 如果可送
-	if (sendAble) {
-		sendAble = false;
-		var card;
-		switch (sendCardName) {
-		case "card_ran":
-			card = 1;
-			break;
-		case "card_qing":
-			card = 2;
-			break;
-		case "card_xiao":
-			card = 3;
-			break;
-		case "card_zhan":
-			card = 4;
-			break;
-		}
-		sendCardToFrend($(".frend_input").val(), card);
-	} else {
-		showToast("请稍后...");
-	}
-})
+//$(".flop_send").click(function() {
+//	if ($(".frend_input").val() == "") {
+//		showToast("工号不能为空", 1000);
+//		return;
+//	}
+//	// 是否送的好友为自己
+//	if ($(".frend_input").val() == account.username) {
+//		showToast("不能送给自己", 1000);
+//		return;
+//	}
+//	// 如果可送
+//	if (sendAble) {
+//		sendAble = false;
+//		var card;
+//		switch (sendCardName) {
+//		case "card_ran":
+//			card = 1;
+//			break;
+//		case "card_qing":
+//			card = 2;
+//			break;
+//		case "card_xiao":
+//			card = 3;
+//			break;
+//		case "card_zhan":
+//			card = 4;
+//			break;
+//		}
+//		sendCardToFrend($(".frend_input").val(), card);
+//	} else {
+//		showToast("请稍后...");
+//	}
+//})
 
 $("#flop_complete_tag").click(function() {
 	$("#flop_complete_tag").hide();
@@ -205,7 +243,41 @@ $(".foka_num img").click(function() {
 		break;
 	}
 	$("#flop_send_tag").show();
-
+	// 点击送好友按钮
+	$(".flop_send").bind("click",function() {
+		if ($(".frend_input").val() == "") {
+			showToast("工号不能为空", 1000);
+			return;
+		}
+		// 是否送的好友为自己
+		if ($(".frend_input").val() == account.username) {
+			showToast("不能送给自己", 1000);
+			return;
+		}
+		// 如果可送
+		if (sendAble) {
+			sendAble = false;
+			var card;
+			switch (sendCardName) {
+			case "card_ran":
+				card = 1;
+				break;
+			case "card_qing":
+				card = 2;
+				break;
+			case "card_xiao":
+				card = 3;
+				break;
+			case "card_zhan":
+				card = 4;
+				break;
+			}
+			
+			sendCardToFrend($(".frend_input").val(), card);
+		} else {
+			showToast("请稍后...");
+		}
+	});
 })
 // 重新初始化
 function reInit() {
