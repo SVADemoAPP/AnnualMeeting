@@ -150,7 +150,7 @@ public class WeixinUtil {
     public static String getTokenString() {
         String token = "";
         long nowTime = System.currentTimeMillis();
-//        System.out.println("相差时间:"+(nowTime - tokenTime)+",上个token:"+lastToken);
+        System.out.println("相差时间:"+(nowTime - tokenTime)+",上个token:"+lastToken);
         // 相差小于100分钟并且token不为空则直接取，否则重新获取
         if (nowTime - tokenTime < 1000 * 60 * 100 && StringUtils.isNotEmpty(lastToken)) {
             token = lastToken;

@@ -42,7 +42,7 @@ function getWinInfo() {
 
 // 送福卡给好友
 function sendCardToFrend(myToUserName, myFuId) {
-	var tem;
+	var temp;
 	switch(myFuId){
 	case 1:
 		temp=winData.fu1;
