@@ -121,13 +121,13 @@ public class PushAdController
      */ 
     @RequestMapping(value = "/pushWeixin", method = {RequestMethod.POST})
     @ResponseBody
-    public Map<String, Object> pushWeixin(String imgName, String txt){
+    public Map<String, Object> pushWeixin(String imgName,String title, String txt){
         Map<String, Object> result = new HashMap<String, Object>();
         if(StringUtils.isEmpty(txt)){
             result.put("data", "文本不能为空！");
         }else{
             // 推送微信
-            service.pushAd(imgName, txt);
+            service.pushAd(imgName, title, txt);
             result.put("data", "消息已推送");
         }
         

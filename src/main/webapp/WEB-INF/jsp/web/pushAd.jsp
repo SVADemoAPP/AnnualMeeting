@@ -29,24 +29,29 @@
 .operateBox{
     width: 60%;
     margin: 20px auto;
-    height: 156px;
+    height: 210px;
 }
 
 .chosenImg{
-    width:200px;
-    height:156px;
+    width:300px;
+    height:200px;
     background-size:cover;
     float:left;
 }
 
+.btn-group{
+    float:left;
+    width: 102px;
+}
+
 .btn-opt{
-    float: right;
+    float: left;
     cursor:pointer;
     border: 1px solid #a9a9a9;
-    width: 70px;
-    height: 76px;
+    width: 100px;
+    height: 98px;
     text-align: center;
-    line-height: 76px;
+    line-height: 100px;
     background-color: #e4e4e4;
 }
 
@@ -60,9 +65,16 @@
             <div class="chosenImg">
             </div>
             <div style="float:left;">
-                <textarea id="text" rows="10" cols="60"></textarea>
-                <div id="push" style="margin-left: -72px;" class="btn-opt">推送</div>
-                <div id="clear" style="margin-top:78px;" class="btn-opt">清空</div>
+                <div>
+                    <input id="title" placeholder="输入标题" type="text" style="line-height: 38px;width: 439px;"/>
+                </div>
+                <div>
+                    <textarea id="text" placeholder="输入内容" rows="10" cols="60"></textarea>
+                </div>
+            </div>
+            <div class="btn-group">
+                <div id="push" class="btn-opt">推送</div>
+                <div id="clear" class="btn-opt">清空</div>
             </div>
         </div>
     </div>

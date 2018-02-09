@@ -4,6 +4,7 @@
 ;(function($,win){
 	
 	function clear(){
+		$("#title").val("");
 		$("#text").val("");
 		$(".chosenImg").attr("data-val","");
 		$(".chosenImg").css("background-image","");
@@ -21,8 +22,9 @@
 	}
 	
 	function checkInput(){
+		var title = $("#title").val();
 		var txt = $("#text").val();
-		if(!txt){
+		if(!txt || !title){
 			$("#console").html("文本不能为空！");
 			return false;
 		}else{
@@ -69,7 +71,8 @@
 				if(checkInput()){
 					var name = $(".chosenImg").attr("data-val");
 					var txt = $("#text").val();
-					$.post("/sva/pushAd/pushWeixin",{imgName:name, txt:txt},function(data){
+					var title = $("#title").val();
+					$.post("/sva/pushAd/pushWeixin",{imgName:name, title:title, txt:txt},function(data){
 						$("#console").html(data.data);
 					});
 				}
