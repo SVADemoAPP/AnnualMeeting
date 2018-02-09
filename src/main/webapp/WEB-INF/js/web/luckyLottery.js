@@ -52,7 +52,7 @@
 	
 	function startNum() {
 		if(!candidates || !candidates.length) return false;
-		timerLuckeName1 = setInterval(function(){
+		/*timerLuckeName1 = setInterval(function(){
 			$(".col-1").each(function(index){
 				var _name = $(this);
 				var pcount = candidates.length;
@@ -60,14 +60,14 @@
 				_name.html(candidates[name]);
 			});
 		},0);
-	/*	timerLuckeName2 = setInterval(function(){
+		timerLuckeName2 = setInterval(function(){
 			$(".col-2").each(function(index){
 				var _name = $(this);
 				var pcount = candidates.length;
 				var name = Math.floor(Math.random() * pcount);
 				_name.html(candidates[name]);
 			});
-		},0);
+		},0);*/
 		timerLuckeName3 = setInterval(function(){
 			$(".col-3").each(function(index){
 				var _name = $(this);
@@ -76,7 +76,7 @@
 				_name.html(candidates[name]);
 			});
 		},0);
-		timerLuckeName4 = setInterval(function(){
+/*		timerLuckeName4 = setInterval(function(){
 			$(".col-4").each(function(index){
 				var _name = $(this);
 				var pcount = candidates.length;
@@ -122,7 +122,7 @@
 		if(isBegin) return false;
 		isBegin = true;
 		var tempList = _.union(detail,[]);
-		var i=1;
+		var i=3;
 		var timeout = setInterval(function(){
 			switch(i){
 			case 1:
@@ -151,18 +151,15 @@
 					$(_names[index]).html("");
 				}
 			}
-			if(i==5){
-				isBegin = false;
-				// 灯泡动画 
-				stopBlink();
-				allLightOn();
-				showResult(detail);
-				getCandidate();
-				if(callback) callback();
-				clearInterval(timeout);
-			}
-			i++;
-		}, i*3000);
+			isBegin = false;
+			// 灯泡动画 
+			stopBlink();
+			allLightOn();
+			showResult(detail);
+			getCandidate();
+			if(callback) callback();
+			clearInterval(timeout);
+		}, 3000);
 	}
 	
 	function refresh(){

@@ -27,12 +27,12 @@ html,body{
     height:1080px;
     overflow:hidden;
 }
-.prizeShow{
+.p/* rizeShow{
     width:1053px;
     height:434px;
     margin:580px 0 0 60px;
     background:url(<c:url value='/images/prizeBg.png'/>) top center no-repeat;
-}
+} */
 .prizeBox{
     float:left;
     width:240px;
@@ -471,12 +471,12 @@ rotateCubeBottomIn {
 	<div style="background-color:rgb(230,41,74);">
 	   <div class="main_bg">
          <div class="leftPart">
-            <div class="prizeShow">
-                <!-- 
+            <!-- <div class="prizeShow">
+                
                 <div class="prizeBox prizeBox-1"></div>
                 <div class="prizeBox prizeBox-2"></div>
-                <div class="prizeBox prizeBox-3"></div> -->
-            </div>
+                <div class="prizeBox prizeBox-3"></div>
+            </div> -->
          </div>
          <div class="rightPart">
             <div style="height:145px;">

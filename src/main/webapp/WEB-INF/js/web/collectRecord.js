@@ -141,6 +141,17 @@
         		});
         	}
 		});
+		
+		$("#prizeBar").onclick = function(){
+			alert(1);
+			$("#card").hide();
+			$("#prize").show();
+		};
+		$("#cardBar").onclick = function(){
+			alert(2);
+			$("#prize").hide();
+			$("#card").show();
+		};
 	}
 	
 	var Collect = {
