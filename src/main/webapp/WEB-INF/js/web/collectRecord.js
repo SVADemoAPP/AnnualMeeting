@@ -142,16 +142,8 @@
         	}
 		});
 		
-		$("#prizeBar").onclick = function(){
-			alert(1);
-			$("#card").hide();
-			$("#prize").show();
-		};
-		$("#cardBar").onclick = function(){
-			alert(2);
-			$("#prize").hide();
-			$("#card").show();
-		};
+		
+		
 	}
 	
 	var Collect = {
@@ -166,4 +158,12 @@
 
 $(function(){
 	Collect.init();
+	$("#prize").live("click",function(e){
+		$("#c2").hide();
+		$("#c1").show();
+	});
+	$("#card").live("click",function(e){
+		$("#c1").hide();
+		$("#c2").show();
+	});
 });
